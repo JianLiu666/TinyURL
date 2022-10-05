@@ -36,7 +36,12 @@ func LoadFromViper() {
 }
 
 type environment struct {
-	MySQL mysql `yaml:"mysql"`
+	Server server `yaml:"server"`
+	MySQL  mysql  `yaml:"mysql"`
+}
+
+type server struct {
+	Port string `yaml:"port"`
 }
 
 type mysql struct {
