@@ -1,13 +1,9 @@
 package main
 
 import (
-	"tinyurl/pkg/api"
-
-	"github.com/gofiber/fiber/v2"
+	"tinyurl/cmd"
 )
 
 func main() {
-	app := fiber.New()
-	api.SetRoutes(app)
-	app.Listen(":3000")
+	cmd.Execute()
 }
