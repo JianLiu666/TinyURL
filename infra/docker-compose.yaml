@@ -1,0 +1,31 @@
+version: "3.4"
+
+services:
+  mysql:
+    image: mysql:5.7
+    platform: linux/amd64
+    container_name: "tinyurl-mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "0"
+      MYSQL_DATABASE: "tinyurl"
+    networks: 
+      - network-tinyurl
+    ports:
+      - 3305:3306
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./mysql/conf:/etc/mysql/conf.d
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
+
+networks:
+    network-tinyurl:
+      driver: bridge
+
