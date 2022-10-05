@@ -12,7 +12,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// ApiServerCmd api server init point
 var serverCmd = &cobra.Command{
 	Use:   "server",
 	Short: "",

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"tinyurl/config"
+	"tinyurl/pkg/storage/mysql"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -43,4 +44,6 @@ func initConfig() {
 
 	viper.AutomaticEnv()
 	config.LoadFromViper()
+
+	mysql.Init()
 }
