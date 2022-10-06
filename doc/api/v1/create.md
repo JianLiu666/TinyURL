@@ -13,7 +13,7 @@ Request Body
 | Field  | Type   | Required | Description |
 | ------ | ------ | :------: | ----------- |
 | url    | string | Yes      | 原始網址 |
-| alias  | string | No       | 指定短網址內容 |
+| alias  | string | No       | 指定短網址替代碼 |
 
 ### Response
 

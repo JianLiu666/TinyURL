@@ -9,7 +9,7 @@ type Url struct {
 	Hash      string    `json:"hash" gorm:"column:hash"`
 	Origin    string    `json:"origin" gorm:"column:origin"`
 	CreatedAt time.Time `json:"created_at" gorm:"column:created_at"`
-	ExpiredAt time.Time `json:"expired_at" gorm:"column:expired_at"`
+	ExpiresAt time.Time `json:"expires_at" gorm:"column:expires_at"`
 }
 
 func CreateUrl(data *Url) error {
