@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/gofiber/fiber/v2 v2.38.1
+	github.com/spaolacci/murmur3 v1.1.0
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.13.0
 	gorm.io/driver/mysql v1.3.6
