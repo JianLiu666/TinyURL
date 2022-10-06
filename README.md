@@ -16,6 +16,10 @@ Create a shorter aliases for original URLs.
   - [ ] [GET] {domain}/api/v1/urls
   - [ ] [GET] {domain}/{tinyurl}
 
+- Mechanisms
+  - [ ] Account
+  - [ ] Rate Limiter
+
 - CI
   - [ ] Lint
   - [ ] Unit Testing
