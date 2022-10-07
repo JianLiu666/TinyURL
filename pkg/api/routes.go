@@ -7,6 +7,8 @@ import (
 )
 
 func SetRoutes(app *fiber.App) {
+	app.Get("/:tiny_url", Redirect)
+
 	api := app.Group("/api")
 	v1 := api.Group("/v1")
 	v1.Post("/create", v1api.Create)

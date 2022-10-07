@@ -42,7 +42,8 @@ type environment struct {
 }
 
 type server struct {
-	Port string `yaml:"port"`
+	Domain string `yaml:"domain"`
+	Port   string `yaml:"port"`
 }
 
 type mysql struct {

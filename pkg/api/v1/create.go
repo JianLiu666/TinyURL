@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"time"
+	"tinyurl/config"
 	"tinyurl/pkg/storage/mysql"
 
 	"github.com/gofiber/fiber/v2"
@@ -38,7 +39,7 @@ func Create(c *fiber.Ctx) error {
 	// 3. response
 	respBody := &createRespBody{
 		Origin:    data.Origin,
-		Tiny:      data.Hash,
+		Tiny:      fmt.Sprintf("%s%s/%s", config.Env().Server.Domain, config.Env().Server.Port, data.Hash),
 		CreateAt:  data.CreatedAt.Unix(),
 		ExpiresAt: data.ExpiresAt.Unix(),
 	}
