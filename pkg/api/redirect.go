@@ -1,7 +1,19 @@
 package api
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"tinyurl/pkg/storage/mysql"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func Redirect(c *fiber.Ctx) error {
-	return c.SendString(c.Params("tiny_url"))
+	// 1. select from mysql
+	url, err := mysql.GetUrl(c.Params("tiny_url"))
+	if err != nil {
+		return err
+	}
+
+	// TODO: 用戶資料分析
+	// 2. redirection
+	return c.Redirect(url.Origin, fiber.StatusFound)
 }

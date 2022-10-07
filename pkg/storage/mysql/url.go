@@ -16,3 +16,9 @@ type Url struct {
 func CreateUrl(data *Url) error {
 	return instance.Table(tbUrls).Where(Url{Origin: data.Origin}).FirstOrCreate(data).Error
 }
+
+// Get url
+func GetUrl(tiny_url string) (res Url, err error) {
+	err = instance.Table(tbUrls).Where("hash = ?", tiny_url).First(&res).Error
+	return
+}
