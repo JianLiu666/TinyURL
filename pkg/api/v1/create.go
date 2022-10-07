@@ -17,10 +17,13 @@ func Create(c *fiber.Ctx) error {
 		return err
 	}
 
+	// 1. validation
 	if reqBody.Url == "" {
 		return c.Status(fiber.StatusBadRequest).SendString("Bad Request")
 	}
 
+	// TODO: tiny url 碰撞檢查
+	// 2. business logic
 	tiny := encode(reqBody.Url)
 	data := &mysql.Url{
 		Hash:      tiny,
@@ -32,9 +35,10 @@ func Create(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
+	// 3. response
 	respBody := &createRespBody{
-		Origin:    reqBody.Url,
-		Tiny:      tiny,
+		Origin:    data.Origin,
+		Tiny:      data.Hash,
 		CreateAt:  data.CreatedAt.Unix(),
 		ExpiresAt: data.ExpiresAt.Unix(),
 	}

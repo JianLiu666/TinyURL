@@ -12,6 +12,7 @@ type Url struct {
 	ExpiresAt time.Time `json:"expires_at" gorm:"column:expires_at"`
 }
 
+// Create url if same origin url not found
 func CreateUrl(data *Url) error {
-	return instance.Table(tbUrls).Create(data).Error
+	return instance.Table(tbUrls).Where(Url{Origin: data.Origin}).FirstOrCreate(data).Error
 }
