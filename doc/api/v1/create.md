@@ -44,19 +44,9 @@ sequenceDiagram
         else
             autonumber 2
             Note over server : parse request body successfully
-            server ->> server : encode origin url
-            server ->> mysql : 檢查是否存在相同網址<br>table: urls
-            rect rgb(136,186,186)
-            alt
-            Note over server, mysql : 已經存在相同網址且短網址仍有效
-            server ->> client: reponse 400: Bad Request
-            else
-            autonumber 4
-            Note over server, mysql : 網址不存在或短網址已失效
+            server ->> server : 產生短網址 (MurmurHash)
             server ->> mysql : 寫入短網址 (InsertUpdate)<br>table: urls
             server ->> client: reponse 200: OK
-            end
-            end
         end
     end
 ```

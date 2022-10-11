@@ -3,10 +3,10 @@ package v1
 import (
 	"encoding/json"
 	"fmt"
-	"strconv"
 	"time"
 	"tinyurl/config"
 	"tinyurl/pkg/storage/mysql"
+	"tinyurl/util"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/spaolacci/murmur3"
@@ -59,7 +59,7 @@ func Create(c *fiber.Ctx) error {
 func encode(origin string) string {
 	hasher := murmur3.New32()
 	hasher.Write([]byte(origin))
-	return strconv.FormatUint(uint64(hasher.Sum32()), 16)
+	return util.Base10ToBase62(uint64(hasher.Sum32()))
 }
 
 type createReqBody struct {
