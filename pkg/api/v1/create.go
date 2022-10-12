@@ -15,12 +15,12 @@ import (
 func Create(c *fiber.Ctx) error {
 	reqBody := new(createReqBody)
 	if err := c.BodyParser(reqBody); err != nil {
-		return err
+		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
 	// 1. validation
 	if reqBody.Url == "" {
-		return c.Status(fiber.StatusBadRequest).SendString("Bad Request")
+		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
 	// TODO: tiny url 碰撞檢查
@@ -33,7 +33,7 @@ func Create(c *fiber.Ctx) error {
 		ExpiresAt: time.Now().Add(24 * time.Hour),
 	}
 	if err := mysql.CreateUrl(data); err != nil {
-		fmt.Println(err)
+		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
 	// 3. response
@@ -45,7 +45,7 @@ func Create(c *fiber.Ctx) error {
 	}
 	b, err := json.Marshal(respBody)
 	if err != nil {
-		return err
+		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
 	c.Response().BodyWriter().Write(b)

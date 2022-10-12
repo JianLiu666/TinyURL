@@ -19,10 +19,13 @@ Create a shorter aliases for original URLs.
 - Mechanisms
   - [ ] Account
   - [ ] Rate Limiter
+  - [ ] Logger
+  - [ ] Monitoring
 
 - CI
   - [ ] Lint
   - [ ] Unit Testing
+  - [ ] Coverage Testing
   - [ ] Integration Testing
 
 - Monitoring

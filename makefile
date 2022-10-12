@@ -5,3 +5,6 @@ CONFIG_FILE ?= env.yaml
 
 local_run:
 	go run main.go
+
+unit_test:
+	go test -v ./...
