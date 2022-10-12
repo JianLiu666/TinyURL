@@ -30,5 +30,7 @@ func setMonitor(app *fiber.App) {
 }
 
 func setLogger(app *fiber.App) {
-	app.Use(logger.New())
+	app.Use(logger.New(logger.Config{
+		Format: "[${time}] | ${ip} | ${latency} | ${status} | ${method} | ${path} | Req: ${body} | Resp: ${resBody}\n",
+	}))
 }
