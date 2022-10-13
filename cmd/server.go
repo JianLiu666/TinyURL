@@ -7,6 +7,7 @@ import (
 	"syscall"
 	"tinyurl/config"
 	"tinyurl/pkg/api"
+	"tinyurl/pkg/storage/mysql"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cobra"
@@ -20,16 +21,19 @@ var serverCmd = &cobra.Command{
 }
 
 func RunServerCmd(cmd *cobra.Command, args []string) error {
+	// 1. enable third-party modules
+	mysql.Init()
+
+	// 2. enable api server
 	app := fiber.New()
-
 	api.SetRoutes(app)
-
 	go func() {
 		if err := app.Listen(config.Env().Server.Port); err != nil {
 			panic(fmt.Errorf("starting fiber HTTP server on %s failed: %s", config.Env().Server.Port, err.Error()))
 		}
 	}()
 
+	// 3. set graceful shutdown method
 	stopSignal := make(chan os.Signal, 1)
 	signal.Notify(stopSignal, syscall.SIGINT, syscall.SIGHUP, syscall.SIGTERM)
 	<-stopSignal

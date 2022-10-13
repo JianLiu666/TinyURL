@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"tinyurl/config"
-	"tinyurl/pkg/storage/mysql"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -33,6 +32,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./conf.d/env.yaml")
 
 	rootCmd.AddCommand(serverCmd)
+	rootCmd.AddCommand(integrationCmd)
 }
 
 func initConfig() {
@@ -44,6 +44,4 @@ func initConfig() {
 
 	viper.AutomaticEnv()
 	config.LoadFromViper()
-
-	mysql.Init()
 }

@@ -10,7 +10,7 @@ import (
 
 func TestCreate_OK(t *testing.T) {
 	// 1. prepare request body
-	reqData := &createReqBody{
+	reqData := &CreateReqBody{
 		Url:   "https://tinyurl.com/app/",
 		Alias: "",
 	}
@@ -43,7 +43,7 @@ func TestCreate_OK(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	respData := &createRespBody{}
+	respData := &CreateRespBody{}
 	err = json.Unmarshal(respBody, respData)
 	if err != nil {
 		t.Fatal(err)
@@ -56,7 +56,7 @@ func TestCreate_OK(t *testing.T) {
 
 func TestCreate_BadRequest(t *testing.T) {
 	// 1. prepare request body
-	reqData := &createReqBody{
+	reqData := &CreateReqBody{
 		Url:   "",
 		Alias: "",
 	}

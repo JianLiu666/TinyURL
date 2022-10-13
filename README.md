@@ -25,7 +25,6 @@ Create a shorter aliases for original URLs.
 - CI
   - [ ] Lint
   - [ ] Unit Testing
-  - [ ] Coverage Testing
   - [ ] Integration Testing
 
 - Monitoring

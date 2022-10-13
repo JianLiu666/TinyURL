@@ -13,7 +13,7 @@ import (
 )
 
 func Create(c *fiber.Ctx) error {
-	reqBody := new(createReqBody)
+	reqBody := new(CreateReqBody)
 	if err := c.BodyParser(reqBody); err != nil {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
@@ -37,7 +37,7 @@ func Create(c *fiber.Ctx) error {
 	}
 
 	// 3. response
-	respBody := &createRespBody{
+	respBody := &CreateRespBody{
 		Origin:    data.Origin,
 		Tiny:      fmt.Sprintf("%s%s/%s", config.Env().Server.Domain, config.Env().Server.Port, data.Hash),
 		CreateAt:  data.CreatedAt.Unix(),
@@ -62,12 +62,12 @@ func encode(origin string) string {
 	return util.Base10ToBase62(uint64(hasher.Sum32()))
 }
 
-type createReqBody struct {
+type CreateReqBody struct {
 	Url   string `json:"url"`
 	Alias string `json:"alias"`
 }
 
-type createRespBody struct {
+type CreateRespBody struct {
 	Origin    string `json:"origin"`
 	Tiny      string `json:"tiny"`
 	CreateAt  int64  `json:"created_at"`
