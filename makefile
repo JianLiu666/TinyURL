@@ -4,7 +4,10 @@ CONFIG_PATH ?= $(CURDIR)/conf.d
 CONFIG_FILE ?= env.yaml
 
 local_run:
-	go run main.go
+	go run main.go server
 
 unit_test:
 	go test -v ./...
+
+integration_test:
+	go run main.go integration
