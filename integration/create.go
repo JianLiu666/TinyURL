@@ -5,13 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"tinyurl/config"
 	v1 "tinyurl/pkg/api/v1"
 )
 
-func create_ok(s *session) {
+func create_OK(s *session) (bool, error) {
 	// 1. prepare request body
 	reqData := &v1.CreateReqBody{
 		Url:   s.origin,
@@ -19,7 +18,7 @@ func create_ok(s *session) {
 	}
 	reqBody, err := json.Marshal(reqData)
 	if err != nil {
-		log.Fatal(err)
+		return false, err
 	}
 
 	domain := fmt.Sprintf("http://%s%s/api/v1/create",
@@ -28,7 +27,7 @@ func create_ok(s *session) {
 	)
 	req, err := http.NewRequest(http.MethodPost, domain, bytes.NewBuffer(reqBody))
 	if err != nil {
-		log.Fatal(err)
+		return false, err
 	}
 	req.Header.Set("Content-Type", "application/json")
 
@@ -36,29 +35,31 @@ func create_ok(s *session) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		return false, err
 	}
 	defer resp.Body.Close()
 
 	// 3. valid response
 	if resp.StatusCode != http.StatusOK {
-		log.Fatal("response status code incorrect.")
+		return false, fmt.Errorf("response not equal. (expected: %v, actual: %v)", http.StatusOK, resp.StatusCode)
 	}
 
 	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatal(err)
+		return false, err
 	}
 
 	respData := &v1.CreateRespBody{}
 	err = json.Unmarshal(respBody, respData)
 	if err != nil {
-		log.Fatal(err)
+		return false, err
 	}
 
 	if respData.Origin != reqData.Url {
-		log.Fatal("data incorrect.")
+		return false, fmt.Errorf("origin url not equal. (expected: %s, actual: %s)", reqData.Url, respData.Origin)
 	}
 
 	s.tiny = respData.Tiny
+
+	return true, nil
 }

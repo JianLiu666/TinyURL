@@ -14,8 +14,6 @@ var integrationCmd = &cobra.Command{
 }
 
 func RunIntegrationCmd(cmd *cobra.Command, args []string) error {
-
-	integration.Case1()
-
+	integration.Start()
 	return nil
 }

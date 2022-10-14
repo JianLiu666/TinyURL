@@ -1,10 +1,8 @@
 package integration
 
 import (
-	"log"
-	"reflect"
-	"runtime"
-	"time"
+	"fmt"
+	"tinyurl/config"
 )
 
 type session struct {
@@ -13,26 +11,32 @@ type session struct {
 	tiny   string
 }
 
-func Case1() {
+func Start() {
+	casef(testcase1)
+	casef(testcase2)
+}
+
+// 模擬使用者申請短網址且使用短網址跳轉
+func testcase1() {
 	s := &session{
 		origin: "https://tinyurl.com/app/",
 		atlas:  "",
 		tiny:   "",
 	}
 
-	middleware(s, create_ok)
-	middleware(s, redirect_ok)
+	funcf(s, create_OK)
+	funcf(s, redirect_OK)
 }
 
-func middleware(s *session, callback func(s *session)) {
-	start := time.Now()
-	callback(s)
-	log.Printf("| %4dms | %s",
-		time.Since(start).Milliseconds(),
-		getFunctionName(callback),
-	)
-}
+// 模擬使用者使用不存在的短網址跳轉
+func testcase2() {
+	s := &session{
+		origin: "",
+		atlas:  "",
+		tiny: fmt.Sprintf("%s%s/jianliu",
+			config.Env().Server.Domain,
+			config.Env().Server.Port),
+	}
 
-func getFunctionName(f interface{}) string {
-	return runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name()
+	funcf(s, redirect_BadRequest)
 }
