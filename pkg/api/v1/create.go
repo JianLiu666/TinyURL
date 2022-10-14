@@ -2,6 +2,7 @@ package v1
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
 	"tinyurl/config"
@@ -10,33 +11,45 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/spaolacci/murmur3"
+	"gorm.io/gorm"
 )
 
 func Create(c *fiber.Ctx) error {
+	// 1. parsing request body
 	reqBody := new(CreateReqBody)
 	if err := c.BodyParser(reqBody); err != nil {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	// 1. validation
+	// 2. validation
 	if reqBody.Url == "" {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
+	if len(reqBody.Alias) > 20 {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
 
-	// TODO: tiny url 碰撞檢查
-	// 2. business logic
-	tiny := encode(reqBody.Url)
+	// 3. create tiny url by custom alias or hash method
+	tiny := reqBody.Alias
+	if tiny == "" {
+		tiny = encode(reqBody.Url)
+	}
+
+	// 4. create or update url metadata into database
 	data := &mysql.Url{
 		Hash:      tiny,
 		Origin:    reqBody.Url,
 		CreatedAt: time.Now(),
 		ExpiresAt: time.Now().Add(24 * time.Hour),
 	}
-	if err := mysql.CreateUrl(data); err != nil {
+	if err := mysql.CreateUrl(data, tiny == reqBody.Alias); err != nil {
+		if errors.Is(err, gorm.ErrInvalidData) {
+			return c.Status(fiber.StatusBadRequest).SendString("alias dunplicated.")
+		}
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	// 3. response
+	// 5. initial reponse body
 	respBody := &CreateRespBody{
 		Origin:    data.Origin,
 		Tiny:      fmt.Sprintf("%s%s/%s", config.Env().Server.Domain, config.Env().Server.Port, data.Hash),
@@ -63,13 +76,13 @@ func encode(origin string) string {
 }
 
 type CreateReqBody struct {
-	Url   string `json:"url"`
-	Alias string `json:"alias"`
+	Url   string `json:"url"`   // 原始網址
+	Alias string `json:"alias"` // 指定短網址格式
 }
 
 type CreateRespBody struct {
-	Origin    string `json:"origin"`
-	Tiny      string `json:"tiny"`
-	CreateAt  int64  `json:"created_at"`
-	ExpiresAt int64  `json:"expires_at"`
+	Origin    string `json:"origin"`     // 原始網址
+	Tiny      string `json:"tiny"`       // 短網址
+	CreateAt  int64  `json:"created_at"` // 短網址產生時間
+	ExpiresAt int64  `json:"expires_at"` // 短網址有效時間
 }

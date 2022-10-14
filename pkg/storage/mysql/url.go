@@ -1,6 +1,12 @@
 package mysql
 
-import "time"
+import (
+	"errors"
+	"time"
+	"tinyurl/util"
+
+	"gorm.io/gorm"
+)
 
 const tbUrls = "urls"
 
@@ -12,12 +18,35 @@ type Url struct {
 	ExpiresAt time.Time `json:"expires_at" gorm:"column:expires_at"`
 }
 
-// Create url if same origin url not found
-func CreateUrl(data *Url) error {
-	return instance.Table(tbUrls).Where(Url{Origin: data.Origin}).FirstOrCreate(data).Error
+func CreateUrl(data *Url, isCustomAlias bool) error {
+	alias := Url{}
+
+	// 檢查資料庫是否已經存在相同的短網址
+	if err := instance.Table(tbUrls).Where("hash = ?", data.Hash).First(&alias).Error; err != nil {
+		if !errors.Is(err, gorm.ErrRecordNotFound) {
+			return err
+		}
+		// 短網址未發生碰撞, 直接將短網址的 meatadata 寫入資料庫
+		// 若本來就存在相同的原始網址, 直接覆蓋新的 meatadata 即可
+		return instance.Table(tbUrls).Where(Url{Origin: data.Origin}).FirstOrCreate(&data).Error
+	}
+
+	// 已經存在相同資料, 不處理也不增加 expired time
+	if alias.Origin == data.Origin {
+		return nil
+	}
+
+	// 短網址發生碰撞, 且短網址是用戶自定義
+	if isCustomAlias {
+		return gorm.ErrInvalidData
+	}
+
+	// 將 timestamp 作為後綴詞加入短網址
+	suffix := util.Base10ToBase62(uint64(time.Now().UnixMilli()))
+	data.Hash += suffix
+	return instance.Table(tbUrls).Where(Url{Origin: data.Origin}).FirstOrCreate(&data).Error
 }
 
-// Get url
 func GetUrl(tiny_url string) (res Url, err error) {
 	err = instance.Table(tbUrls).Where("hash = ?", tiny_url).First(&res).Error
 	return
