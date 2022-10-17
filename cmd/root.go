@@ -29,7 +29,7 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./conf.d/env.yaml")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "f", "", "config file (default is ./conf.d/env.yaml")
 
 	rootCmd.AddCommand(serverCmd)
 	rootCmd.AddCommand(integrationCmd)

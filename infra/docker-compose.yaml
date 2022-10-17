@@ -25,17 +25,6 @@ services:
         reservations:
           memory: 256M
 
-  prometheus:
-    image: prom/prometheus
-    container_name: "prometheus"
-    restart: always
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - "9090:9090"
-    networks:
-      - network-tinyurl
-
   mysql_exporter:
     image: prom/mysqld-exporter
     container_name: "mysql-exporter"
@@ -46,6 +35,33 @@ services:
       DATA_SOURCE_NAME: 'exporter:123456@(mysql:3306)/tinyurl'
     networks:
       - network-tinyurl
+    depends_on:
+      - mysql
+  
+  tinyurl:
+    image: tinyurl:latest
+    container_name: "tinyurl"
+    restart: always
+    ports:
+      - "6600:6600"
+    networks:
+      - network-tinyurl
+    depends_on:
+      - mysql
+      
+  prometheus:
+    image: prom/prometheus
+    container_name: "prometheus"
+    restart: always
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - network-tinyurl
+    depends_on:
+      - mysql_exporter
+      - tinyurl
 
   grafana:
     image: grafana/grafana
@@ -55,7 +71,8 @@ services:
       - "3000:3000"
     networks:
       - network-tinyurl
-
+    depends_on:
+      - prometheus
 
 networks:
     network-tinyurl:

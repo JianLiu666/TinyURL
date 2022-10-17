@@ -23,15 +23,14 @@ func SetRoutes(app *fiber.App) {
 
 func setMonitor(app *fiber.App) {
 	app.Use(pprof.New())
-	app.Get("/metrics", monitor.New(monitor.Config{
+	app.Get("/fiber/metrics", monitor.New(monitor.Config{
 		Title:   "TinyURL Monitor",
 		Refresh: 1 * time.Second,
 	}))
 
 	prometheus := fiberprometheus.New("tinyurl")
-	prometheus.RegisterAt(app, "/prometheus/metrics")
+	prometheus.RegisterAt(app, "/metrics")
 	app.Use(prometheus.Middleware)
-
 }
 
 func setLogger(app *fiber.App) {
