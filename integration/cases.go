@@ -33,7 +33,7 @@ func testcase2() {
 	s := &session{
 		origin: "",
 		atlas:  "",
-		tiny: fmt.Sprintf("%s%s/jianliu",
+		tiny: fmt.Sprintf("%s%s/api/v1/jianliu",
 			config.Env().Server.Domain,
 			config.Env().Server.Port),
 	}

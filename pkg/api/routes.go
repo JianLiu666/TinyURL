@@ -4,6 +4,7 @@ import (
 	"time"
 	v1api "tinyurl/pkg/api/v1"
 
+	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
@@ -14,11 +15,10 @@ func SetRoutes(app *fiber.App) {
 	setMonitor(app)
 	setLogger(app)
 
-	app.Get("/:tiny_url", Redirect)
-
 	api := app.Group("/api")
 	v1 := api.Group("/v1")
 	v1.Post("/create", v1api.Create)
+	v1.Get("/:tiny_url", v1api.Redirect)
 }
 
 func setMonitor(app *fiber.App) {
@@ -27,6 +27,11 @@ func setMonitor(app *fiber.App) {
 		Title:   "TinyURL Monitor",
 		Refresh: 1 * time.Second,
 	}))
+
+	prometheus := fiberprometheus.New("tinyurl")
+	prometheus.RegisterAt(app, "/prometheus/metrics")
+	app.Use(prometheus.Middleware)
+
 }
 
 func setLogger(app *fiber.App) {

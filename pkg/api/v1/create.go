@@ -52,7 +52,7 @@ func Create(c *fiber.Ctx) error {
 	// 5. initial reponse body
 	respBody := &CreateRespBody{
 		Origin:    data.Origin,
-		Tiny:      fmt.Sprintf("%s%s/%s", config.Env().Server.Domain, config.Env().Server.Port, data.Hash),
+		Tiny:      fmt.Sprintf("%s%s/api/v1/%s", config.Env().Server.Domain, config.Env().Server.Port, data.Hash),
 		CreateAt:  data.CreatedAt.Unix(),
 		ExpiresAt: data.ExpiresAt.Unix(),
 	}
