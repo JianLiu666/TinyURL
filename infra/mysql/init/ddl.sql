@@ -8,3 +8,8 @@ CREATE TABLE `urls` (
     `expires_at` DATETIME NOT NULL COMMENT '短網址有效時間',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '網址資訊';
+
+-- Prometheus metrics
+CREATE USER 'exporter'@'%' IDENTIFIED BY '123456';
+GRANT PROCESS, REPLICATION CLIENT ON *.* TO 'exporter'@'%';
+GRANT SELECT ON *.* TO 'exporter'@'%';
