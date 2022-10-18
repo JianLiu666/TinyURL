@@ -11,26 +11,33 @@ Create a shorter aliases for original URLs.
 ## Todo
 
 - APIs
-  - [ ] [POST] {domain}/api/v1/create
+  - [x] [POST] {domain}/api/v1/create
   - [ ] [GET] {domain}/api/v1/heartbeat
   - [ ] [GET] {domain}/api/v1/urls
-  - [ ] [GET] {domain}/{tinyurl}
+  - [x] [GET] {domain}/api/v1/{tinyurl}
 
 - Mechanisms
   - [ ] Account
   - [ ] Rate Limiter
   - [ ] Logger
-  - [ ] Monitoring
+  - [x] Monitoring
 
 - CI
   - [ ] Lint
-  - [ ] Unit Testing
-  - [ ] Integration Testing
+  - [x] Unit Testing
+  - [x] Integration Testing
 
 - Monitoring
   - [ ] ELK
-  - [ ] Grafana
+  - [x] Grafana
 
 ## References
 
+### TinyURL
+
 - [MurMurHash](https://en.wikipedia.org/wiki/MurmurHash)
+
+### Monitoring
+
+- [docker-compose 搭建 Prometheus+Grafana监控系统](https://www.cnblogs.com/qdhxhz/p/16325893.html)
+- [Prometheus+Grafana+Go服务自建监控系统入门](https://www.xhyonline.com/?p=1492)
