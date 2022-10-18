@@ -44,14 +44,15 @@ make build_infra
 - Mechanisms
   - [ ] Account
   - [ ] Rate Limiter
-  - [ ] Logger
-  - [x] Monitoring
 
-- CI
+- Continuous Integration
   - [ ] Lint
   - [x] Unit Testing
   - [x] Integration Testing
 
 - Monitoring
-  - [ ] ELK
+  - [x] Prometheus
   - [x] Grafana
+  - [ ] ELK
+  - [ ] Graylog
+  - [ ] Distributed Tracing
