@@ -4,9 +4,34 @@
 
 Create a shorter aliases for original URLs.
 
+## How to use
+
+Download third-party packages
+
+```
+go mod download
+```
+
+Start Service
+
+```
+make build_infra
+```
+
 ## High Level System Design
 
 ![image](./doc/image/architecture.svg)
+
+## References
+
+### TinyURL
+
+- [MurMurHash](https://en.wikipedia.org/wiki/MurmurHash)
+
+### Monitoring
+
+- [docker-compose 搭建 Prometheus+Grafana监控系统](https://www.cnblogs.com/qdhxhz/p/16325893.html)
+- [Prometheus+Grafana+Go服务自建监控系统入门](https://www.xhyonline.com/?p=1492)
 
 ## Todo
 
@@ -30,14 +55,3 @@ Create a shorter aliases for original URLs.
 - Monitoring
   - [ ] ELK
   - [x] Grafana
-
-## References
-
-### TinyURL
-
-- [MurMurHash](https://en.wikipedia.org/wiki/MurmurHash)
-
-### Monitoring
-
-- [docker-compose 搭建 Prometheus+Grafana监控系统](https://www.cnblogs.com/qdhxhz/p/16325893.html)
-- [Prometheus+Grafana+Go服务自建监控系统入门](https://www.xhyonline.com/?p=1492)
