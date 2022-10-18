@@ -36,10 +36,10 @@ make build_infra
 ## Todo
 
 - APIs
-  - [x] [POST] {domain}/api/v1/create
-  - [ ] [GET] {domain}/api/v1/heartbeat
-  - [ ] [GET] {domain}/api/v1/urls
-  - [x] [GET] {domain}/api/v1/{tinyurl}
+  - [x] `[POST] {domain}/api/v1/create`
+  - [ ] `[GET] {domain}/api/v1/heartbeat`
+  - [ ] `[GET] {domain}/api/v1/urls`
+  - [x] `[GET] {domain}/api/v1/{tinyurl}`
 
 - Mechanisms
   - [ ] Account
