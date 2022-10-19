@@ -65,6 +65,7 @@ make build_infra
 - Monitoring
   - [x] Prometheus
   - [x] Grafana
-  - [ ] ELK
-  - [ ] Graylog
+  - [ ] Logging
+    - [ ] Study `ELK`, `Graylog`
   - [ ] Distributed Tracing
+    - [ ] Study `OpenTracing`, `OpenTelemetry`, `Jaeger`, `Zipkin`
