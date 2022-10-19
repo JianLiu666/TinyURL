@@ -37,6 +37,7 @@ make build_infra
 
 - [[Github] Marketplace/Actions/Run golangci-lint](https://github.com/marketplace/actions/run-golangci-lint)
 - [[Github] github-actions-golang](https://github.com/mvdan/github-actions-golang)
+- [[Github] Quickstart for GitHub Actions](https://docs.github.com/en/actions/quickstart)
 
 ## Todo
 
