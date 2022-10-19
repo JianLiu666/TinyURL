@@ -26,12 +26,17 @@ make build_infra
 
 ### TinyURL
 
-- [MurMurHash](https://en.wikipedia.org/wiki/MurmurHash)
+- [[Wiki] MurMurHash](https://en.wikipedia.org/wiki/MurmurHash)
 
 ### Monitoring
 
-- [docker-compose 搭建 Prometheus+Grafana监控系统](https://www.cnblogs.com/qdhxhz/p/16325893.html)
-- [Prometheus+Grafana+Go服务自建监控系统入门](https://www.xhyonline.com/?p=1492)
+- [[Blog] docker-compose 搭建 Prometheus+Grafana监控系统](https://www.cnblogs.com/qdhxhz/p/16325893.html)
+- [[Blog] Prometheus+Grafana+Go服务自建监控系统入门](https://www.xhyonline.com/?p=1492)
+
+### Github Actions
+
+- [[Github] Marketplace/Actions/Run golangci-lint](https://github.com/marketplace/actions/run-golangci-lint)
+- [[Github] github-actions-golang](https://github.com/mvdan/github-actions-golang)
 
 ## Todo
 
@@ -46,11 +51,15 @@ make build_infra
   - [ ] Rate Limiter
   - [ ] Horizontal Scaling
 
-- Continuous Integration
-  - [ ] Lint
+- Tests
   - [x] Unit Testing
   - [x] Integration Testing
+  - [ ] Benchmark
+
+- Continuous Integration
   - [ ] Github Actions
+    - [x] Lint
+    - [ ] Test
 
 - Monitoring
   - [x] Prometheus
