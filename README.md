@@ -56,6 +56,7 @@ make build_infra
   - [x] Unit Testing
   - [x] Integration Testing
   - [ ] Benchmark
+    - [ ] Study `Lucust`, `go-stress-testing`
 
 - Continuous Integration
   - [ ] Github Actions
