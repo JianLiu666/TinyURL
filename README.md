@@ -44,11 +44,13 @@ make build_infra
 - Mechanisms
   - [ ] Account
   - [ ] Rate Limiter
+  - [ ] Horizontal Scaling
 
 - Continuous Integration
   - [ ] Lint
   - [x] Unit Testing
   - [x] Integration Testing
+  - [ ] Github Actions
 
 - Monitoring
   - [x] Prometheus

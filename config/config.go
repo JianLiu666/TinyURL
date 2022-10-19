@@ -27,7 +27,7 @@ func LoadFromViper() {
 		fmt.Printf("read config file from: %v\n", viper.ConfigFileUsed())
 
 		env = &environment{}
-		viper.Unmarshal(env)
+		err = viper.Unmarshal(env)
 		if err != nil {
 			panic(fmt.Errorf("fatal unmarshal config file: %w", err))
 		}

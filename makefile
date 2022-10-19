@@ -3,6 +3,9 @@ BUILD_TIME ?= ${shell date +'%Y-%m-%d_%T'}
 CONFIG_PATH ?= $(CURDIR)/conf.d
 CONFIG_FILE ?= env.yaml
 
+go-lint:
+	golangci-lint run
+
 build_infra:
 	make build_docker
 	docker-compose -f infra/docker-compose.yaml down -v

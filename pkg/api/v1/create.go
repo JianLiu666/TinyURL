@@ -61,7 +61,11 @@ func Create(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	c.Response().BodyWriter().Write(b)
+	_, err = c.Response().BodyWriter().Write(b)
+	if err != nil {
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+
 	return nil
 }
 

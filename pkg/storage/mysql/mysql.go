@@ -10,7 +10,6 @@ import (
 )
 
 var once sync.Once
-var initialized bool
 var instance *gorm.DB
 
 func Init() {
@@ -28,7 +27,6 @@ func Init() {
 		}
 
 		instance = db
-		initialized = true
 		fmt.Println("connect to mysql successful.")
 	})
 }
