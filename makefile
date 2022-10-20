@@ -18,12 +18,12 @@ help:
 
 init:
 	rm -rf infra/data
-	mkdir -p infra/data/mysql infra/data/mysql_exporter infra/data/tinyurl infra/data/prometheus infra/data/grafana
+	mkdir -p infra/data/mysql infra/data/prometheus infra/data/grafana
 	go mod download
 	go mod tidy
+	make build-image
 
 demo:
-	make build-image
 	docker-compose -f infra/docker-compose.yaml down -v
 	docker-compose -f infra/docker-compose.yaml up -d
 	docker ps -a

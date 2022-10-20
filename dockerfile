@@ -15,5 +15,5 @@ FROM centos:centos7
 RUN mkdir -p /app
 COPY --from=builder /app/tinyurl /app/tinyurl
 WORKDIR /app
-COPY /conf.d/env.yaml .
+COPY /conf.d/env.template.yaml ./env.yaml
 CMD ["./tinyurl", "-f", "./env.yaml", "server"]

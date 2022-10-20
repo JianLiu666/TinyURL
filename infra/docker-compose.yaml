@@ -4,7 +4,7 @@ services:
   mysql:
     image: mysql:5.7
     platform: linux/amd64
-    container_name: "mysql"
+    container_name: "tinyurl-mysql"
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "0"
@@ -15,6 +15,7 @@ services:
       - 3306:3306
     volumes:
       - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./data/mysql:/var/lib/mysql
       - ./mysql/conf:/etc/mysql/conf.d
       - /etc/timezone:/etc/timezone
       - /etc/localtime:/etc/localtime
@@ -25,9 +26,9 @@ services:
         reservations:
           memory: 256M
 
-  mysql_exporter:
+  mysql-exporter:
     image: prom/mysqld-exporter
-    container_name: "mysql-exporter"
+    container_name: "tinyurl-mysql-exporter"
     restart: always
     ports:
       - "9104:9104"
@@ -40,7 +41,7 @@ services:
   
   tinyurl:
     image: tinyurl:latest
-    container_name: "tinyurl"
+    container_name: "tinyurl-server"
     restart: always
     ports:
       - "6600:6600"
@@ -51,10 +52,11 @@ services:
       
   prometheus:
     image: prom/prometheus
-    container_name: "prometheus"
+    container_name: "tinyurl-prometheus"
     restart: always
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./data/prometheus:/prometheus
     ports:
       - "9090:9090"
     networks:
@@ -65,8 +67,10 @@ services:
 
   grafana:
     image: grafana/grafana
-    container_name: "grafana"
+    container_name: "tinyurl-grafana"
     restart: always
+    volumes:
+      - ./data/grafana:/var/lib/grafana
     ports:
       - "3000:3000"
     networks:
