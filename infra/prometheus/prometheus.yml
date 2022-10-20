@@ -1,7 +1,12 @@
-global:
-  scrape_interval:     5s # 多久獲取一次目標
-  evaluation_interval: 15s # 多久評估一次規則
+# For advice on how to change settings please see
+# https://prometheus.io/docs/prometheus/latest/configuration/configuration/
 
+global:
+  scrape_interval: 10s    # How frequency to scrape targets by default.
+  scrape_timeout: 5s      # How long until a scrape request times out.
+  evaluation_interval: 1m # How  frequency to evaluate rules.
+
+# A list of scrape configurations.
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
