@@ -21,6 +21,8 @@ type Url struct {
 func CreateUrl(data *Url, isCustomAlias bool) error {
 	alias := Url{}
 
+	// TODO: 這段業務邏輯應該要包成 transaction 處理
+
 	// 檢查資料庫是否已經存在相同的短網址
 	if err := instance.Table(tbUrls).Where("hash = ?", data.Hash).First(&alias).Error; err != nil {
 		if !errors.Is(err, gorm.ErrRecordNotFound) {

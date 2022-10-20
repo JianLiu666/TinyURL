@@ -38,15 +38,19 @@ sequenceDiagram
     client ->> server: [POST] /api/v1/create
     
     rect rgb(242, 238, 229)
-        alt
-            Note over server: failed to parse request body
-            server ->> client: reponse 400: Bad Request
-        else
-            autonumber 2
-            Note over server : parse request body successfully
-            server ->> server : 產生短網址 (MurmurHash)
-            server ->> mysql : 寫入短網址 (InsertUpdate)<br>table: urls
-            server ->> client: reponse 200: OK
-        end
+    alt
+        Note over server: failed to parse request body
+        server ->> client: reponse 400: Bad Request
+    else
+        autonumber 2
+        Note over server : parse request body successfully
+        server ->> server : 產生短網址 (MurmurHash)
+        
+        server ->> mysql : 檢查是否存在相同的短網址<br>table: urls
+        server ->> mysql : 寫入短網址 (InsertUpdate)<br>table: urls
+        Note over server, mysql : 如果短網址發生碰撞, 加入 timestamp 作為後綴
+        
+        server ->> client: reponse 200: OK
+    end
     end
 ```
