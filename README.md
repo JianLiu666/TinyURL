@@ -7,16 +7,16 @@
 
 ## How to use
 
-Download third-party packages
+Initial container volumes and download needed third-party modules for go.
 
 ```
-go mod download
+make init
 ```
 
-Start Service
+Start application by docker-compose.
 
 ```
-make build_infra
+make demo
 ```
 
 ## High Level System Design
