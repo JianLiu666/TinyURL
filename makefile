@@ -1,11 +1,12 @@
 GIT_NUM ?= ${shell git rev-parse --short=6 HEAD}
 BUILD_TIME ?= ${shell date +'%Y-%m-%d_%T'}
 
-.PHONY: help demo shutdown lint unit-test integration-test benchmark build-image
+.PHONY: help init demo shutdown lint unit-test integration-test benchmark build-image
 
 help:
 	@echo "Usage: make [commands]\n"
 	@echo "Comands:"
+	@echo "  init               initial container volumes and download needed third-party modules."
 	@echo "  demo               enable whole needed images in containers with docker-compose."
 	@echo "  shutdowm           shutdown all containers with docker-compose."
 	@echo "  lint               run golang linter (golangci-lint)."
@@ -14,6 +15,12 @@ help:
 	@echo "  integration-test   run integration test in local environment."
 	@echo "  benchmark          run benchmark in local environment."
 	@echo "  build-image        start to build tinyurl image."
+
+init:
+	rm -rf infra/data
+	mkdir -p infra/data/mysql infra/data/mysql_exporter infra/data/tinyurl infra/data/prometheus infra/data/grafana
+	go mod download
+	go mod tidy
 
 demo:
 	make build-image
