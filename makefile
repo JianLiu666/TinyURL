@@ -1,12 +1,13 @@
 GIT_NUM ?= ${shell git rev-parse --short=6 HEAD}
 BUILD_TIME ?= ${shell date +'%Y-%m-%d_%T'}
 
-.PHONY: help demo lint unit-test integration-test benchmark build-image
+.PHONY: help demo shutdown lint unit-test integration-test benchmark build-image
 
 help:
 	@echo "Usage: make [commands]\n"
 	@echo "Comands:"
 	@echo "  demo               enable whole needed images in containers with docker-compose."
+	@echo "  shutdowm           shutdown all containers with docker-compose."
 	@echo "  lint               run golang linter (golangci-lint)."
 	@echo "  server             enable tinyurl server in local environment."
 	@echo "  unit-tst           run unit test in local environment."
@@ -19,6 +20,9 @@ demo:
 	docker-compose -f infra/docker-compose.yaml down -v
 	docker-compose -f infra/docker-compose.yaml up -d
 	docker ps -a
+
+shutdown:
+	docker-compose -f infra/docker-compose.yaml down -v
 
 lint:
 	golangci-lint run
