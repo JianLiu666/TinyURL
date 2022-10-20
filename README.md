@@ -2,7 +2,8 @@
 
 ## Goal
 
-Create a shorter aliases for original URLs.
+- Create a shorter aliases for original URLs.
+- Side project practice (implementations, write documentations, deployment and monitoring)
 
 ## How to use
 
@@ -21,6 +22,33 @@ make build_infra
 ## High Level System Design
 
 ![image](./doc/image/architecture.svg)
+
+## File Architecture
+
+```
+TinyURL
+ ├─ .github/         # includes github actions
+ ├─ benchmark/       # includes benchmark testcases
+ ├─ cmd/             # golang cli (cobra)
+ ├─ conf.d/          # includes configuration files
+ ├─ config/          # golang config manager (viper)
+ ├─ doc/             # includes documentations (sequence, db schema, etc.)
+ ├─ infra/           # includes docker-compose, mysql seed, etc.
+ ├─ integration/     # includes integration testcases
+ ├─ pkg/             # includes core modules (apis, storages, etc.)
+ ├─ util/            # includes common modules (base converter, etc.)
+ ├─ .gitattributes
+ ├─ .gitignore
+ ├─ .golangci.yaml   # golang linter settings
+ ├─ dockerfile
+ ├─ go.mod           # go mod files
+ ├─ go.sum           # go mou files
+ ├─ LICENSE
+ ├─ main.go          # program entry point
+ ├─ makefile         # cli tool
+ └─ README.md
+
+```
 
 ## References
 
