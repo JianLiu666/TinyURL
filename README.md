@@ -1,5 +1,18 @@
 # TinyURL
 
+- [TinyURL](#tinyurl)
+  - [Goal](#goal)
+  - [How to use](#how-to-use)
+  - [High Level System Design](#high-level-system-design)
+  - [File Architecture](#file-architecture)
+  - [References](#references)
+    - [TinyURL](#tinyurl-1)
+    - [Testing](#testing)
+    - [Monitoring](#monitoring)
+    - [Github Actions](#github-actions)
+
+---
+
 ## Goal
 
 - Create a shorter aliases for original URLs.
@@ -55,6 +68,10 @@ TinyURL
 
 - [[Wiki] MurMurHash](https://en.wikipedia.org/wiki/MurmurHash)
 
+### Testing
+
+- [[Doc] Locust](https://docs.locust.io/en/stable/)
+
 ### Monitoring
 
 - [[Blog] docker-compose 搭建 Prometheus+Grafana监控系统](https://www.cnblogs.com/qdhxhz/p/16325893.html)
@@ -65,35 +82,3 @@ TinyURL
 - [[Github] Marketplace/Actions/Run golangci-lint](https://github.com/marketplace/actions/run-golangci-lint)
 - [[Github] github-actions-golang](https://github.com/mvdan/github-actions-golang)
 - [[Github] Quickstart for GitHub Actions](https://docs.github.com/en/actions/quickstart)
-
-## Todo
-
-- APIs
-  - [x] `[POST] {domain}/api/v1/create`
-  - [ ] `[GET] {domain}/api/v1/heartbeat`
-  - [ ] `[GET] {domain}/api/v1/urls`
-  - [x] `[GET] {domain}/api/v1/{tinyurl}`
-
-- Mechanisms
-  - [ ] Account
-  - [ ] Rate Limiter
-  - [ ] Horizontal Scaling
-
-- Tests
-  - [x] Unit Testing
-  - [x] Integration Testing
-  - [ ] Benchmark
-    - [ ] Study `Lucust`, `go-stress-testing`
-
-- Continuous Integration
-  - [ ] Github Actions
-    - [x] Lint
-    - [ ] Test
-
-- Monitoring
-  - [x] Prometheus
-  - [x] Grafana
-  - [ ] Logging
-    - [ ] Study `ELK`, `Graylog`
-  - [ ] Distributed Tracing
-    - [ ] Study `OpenTracing`, `OpenTelemetry`, `Jaeger`, `Zipkin`
