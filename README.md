@@ -47,7 +47,6 @@ TinyURL
  ├─ main.go          # program entry point
  ├─ makefile         # cli tool
  └─ README.md
-
 ```
 
 ## References

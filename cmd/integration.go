@@ -13,6 +13,10 @@ var integrationCmd = &cobra.Command{
 	RunE:  RunIntegrationCmd,
 }
 
+func init() {
+	rootCmd.AddCommand(integrationCmd)
+}
+
 func RunIntegrationCmd(cmd *cobra.Command, args []string) error {
 	integration.Start()
 	return nil

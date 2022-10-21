@@ -9,30 +9,24 @@ import (
 	"github.com/spf13/viper"
 )
 
-var (
-	cfgFile string
-
-	rootCmd = &cobra.Command{
-		Use:   "root",
-		Short: "",
-		Long:  ``,
-	}
-)
-
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
+var cfgFile string
+var rootCmd = &cobra.Command{
+	Use:   "root",
+	Short: "",
+	Long:  ``,
 }
 
 func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "f", "", "config file (default is ./conf.d/env.yaml")
+}
 
-	rootCmd.AddCommand(serverCmd)
-	rootCmd.AddCommand(integrationCmd)
+func Execute() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 }
 
 func initConfig() {

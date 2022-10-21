@@ -20,6 +20,10 @@ var serverCmd = &cobra.Command{
 	RunE:  RunServerCmd,
 }
 
+func init() {
+	rootCmd.AddCommand(serverCmd)
+}
+
 func RunServerCmd(cmd *cobra.Command, args []string) error {
 	// 1. enable third-party modules
 	mysql.Init()
