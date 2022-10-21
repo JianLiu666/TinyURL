@@ -3,3 +3,4 @@ env.yaml
 
 # folders
 infra/data
+__pycache__

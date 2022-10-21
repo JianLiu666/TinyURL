@@ -48,7 +48,7 @@ integration-test:
 
 benchmark:
 # TODO: 應該要先確認 server 是否已啟動
-	go run main.go benchmark
+	locust -f ./benchmark/locustfile.py
  
 build-image:
 	docker build -t tinyurl:latest .
