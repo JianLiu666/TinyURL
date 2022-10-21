@@ -26,9 +26,9 @@
 
 - [ ] Unit Testing
 - [x] Integration Testing
-- [ ] Benchmark Testing
+- [x] Benchmark Testing
   - [x] using `Locust(O)`, `go-stress-testing(X)`
-  - [ ] dockerize
+  - [x] dockerize
 
 ## Continuous Integration
 - [ ] Github Actions

@@ -1,0 +1,17 @@
+version: "3.4"
+
+services:
+  tinyurl:
+    image: tinyurl:latest
+    container_name: "tinyurl-server"
+    restart: always
+    ports:
+      - "6600:6600"
+    networks:
+      - deployment_network-tinyurl
+    depends_on:
+      - mysql
+
+networks:
+    deployment_network-tinyurl:
+      external: true

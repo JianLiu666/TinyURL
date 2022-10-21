@@ -1,0 +1,18 @@
+version: "3.4"
+
+services:
+  locust:
+    image: locustio/locust
+    container_name: "tinyurl-locust"
+    restart: always
+    networks:
+      - deployment_network-tinyurl
+    ports:
+     - "8089:8089"
+    volumes:
+      - ./data/locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py -H http://tinyurl:6600
+
+networks:
+  deployment_network-tinyurl:
+    external: true

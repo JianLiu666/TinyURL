@@ -10,6 +10,7 @@
     - [Testing](#testing)
     - [Monitoring](#monitoring)
     - [Github Actions](#github-actions)
+    - [Deployment](#deployment)
 
 ---
 
@@ -45,8 +46,8 @@ TinyURL
  ├─ cmd/             # golang cli (cobra)
  ├─ conf.d/          # includes configuration files
  ├─ config/          # golang config manager (viper)
+ ├─ deployment/      # includes docker-compose, mysql seed, etc.
  ├─ doc/             # includes documentations (sequence, db schema, etc.)
- ├─ infra/           # includes docker-compose, mysql seed, etc.
  ├─ integration/     # includes integration testcases
  ├─ pkg/             # includes core modules (apis, storages, etc.)
  ├─ util/            # includes common modules (base converter, etc.)
@@ -82,3 +83,7 @@ TinyURL
 - [[Github] Marketplace/Actions/Run golangci-lint](https://github.com/marketplace/actions/run-golangci-lint)
 - [[Github] github-actions-golang](https://github.com/mvdan/github-actions-golang)
 - [[Github] Quickstart for GitHub Actions](https://docs.github.com/en/actions/quickstart)
+
+### Deployment
+
+- [[Blog] 多个docker-compose共享网络并相互调用服务](https://juejin.cn/post/7070401263019491365)

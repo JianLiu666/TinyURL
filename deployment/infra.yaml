@@ -38,18 +38,7 @@ services:
       - network-tinyurl
     depends_on:
       - mysql
-  
-  tinyurl:
-    image: tinyurl:latest
-    container_name: "tinyurl-server"
-    restart: always
-    ports:
-      - "6600:6600"
-    networks:
-      - network-tinyurl
-    depends_on:
-      - mysql
-      
+
   prometheus:
     image: prom/prometheus
     container_name: "tinyurl-prometheus"
