@@ -50,7 +50,7 @@ make demo
 Now, you can make your own tiny url following this example :
 
 ```shell
-curl -d '{"url":"http://example.com", "alias":""}' -H "Content-Type: application/json" -X POST http://localhost:6600/api/v1/create
+curl -d '{"url":"http://replace/for/your/url", "alias":""}' -H "Content-Type: application/json" -X POST http://localhost:6600/api/v1/create
 ```
 
 Test by integraion testing command : 
