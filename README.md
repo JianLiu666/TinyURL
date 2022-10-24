@@ -2,14 +2,18 @@
 
 - [TinyURL](#tinyurl)
   - [Goal](#goal)
-  - [How to use](#how-to-use)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Quick install instructions](#quick-install-instructions)
+    - [Usage](#usage)
+    - [Monitoring](#monitoring)
   - [High Level System Design](#high-level-system-design)
   - [File Architecture](#file-architecture)
   - [References](#references)
     - [TinyURL](#tinyurl-1)
     - [Database](#database)
     - [Testing](#testing)
-    - [Monitoring](#monitoring)
+    - [Monitoring](#monitoring-1)
     - [Github Actions](#github-actions)
     - [Deployment](#deployment)
 
@@ -20,29 +24,56 @@
 - Create a shorter aliases for original URLs.
 - Side project practice (implementations, write documentations, deployment and monitoring)
 
-## How to use
+## Getting Started
 
-Initial container volumes and download needed third-party modules for go.
+### Prerequisites
 
-```
+- Go
+- Docker
+
+### Quick install instructions
+
+```shell
 make init
 ```
 
-Start application by docker-compose.
+### Usage
 
-```
+Enable whole of applications by docker-compose.
+
+```shell
 make demo
 ```
 
-Prepare environment for benchmark testing
+Now, you can make your own tiny url following this example :
 
+```shell
+curl -d '{"url":"http://example.com", "alias":""}' -H "Content-Type: application/json" -X POST http://localhost:6600/api/v1/create
 ```
+
+Test by integraion testing command : 
+
+```shell
+make integration-test
+```
+
+Run the customize benchmark on http://localhost:8089 after enter the following command : 
+
+```shell
 make benchmark-up
 ```
 
-Now, you can enter http://localhost:8089 to use benchmark tool locust
+Get more help by enter :
 
-or enter http://localhost:3000 to see grafana monitoring
+```shell
+make help
+```
+
+### Monitoring
+
+Enter http://localhost:3000 to see grafana monitoring.
+
+- I was prepared two simple dashboard templates for you in `deployment/grafana/`, one is mysql dashboard, another is server dashboard.
 
 ## High Level System Design
 
