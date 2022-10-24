@@ -37,7 +37,7 @@ func Create(c *fiber.Ctx) error {
 
 	// 4. create or update url metadata into database
 	data := &mysql.Url{
-		Hash:      tiny,
+		Tiny:      tiny,
 		Origin:    reqBody.Url,
 		CreatedAt: time.Now(),
 		ExpiresAt: time.Now().Add(24 * time.Hour),
@@ -52,7 +52,7 @@ func Create(c *fiber.Ctx) error {
 	// 5. initial reponse body
 	respBody := &CreateRespBody{
 		Origin:    data.Origin,
-		Tiny:      fmt.Sprintf("%s%s/api/v1/%s", config.Env().Server.Domain, config.Env().Server.Port, data.Hash),
+		Tiny:      fmt.Sprintf("%s%s/api/v1/%s", config.Env().Server.Domain, config.Env().Server.Port, data.Tiny),
 		CreateAt:  data.CreatedAt.Unix(),
 		ExpiresAt: data.ExpiresAt.Unix(),
 	}

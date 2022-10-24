@@ -1,14 +1,15 @@
 GIT_NUM ?= ${shell git rev-parse --short=6 HEAD}
 BUILD_TIME ?= ${shell date +'%Y-%m-%d_%T'}
 
-.PHONY: help init demo shutdown restart-infra restart-server lint local unit-test integration-test benchmark-up benchmark-down build-image
+.PHONY: help init demo shutdown-all shutdown-server restart-infra restart-server lint local unit-test integration-test benchmark-up benchmark-down build-image
 
 help:
 	@echo "Usage: make [commands]\n"
 	@echo "Comands:"
 	@echo "  init               initial container volumes and download needed third-party modules."
 	@echo "  demo               enable whole needed images in containers with docker-compose."
-	@echo "  shutdown           shutdown all containers with docker-compose."
+	@echo "  shutdown-all       shutdown all containers with docker-compose."
+	@echo "  shutdown-server    "
 	@echo "  restart-infra      "
 	@echo "  restart-server     "
 	@echo "  lint               run golang linter (golangci-lint)."
@@ -33,9 +34,12 @@ demo:
 	docker-compose -f deployment/server.yaml up -d
 	docker ps -a
 
-shutdown:
+shutdown-all:
 	docker-compose -f deployment/server.yaml down -v
 	docker-compose -f deployment/infra.yaml down -v
+
+shutdown-server:
+	docker-compose -f deployment/server.yaml down -v
 
 restart-infra:
 	docker-compose -f deployment/infra.yaml down -v

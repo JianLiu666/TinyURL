@@ -7,6 +7,7 @@
   - [File Architecture](#file-architecture)
   - [References](#references)
     - [TinyURL](#tinyurl-1)
+    - [Database](#database)
     - [Testing](#testing)
     - [Monitoring](#monitoring)
     - [Github Actions](#github-actions)
@@ -78,6 +79,10 @@ TinyURL
 ### TinyURL
 
 - [[Wiki] MurMurHash](https://en.wikipedia.org/wiki/MurmurHash)
+
+### Database
+
+- [[Blog] 如何查看 MySQL 語句執行紀錄](https://learnku.com/articles/33773)
 
 ### Testing
 
