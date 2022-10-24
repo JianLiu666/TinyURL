@@ -24,6 +24,8 @@
 - Create a shorter aliases for original URLs.
 - Side project practice (implementations, write documentations, deployment and monitoring)
 
+---
+
 ## Getting Started
 
 ### Prerequisites
@@ -75,9 +77,13 @@ Enter http://localhost:3000 to see grafana monitoring.
 
 - I was prepared two simple dashboard templates for you in `deployment/grafana/`, one is mysql dashboard, another is server dashboard.
 
+---
+
 ## High Level System Design
 
 ![image](./doc/image/architecture.svg)
+
+---
 
 ## File Architecture
 
@@ -104,6 +110,8 @@ TinyURL
  ├─ makefile         # cli tool
  └─ README.md
 ```
+
+---
 
 ## References
 
