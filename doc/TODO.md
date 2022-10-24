@@ -18,8 +18,12 @@
 
 ## Mechanisms
 
-- [ ] Account
 - [ ] Rate Limiter
+  - [ ] By Methods
+- [ ] Server Cache
+  - [ ] redirect
+- [ ] Precompute TinyURL
+- [ ] Account
 - [ ] Horizontal Scaling
 
 ## Testings
