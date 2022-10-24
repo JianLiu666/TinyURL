@@ -18,13 +18,14 @@
 
 ## Mechanisms
 
+- [ ] Set MySQL connection pool
 - [ ] Rate Limiter
   - [ ] `api/v1/create` : by IP
   - [ ] `api/v1/{redirect}` : muti rules (per IP and global maximum)
 - [ ] Server Cache
-  - [ ] redirect
+  - [ ] `api/v1/{redirect}`
 - [ ] Precompute TinyURL
-- [ ] Account
+- [ ] Add APIs for registered user
 - [ ] Horizontal Scaling
 
 ## Testings
