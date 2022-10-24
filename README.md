@@ -33,6 +33,16 @@ Start application by docker-compose.
 make demo
 ```
 
+Prepare environment for benchmark testing
+
+```
+make benchmark-up
+```
+
+Now, you can enter http://localhost:8089 to use benchmark tool locust
+
+or enter http://localhost:3000 to see grafana monitoring
+
 ## High Level System Design
 
 ![image](./doc/image/architecture.svg)
