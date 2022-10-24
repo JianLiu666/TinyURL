@@ -19,7 +19,8 @@
 ## Mechanisms
 
 - [ ] Rate Limiter
-  - [ ] By Methods
+  - [ ] `api/v1/create` : by IP
+  - [ ] `api/v1/{redirect}` : muti rules (per IP and global maximum)
 - [ ] Server Cache
   - [ ] redirect
 - [ ] Precompute TinyURL
