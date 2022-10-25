@@ -6,9 +6,15 @@ class WebUser(HttpUser):
 
     @task
     def create(self):
-        self.client.post("/api/v1/create", json={
+        packet = {
             "url": "https://github.com/"+str(self.incr),
             "alias": "",
-        })
+        }
+
+        with self.client.post("/api/v1/create", json=packet, catch_response=True) as response:
+            if response.status_code != 200 and response.status_code != 400:
+                response.failure("Got unexpected response code: " + str(response.status_code) + " Error: " + str(response.text))
+            else:
+                response.success()
 
         self.incr += 1
