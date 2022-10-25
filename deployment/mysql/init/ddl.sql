@@ -11,7 +11,7 @@ CREATE TABLE `urls` (
     UNIQUE KEY `tiny` (`tiny`),
     UNIQUE KEY `origin` (`origin`),
     UNIQUE KEY `hash` (`tiny`,`origin`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='網址資訊'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='網址資訊';
 
 -- Prometheus metrics
 CREATE USER 'exporter'@'%' IDENTIFIED BY '123456';
