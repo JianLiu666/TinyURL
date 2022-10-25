@@ -24,6 +24,7 @@
   - [ ] `api/v1/{redirect}` : muti rules (per IP and global maximum)
 - [ ] Server Cache
   - [ ] `api/v1/{redirect}`
+- [ ] Tuning MySQL configuration
 - [ ] Precompute TinyURL
 - [ ] Add APIs for registered user
 - [ ] Horizontal Scaling
