@@ -22,9 +22,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 4G
         reservations:
-          memory: 256M
+          memory: 4G
 
   mysql-exporter:
     image: prom/mysqld-exporter
