@@ -3,6 +3,7 @@ package mysql
 import (
 	"fmt"
 	"sync"
+	"time"
 	"tinyurl/config"
 
 	"gorm.io/driver/mysql"
@@ -25,8 +26,16 @@ func Init() {
 		if err != nil {
 			panic(err)
 		}
-
 		instance = db
+
+		sqlDB, err := db.DB()
+		if err != nil {
+			panic(err)
+		}
+		sqlDB.SetMaxIdleConns(config.Env().MySQL.MaxIdleConns)
+		sqlDB.SetMaxOpenConns(config.Env().MySQL.MaxOpenConns)
+		sqlDB.SetConnMaxLifetime(time.Duration(config.Env().MySQL.ConnMaxLifetime * int(time.Minute)))
+
 		fmt.Println("connect to mysql successful.")
 	})
 }

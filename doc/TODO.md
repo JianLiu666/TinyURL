@@ -18,7 +18,7 @@
 
 ## Mechanisms
 
-- [ ] Set MySQL connection pool
+- [x] Set MySQL connection pool
 - [ ] Rate Limiter
   - [ ] `api/v1/create` : by IP
   - [ ] `api/v1/{redirect}` : muti rules (per IP and global maximum)
