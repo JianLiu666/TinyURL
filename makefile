@@ -35,6 +35,7 @@ demo:
 	docker ps -a
 
 shutdown-all:
+	docker-compose -f deployment/locust.yaml down -v
 	docker-compose -f deployment/server.yaml down -v
 	docker-compose -f deployment/infra.yaml down -v
 
