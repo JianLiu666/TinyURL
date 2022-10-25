@@ -23,10 +23,10 @@ func Create(c *fiber.Ctx) error {
 
 	// 2. validation
 	if reqBody.Url == "" {
-		return c.SendStatus(fiber.StatusBadRequest)
+		return c.Status(fiber.StatusBadRequest).SendString("field 'url' is empty.")
 	}
 	if len(reqBody.Alias) > 20 {
-		return c.SendStatus(fiber.StatusBadRequest)
+		return c.Status(fiber.StatusBadRequest).SendString("field 'alias is invalid.")
 	}
 
 	// 3. create tiny url by custom alias or hash method
@@ -46,6 +46,7 @@ func Create(c *fiber.Ctx) error {
 		if errors.Is(err, gorm.ErrInvalidData) {
 			return c.Status(fiber.StatusBadRequest).SendString("alias dunplicated.")
 		}
+		fmt.Printf("Failed to run sql: %v", err)
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
