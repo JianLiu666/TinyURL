@@ -34,7 +34,7 @@
 - [ ] Unit Testing
 - [x] Integration Testing
 - [x] Benchmark Testing
-  - [x] using `Locust(O)`, `go-stress-testing(X)`
+  - [x] used `Locust(O)`, `go-stress-testing(X)`
   - [x] dockerize
 
 ## Continuous Integration
@@ -47,6 +47,7 @@
 - [x] Prometheus
 - [x] Grafana
 - [ ] Logging
+  - [x] used `logrus(O)`, `zap(X)`
   - [ ] Study `ELK`, `Graylog`
 - [ ] Distributed Tracing
   - [ ] Study `OpenTracing`, `OpenTelemetry`, `Jaeger`, `Zipkin`

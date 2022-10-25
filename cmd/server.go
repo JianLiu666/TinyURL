@@ -10,6 +10,8 @@ import (
 	"tinyurl/pkg/storage/mysql"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -25,10 +27,16 @@ func init() {
 }
 
 func RunServerCmd(cmd *cobra.Command, args []string) error {
-	// 1. enable third-party modules
+	// enable third-party logger
+	logrus.SetFormatter(&log.TextFormatter{
+		FullTimestamp:   true,
+		TimestampFormat: "2006-01-02 15:04:05-07:00",
+	})
+
+	// enable third-party modules
 	mysql.Init()
 
-	// 2. enable api server
+	// enable api server
 	app := fiber.New()
 	api.SetRoutes(app)
 	go func() {
@@ -37,7 +45,7 @@ func RunServerCmd(cmd *cobra.Command, args []string) error {
 		}
 	}()
 
-	// 3. set graceful shutdown method
+	// set graceful shutdown method
 	stopSignal := make(chan os.Signal, 1)
 	signal.Notify(stopSignal, syscall.SIGINT, syscall.SIGHUP, syscall.SIGTERM)
 	<-stopSignal

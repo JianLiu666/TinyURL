@@ -10,6 +10,7 @@ import (
 	"tinyurl/util"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/sirupsen/logrus"
 	"github.com/spaolacci/murmur3"
 	"gorm.io/gorm"
 )
@@ -46,7 +47,7 @@ func Create(c *fiber.Ctx) error {
 		if errors.Is(err, gorm.ErrInvalidData) {
 			return c.Status(fiber.StatusBadRequest).SendString("alias dunplicated.")
 		}
-		fmt.Printf("Failed to run sql: %v", err)
+		logrus.Errorf("Failed to run sql: %v", err)
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
