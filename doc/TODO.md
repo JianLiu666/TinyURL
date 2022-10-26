@@ -21,6 +21,7 @@
 - [x] Set MySQL connection pool
 - [x] Tuning MySQL configuration
 - [ ] Server Cache
+  - [ ] `api/v1/create`
   - [ ] `api/v1/{redirect}`
 - [ ] Rate Limiter
   - [ ] `api/v1/create` : by IP
