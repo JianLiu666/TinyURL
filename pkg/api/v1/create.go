@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 	"tinyurl/config"
+	"tinyurl/pkg/storage"
 	"tinyurl/pkg/storage/mysql"
 	"tinyurl/util"
 
@@ -37,7 +38,7 @@ func Create(c *fiber.Ctx) error {
 	}
 
 	// 4. create or update url metadata into database
-	data := &mysql.Url{
+	data := &storage.Url{
 		Tiny:      tiny,
 		Origin:    reqBody.Url,
 		CreatedAt: time.Now(),

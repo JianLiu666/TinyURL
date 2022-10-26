@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"time"
+	"tinyurl/pkg/storage"
 	"tinyurl/util"
 
 	"gorm.io/gorm"
@@ -11,21 +12,13 @@ import (
 
 const tbUrls = "urls"
 
-type Url struct {
-	ID        uint      `json:"id" gorm:"column:id;primaryKey"`
-	Tiny      string    `json:"tiny" gorm:"column:tiny"`
-	Origin    string    `json:"origin" gorm:"column:origin"`
-	CreatedAt time.Time `json:"created_at" gorm:"column:created_at"`
-	ExpiresAt time.Time `json:"expires_at" gorm:"column:expires_at"`
-}
-
-func CreateUrl(data *Url, isCustomAlias bool) error {
+func CreateUrl(data *storage.Url, isCustomAlias bool) error {
 	txOptions := &sql.TxOptions{
 		Isolation: sql.LevelRepeatableRead,
 		ReadOnly:  false,
 	}
 
-	alias := Url{}
+	alias := storage.Url{}
 
 	return instance.Transaction(func(tx *gorm.DB) error {
 
@@ -59,7 +52,7 @@ func CreateUrl(data *Url, isCustomAlias bool) error {
 	}, txOptions)
 }
 
-func GetUrl(tiny_url string) (res Url, err error) {
+func GetUrl(tiny_url string) (res storage.Url, err error) {
 	err = instance.Table(tbUrls).Where("tiny = ?", tiny_url).First(&res).Error
 	return
 }
