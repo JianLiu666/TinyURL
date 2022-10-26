@@ -8,6 +8,7 @@ import (
 	"tinyurl/config"
 	"tinyurl/pkg/api"
 	"tinyurl/pkg/storage/mysql"
+	"tinyurl/pkg/storage/redis"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
@@ -35,6 +36,7 @@ func RunServerCmd(cmd *cobra.Command, args []string) error {
 
 	// enable third-party modules
 	mysql.Init()
+	redis.Init()
 
 	// enable api server
 	app := fiber.New()

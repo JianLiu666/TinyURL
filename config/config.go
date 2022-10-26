@@ -39,6 +39,7 @@ func LoadFromViper() {
 type environment struct {
 	Server server `yaml:"server"`
 	MySQL  mysql  `yaml:"mysql"`
+	Redis  redis  `yaml:"redis"`
 }
 
 type server struct {
@@ -54,4 +55,10 @@ type mysql struct {
 	MaxIdleConns    int    `yaml:"max_idle_conns"`
 	MaxOpenConns    int    `yaml:"max_open_conns"`
 	ConnMaxLifetime int    `yaml:"conn_max_lifetime"`
+}
+
+type redis struct {
+	Address  string `yaml:"address"`
+	Password string `yaml:"password"`
+	DB       int    `yaml:"db"`
 }
