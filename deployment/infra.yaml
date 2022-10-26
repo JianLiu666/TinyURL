@@ -6,19 +6,34 @@ services:
     platform: linux/amd64
     container_name: "tinyurl-mysql"
     restart: always
+    ports:
+      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: "0"
       MYSQL_DATABASE: "tinyurl"
-    networks: 
-      - network-tinyurl
-    ports:
-      - 3306:3306
     volumes:
       - ./mysql/init:/docker-entrypoint-initdb.d
       - ./data/mysql:/var/lib/mysql
       - ./mysql/conf:/etc/mysql/conf.d
       - /etc/timezone:/etc/timezone
       - /etc/localtime:/etc/localtime
+    networks: 
+      - network-tinyurl
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 4G
+
+  redis:
+    image: redis:latest
+    container_name: "tinyurl-redis"
+    restart: always
+    ports:
+      - 6379:6379
+    networks:
+      - network-tinyurl
     deploy:
       resources:
         limits:
@@ -43,11 +58,11 @@ services:
     image: prom/prometheus
     container_name: "tinyurl-prometheus"
     restart: always
+    ports:
+      - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./data/prometheus:/prometheus
-    ports:
-      - "9090:9090"
     networks:
       - network-tinyurl
     depends_on:
@@ -58,10 +73,10 @@ services:
     image: grafana/grafana
     container_name: "tinyurl-grafana"
     restart: always
-    volumes:
-      - ./data/grafana:/var/lib/grafana
     ports:
       - "3000:3000"
+    volumes:
+      - ./data/grafana:/var/lib/grafana
     networks:
       - network-tinyurl
     depends_on:
