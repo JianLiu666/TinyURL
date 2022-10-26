@@ -33,6 +33,7 @@ sequenceDiagram
     participant client
     participant server
     participant mysql
+    participant redis
     
     autonumber 1
     client ->> server: [POST] /api/v1/create
@@ -43,23 +44,23 @@ sequenceDiagram
             server ->> client: reponse 400: field invalid.
         else
             autonumber 2
-            Note over server : parse request body successfully
-            server ->> server : 產生短網址 (MurmurHash)
+            Note over server: parse request body successfully
+            server ->> server: 產生短網址 (MurmurHash)
             
             rect rgb(136,186,186)
-                Note over client, mysql: perform multiple activities by transaction 
-                server ->> mysql : 檢查是否存在相同的短網址<br>table: urls
-                rect rgb(242, 238, 229)
-                    alt
-                        Note over server: 存在相同短網址 AND (短網址為用戶客製化 OR 原始網址相同) 時
-                    server ->> client : response 400: alias dunplicated.
-                    else
-                        Note over server: 僅只有短網址相同時
-                        server ->> server : 短網址增加 timestamp 的後綴
-                    end
+                Note over client, redis: perform multiple activities by lua script
+                server ->> redis: 檢查是否存在相同的短網址<br>key: tinyurl/{tinyurl}
+                alt
+                    Note over server: 短網址相同 AND (原始網址相同 OR 客製短網址相同) 時
+                    server ->> client: response 400: alias dunplicated.
+                else
+                    Note over server: 僅有短網址相同時
+                    server ->> server: 短網址增加 timestamp 的後綴
                 end
-                server ->> mysql : 寫入短網址 (InsertUpdate)<br>table: urls
+                server ->> redis: 寫入短網址<br>key: tinyurl/{tinyurl}
             end
+            
+            server ->> mysql: 寫入短網址<br>table: urls
             server ->> client: reponse 200: OK
         end
     end
