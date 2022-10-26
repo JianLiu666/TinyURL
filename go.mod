@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/ansrivas/fiberprometheus/v2 v2.4.1
-	github.com/emirpasic/gods v1.18.1
 	github.com/fatih/color v1.13.0
 	github.com/gofiber/fiber/v2 v2.38.1
 	github.com/sirupsen/logrus v1.9.0
