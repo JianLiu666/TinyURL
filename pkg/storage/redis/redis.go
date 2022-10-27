@@ -9,8 +9,11 @@ import (
 )
 
 var once sync.Once
-
 var instance *redis.Client
+
+func GetInstance() *redis.Client {
+	return instance
+}
 
 func Init() {
 	once.Do(func() {

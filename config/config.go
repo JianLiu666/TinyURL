@@ -43,22 +43,24 @@ type environment struct {
 }
 
 type server struct {
-	Domain string `yaml:"domain"`
-	Port   string `yaml:"port"`
+	Domain              string `mapstructure:"domain" yaml:"domain"`
+	Port                string `mapstructure:"port" yaml:"port"`
+	TinyUrlCacheExpired int    `mapstructure:"tinyurl_cache_expired" yaml:"tinyurl_cache_expired"`
+	TinyUrlRetry        int    `mapstructure:"tinyurl_retry" yaml:"tinyurl_retry"`
 }
 
 type mysql struct {
-	Address         string `yaml:"address"`
-	UserName        string `yaml:"username"`
-	Password        string `yaml:"password"`
-	DBName          string `yaml:"dbname"`
-	MaxIdleConns    int    `yaml:"max_idle_conns"`
-	MaxOpenConns    int    `yaml:"max_open_conns"`
-	ConnMaxLifetime int    `yaml:"conn_max_lifetime"`
+	Address         string `mapstructure:"address" yaml:"address"`
+	UserName        string `mapstructure:"username" yaml:"username"`
+	Password        string `mapstructure:"password" yaml:"password"`
+	DBName          string `mapstructure:"dbname" yaml:"dbname"`
+	MaxIdleConns    int    `mapstructure:"max_idle_conns" yaml:"max_idle_conns"`
+	MaxOpenConns    int    `mapstructure:"max_open_conns" yaml:"max_open_conns"`
+	ConnMaxLifetime int    `mapstructure:"conn_max_lifetime" yaml:"conn_max_lifetime"`
 }
 
 type redis struct {
-	Address  string `yaml:"address"`
-	Password string `yaml:"password"`
-	DB       int    `yaml:"db"`
+	Address  string `mapstructure:"address" yaml:"address"`
+	Password string `mapstructure:"password" yaml:"password"`
+	DB       int    `mapstructure:"db" yaml:"db"`
 }
