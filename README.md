@@ -81,7 +81,7 @@ Enter http://localhost:3000 to see grafana monitoring.
 
 ## High Level System Design
 
-![image](./doc/image/architecture.svg)
+![image](./doc/image/architecture_v0.1.0.svg)
 
 ---
 
