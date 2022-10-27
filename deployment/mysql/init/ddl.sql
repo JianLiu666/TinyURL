@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS `tinyurl`;
 DROP TABLE IF EXISTS `urls`;
 CREATE TABLE `urls` (
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'UUID',
-    `tiny` varchar(20) NOT NULL COMMENT '短網址',
+    `tiny` varchar(8) NOT NULL COMMENT '短網址',
     `origin` varchar(220) NOT NULL COMMENT '原始網址',
     `created_at` datetime NOT NULL COMMENT '短網址建立時間',
     `expires_at` datetime NOT NULL COMMENT '短網址有效時間',
