@@ -54,6 +54,19 @@ services:
     depends_on:
       - mysql
 
+  redis-exporter:
+    image: oliver006/redis_exporter
+    container_name: "tinyurl-redis-exporter"
+    restart: always
+    ports:
+      - "9121:9121"
+    networks:
+      - network-tinyurl
+    command:
+      - "--redis.addr=redis://redis:6379"
+    depends_on:
+      - redis
+
   prometheus:
     image: prom/prometheus
     container_name: "tinyurl-prometheus"
