@@ -8,9 +8,7 @@ CREATE TABLE `urls` (
     `created_at` datetime NOT NULL COMMENT '短網址建立時間',
     `expires_at` datetime NOT NULL COMMENT '短網址有效時間',
     PRIMARY KEY (`id`),
-    UNIQUE KEY `tiny` (`tiny`),
-    UNIQUE KEY `origin` (`origin`),
-    UNIQUE KEY `hash` (`tiny`,`origin`)
+    UNIQUE KEY `tiny` (`tiny`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='網址資訊';
 
 -- Prometheus metrics
