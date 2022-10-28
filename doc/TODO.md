@@ -40,6 +40,8 @@
   - [ ] Mysql cases
     - [ ] 比較 primary key (number) 跟 unique key (string) 個別設立 index 時的寫入開銷差距
     - [ ] 比較 upsert 的執行開銷差距: replace(delete+insert) 與 insert on dunplicate(select+update)
+  - [ ] Encode tinyurl cases
+    - [ ] mermer3 與 sha256, md5 的開銷差距
 
 ## Continuous Integration
 - [ ] Github Actions
