@@ -29,7 +29,7 @@ func CheckTinyUrl(data *storage.Url, isCustomAlias bool) int {
 		res, err := instance.Get(context.TODO(), "tiny:"+data.Tiny).Result()
 
 		// 可以使用的短網址
-		if err == redis.Nil {
+		if err == redis.Nil || res == "" {
 			return ErrNotFound
 		}
 
