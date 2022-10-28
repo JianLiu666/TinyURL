@@ -49,11 +49,11 @@ sequenceDiagram
         server ->> redis: [GET] 檢查是否存在相同的短網址<br>key: tiny:{tiny}
         
         alt
-            Note over server: 短網址相同 AND (原始網址相同 OR 客製短網址相同) 時
+            Note over server: 短網址(key) 相同 且 [ 原始網址(value) 相同 OR 客製短網址相同 ] 時
             server ->> client: response 400: alias dunplicated.
         else
             autonumber 4
-            Note over server: 僅有短網址相同時
+            Note over server: 短網址(key) 相同且原始網址(value) 不為空時
             server ->> server: 將原始網址加上後綴改變短網址雜湊結果
         end
         
