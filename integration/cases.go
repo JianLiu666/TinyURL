@@ -1,8 +1,11 @@
 package integration
 
 import (
+	"context"
 	"fmt"
 	"tinyurl/config"
+	"tinyurl/pkg/storage/mysql"
+	"tinyurl/pkg/storage/redis"
 )
 
 type session struct {
@@ -12,12 +15,18 @@ type session struct {
 }
 
 func Start() {
+	mysql.Init()
+	mysql.GetInstance().Raw("TRUNCATE TABLE urls;")
+	redis.Init()
+	redis.GetInstance().FlushAll(context.TODO())
+
 	casef(testcase1)
 	casef(testcase2)
 }
 
 // 模擬使用者申請短網址且使用短網址跳轉
 func testcase1() {
+
 	s := &session{
 		origin: "https://tinyurl.com/app/",
 		atlas:  "",

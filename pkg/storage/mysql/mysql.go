@@ -13,6 +13,10 @@ import (
 var once sync.Once
 var instance *gorm.DB
 
+func GetInstance() *gorm.DB {
+	return instance
+}
+
 func Init() {
 	once.Do(func() {
 		dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
