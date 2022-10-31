@@ -18,3 +18,11 @@ class WebUser(HttpUser):
                 response.success()
 
         self.incr += 1
+    
+    @task
+    def redirect(self):
+        with self.client.get("/api/v1/jian", allow_redirects=False, catch_response=True) as response:
+            if response.status_code != 302:
+                response.failure("Got unexpected response code: " + str(response.status_code) + " Error: " + str(response.text))
+            else:
+                response.success()
