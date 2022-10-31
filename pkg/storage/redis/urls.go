@@ -22,6 +22,23 @@ func SetTinyUrl(data *storage.Url) int {
 	return ErrNotFound
 }
 
+func GetOriginUrl(tiny string) (string, int) {
+
+	res, err := instance.Get(context.TODO(), "tiny:"+tiny).Result()
+	// 短網址未命中
+	if err == redis.Nil {
+		return "", ErrKeyNotFound
+	}
+
+	// 例外錯誤
+	if err != nil {
+		fmt.Println(err)
+		return "", ErrUnexpected
+	}
+
+	return res, ErrNotFound
+}
+
 func CheckTinyUrl(data *storage.Url, isCustomAlias bool) int {
 
 	for i := 0; i < config.Env().Server.TinyUrlRetry; i++ {

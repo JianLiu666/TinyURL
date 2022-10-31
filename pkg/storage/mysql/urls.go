@@ -1,8 +1,10 @@
 package mysql
 
 import (
+	"errors"
 	"tinyurl/pkg/storage"
 
+	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
 
@@ -14,5 +16,11 @@ func CreateUrl(data *storage.Url, isCustomAlias bool) error {
 
 func GetUrl(tiny_url string) (res storage.Url, err error) {
 	err = instance.Table(tbUrls).Where("tiny = ?", tiny_url).First(&res).Error
+
+	// 查無資料時的初始化流程
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		res.Tiny = tiny_url
+	}
+
 	return
 }
