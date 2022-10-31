@@ -11,7 +11,7 @@ services:
      - "8089:8089"
     volumes:
       - ./data/locust:/mnt/locust
-    command: -f /mnt/locust/locustfile.py -H http://tinyurl:6600
+    command: --config=/mnt/locust/locust.conf
 
 networks:
   deployment_network-tinyurl:

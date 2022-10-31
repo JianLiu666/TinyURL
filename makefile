@@ -67,8 +67,10 @@ integration-test:
 
 benchmark-up:
 # TODO: 應該要先確認 server 是否已啟動
-# locust -f ./benchmark/locustfile.py
-	cp benchmark/locustfile.py deployment/data/locust/locustfile.py
+	rm -rf deployment/data/locust
+	mkdir -p deployment/data/locust
+	cp -r benchmark/*.py deployment/data/locust/
+	cp -r deployment/locust/ deployment/data/locust/
 	docker-compose -f deployment/locust.yaml up -d
 
 benchmark-down:
