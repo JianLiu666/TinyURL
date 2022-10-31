@@ -1,13 +1,15 @@
 from locust import HttpUser, between, task
 
+incr = 0
+
 class WebUser(HttpUser):
     wait_time = between(0, 2)
-    incr = 0
 
     @task
     def create(self):
+        global incr
         packet = {
-            "url": "https://github.com/"+str(self.incr),
+            "url": "https://github.com/"+str(incr),
             "alias": "",
         }
 
@@ -16,9 +18,8 @@ class WebUser(HttpUser):
                 response.failure("Got unexpected response code: " + str(response.status_code) + " Error: " + str(response.text))
             else:
                 response.success()
+                incr += 1
 
-        self.incr += 1
-    
     @task
     def redirect(self):
         with self.client.get("/api/v1/jian", allow_redirects=False, catch_response=True) as response:
