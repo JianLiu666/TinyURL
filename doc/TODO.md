@@ -22,7 +22,7 @@
 - [x] Tuning MySQL configuration
 - [x] Server Cache
   - [x] `api/v1/create`
-  - [ ] `api/v1/{redirect}`
+  - [x] `api/v1/{redirect}`
 - [ ] Rate Limiter
   - [ ] `api/v1/create` : by IP
   - [ ] `api/v1/{redirect}` : muti rules (per IP and global maximum)
