@@ -10,8 +10,9 @@ import (
 
 const tbUrls = "urls"
 
-func CreateUrl(data *storage.Url, isCustomAlias bool) error {
-	return instance.Table(tbUrls).Clauses(clause.OnConflict{DoNothing: true}).Create(&data).Error
+func CreateUrl(data *storage.Url, isCustomAlias bool) (bool, error) {
+	tx := instance.Table(tbUrls).Clauses(clause.OnConflict{UpdateAll: true}).Create(&data)
+	return tx.RowsAffected == 0, tx.Error
 }
 
 func GetUrl(tiny_url string) (res storage.Url, err error) {

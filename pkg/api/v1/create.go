@@ -63,7 +63,8 @@ func Create(c *fiber.Ctx) error {
 	}
 
 	// create url record into mysql
-	if err := mysql.CreateUrl(data, tiny == reqBody.Alias); err != nil {
+	urlAlreadyExists, err := mysql.CreateUrl(data, tiny == reqBody.Alias)
+	if err != nil {
 		logrus.Errorf("Failed to run sql: %v", err)
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
@@ -90,5 +91,8 @@ func Create(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	return nil
+	if urlAlreadyExists {
+		return c.Status(fiber.StatusBadRequest).SendString("alias dunplicated.")
+	}
+	return c.SendStatus(fiber.StatusOK)
 }
