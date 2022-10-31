@@ -10,7 +10,7 @@ import (
 	v1 "tinyurl/pkg/api/v1"
 )
 
-func create_OK(s *session) (bool, error) {
+func create_200(s *session) (bool, error) {
 	// 1. prepare request body
 	reqData := &v1.CreateReqBody{
 		Url:   s.origin,
@@ -60,6 +60,43 @@ func create_OK(s *session) (bool, error) {
 	}
 
 	s.tiny = respData.Tiny
+
+	return true, nil
+}
+
+func create_400(s *session) (bool, error) {
+	// 1. prepare request body
+	reqData := &v1.CreateReqBody{
+		Url:   s.origin,
+		Alias: s.atlas,
+	}
+	reqBody, err := json.Marshal(reqData)
+	if err != nil {
+		return false, err
+	}
+
+	domain := fmt.Sprintf("http://%s%s/api/v1/create",
+		config.Env().Server.Domain,
+		config.Env().Server.Port,
+	)
+	req, err := http.NewRequest(http.MethodPost, domain, bytes.NewBuffer(reqBody))
+	if err != nil {
+		return false, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	// 2. send request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return false, err
+	}
+	defer resp.Body.Close()
+
+	// 3. valid response
+	if resp.StatusCode != http.StatusBadRequest {
+		return false, fmt.Errorf("response not equal. (expected: %v, actual: %v)", http.StatusOK, resp.StatusCode)
+	}
 
 	return true, nil
 }
