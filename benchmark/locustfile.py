@@ -1,7 +1,6 @@
 import random
 from locust import HttpUser, between, task
 
-
 create_incr = 0
 redirect_incr = 0
 
