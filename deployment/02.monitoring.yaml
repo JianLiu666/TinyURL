@@ -3,7 +3,7 @@ version: "3.4"
 services:
   mysql-exporter:
     image: prom/mysqld-exporter
-    container_name: "tinyurl-mysql-exporter"
+    container_name: "tinyurl-02-mysql-exporter"
     restart: always
     ports:
       - "9104:9104"
@@ -16,7 +16,7 @@ services:
 
   redis-exporter:
     image: oliver006/redis_exporter
-    container_name: "tinyurl-redis-exporter"
+    container_name: "tinyurl-02-redis-exporter"
     restart: always
     ports:
       - "9121:9121"
@@ -29,7 +29,7 @@ services:
 
   prometheus:
     image: prom/prometheus
-    container_name: "tinyurl-prometheus"
+    container_name: "tinyurl-02-prometheus"
     restart: always
     ports:
       - "9090:9090"
@@ -44,7 +44,7 @@ services:
 
   grafana:
     image: grafana/grafana
-    container_name: "tinyurl-grafana"
+    container_name: "tinyurl-02-grafana"
     restart: always
     ports:
       - "3000:3000"

@@ -3,7 +3,7 @@ version: "3.4"
 services:
   tinyurl:
     image: tinyurl:latest
-    container_name: "tinyurl-server"
+    container_name: "tinyurl-01-server"
     restart: always
     ports:
       - "6600:6600"

@@ -1,0 +1,81 @@
+version: "3.4"
+
+services:
+  mongodb:
+    image: mongo:5.0
+    platform: linux/amd64
+    container_name: "tinyurl-03-mongodb"
+    restart: always
+    volumes:
+      - ./data/mongodb:/data/db
+    networks: 
+      - deployment_network-tinyurl
+
+  elasticsearch:
+    image: elasticsearch:7.17.7
+    container_name: "tinyurl-03-elasticsearch"
+    restart: always
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g -Dlog4j2.formatMsgNoLookups=true"
+      bootstrap.memory_lock: "true"
+      discovery.type: "single-node"
+      http.host: "0.0.0.0"
+      network.host: "0.0.0.0"
+      transport.host: "localhost"
+      http.cors.allow-origin: "*"
+      http.cors.enabled: true
+      action.auto_create_index: "false"
+      TZ: Aisa/Taipei
+    ulimits:
+      memlock:
+        hard: -1
+        soft: -1
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data"
+    networks: 
+      - deployment_network-tinyurl
+
+  graylog:
+    image: graylog/graylog:4.3
+    container_name: "tinyurl-03-graylog"
+    restart: always
+    ports:
+      # - "5044:5044/tcp"   # Beats
+      # - "5140:5140/udp"   # Syslog
+      # - "5140:5140/tcp"   # Syslog
+      # - "5555:5555/tcp"   # RAW TCP
+      # - "5555:5555/udp"   # RAW TCP
+      - "9000:9000/tcp"   # Server API
+      # - "12201:12201/tcp" # GELF TCP
+      # - "12201:12201/udp" # GELF UDP
+      # - "10000:10000/tcp" # Custom TCP port
+      # - "10000:10000/udp" # Custom UDP port
+      # - "13301:13301/tcp" # Forwarder data
+      # - "13302:13302/tcp" # Forwarder config
+    environment:
+      GRAYLOG_NODE_ID_FILE: "/usr/share/graylog/data/config/node-id"
+      GRAYLOG_PASSWORD_SECRET: ${GRAYLOG_PASSWORD_SECRET:?Please configure GRAYLOG_PASSWORD_SECRET in the .env file}
+      GRAYLOG_ROOT_PASSWORD_SHA2: ${GRAYLOG_ROOT_PASSWORD_SHA2:?Please configure GRAYLOG_ROOT_PASSWORD_SHA2 in the .env file}
+      GRAYLOG_HTTP_BIND_ADDRESS: "0.0.0.0:9000"
+      GRAYLOG_HTTP_EXTERNAL_URI: "http://localhost:9000/"
+      GRAYLOG_ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+      GRAYLOG_MONGODB_URI: "mongodb://mongodb:27017/graylog"
+    volumes:
+      - ./data/graylog/data:/usr/share/graylog/data/data
+      - ./data/graylog/journal:/usr/share/graylog/data/journal
+    entrypoint: "/usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh"
+    networks: 
+      - deployment_network-tinyurl
+    depends_on:
+      elasticsearch:
+        condition: "service_started"
+      mongodb:
+        condition: "service_started"
+
+networks:
+    deployment_network-tinyurl:
+      external: true
+

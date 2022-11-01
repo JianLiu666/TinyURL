@@ -54,6 +54,6 @@
 - [x] Grafana
 - [ ] Logging
   - [x] used `logrus(O)`, `zap(X)`
-  - [ ] Study `ELK`, `Graylog`
+  - [ ] used `Graylog(O)`, `ELK(X)`
 - [ ] Distributed Tracing
   - [ ] Study `OpenTracing`, `OpenTelemetry`, `Jaeger`, `Zipkin`

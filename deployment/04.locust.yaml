@@ -3,7 +3,7 @@ version: "3.4"
 services:
   locust:
     image: locustio/locust
-    container_name: "tinyurl-locust"
+    container_name: "tinyurl-04-locust"
     restart: always
     networks:
       - deployment_network-tinyurl

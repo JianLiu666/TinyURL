@@ -22,7 +22,10 @@ help:
 
 init:
 	rm -rf deployment/data
-	mkdir -p deployment/data/mysql deployment/data/prometheus deployment/data/grafana deployment/data/locust
+	mkdir -p deployment/data/mysql
+	mkdir -p deployment/data/prometheus deployment/data/grafana
+	mkdir -p deployment/data/mongodb deployment/data/elasticsearch deployment/data/graylog/data deployment/data/graylog/journal
+	mkdir -p deployment/data/locust
 	
 	go mod download
 	go mod tidy
@@ -31,6 +34,7 @@ init:
 
 demo:
 	docker-compose -f deployment/04.locust.yaml down -v
+	docker-compose -f deployment/03.logger.yaml down -v
 	docker-compose -f deployment/02.monitoring.yaml down -v
 	docker-compose -f deployment/01.server.yaml down -v
 	docker-compose -f deployment/00.infra.yaml down -v
@@ -38,12 +42,14 @@ demo:
 	docker-compose -f deployment/00.infra.yaml up -d
 	docker-compose -f deployment/01.server.yaml up -d
 	docker-compose -f deployment/02.monitoring.yaml up -d
+	docker-compose -f deployment/03.logger.yaml up -d
 	docker-compose -f deployment/04.locust.yaml up -d
 
 	docker ps -a
 
 shutdown-all:
 	docker-compose -f deployment/04.locust.yaml down -v
+	docker-compose -f deployment/03.logger.yaml down -v
 	docker-compose -f deployment/02.monitoring.yaml down -v
 	docker-compose -f deployment/01.server.yaml down -v
 	docker-compose -f deployment/00.infra.yaml down -v
