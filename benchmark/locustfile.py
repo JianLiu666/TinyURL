@@ -65,7 +65,7 @@ class redirect_using_same_tinyurl(HttpUser):
 
 class randomly_case(HttpUser):
     wait_time = between(0, 1)
-    tinyurls = ["https://github.com/JianLiu666"]
+    tinyurls = ["xaJxi"]
 
     @task
     def create(self):
@@ -80,7 +80,10 @@ class randomly_case(HttpUser):
                 response.failure("Got unexpected response code: " + str(response.status_code) + " Error: " + str(response.text))
             else:
                 response.success()
-                self.tinyurls.append(response.json()['tiny'])
+                create_incr += 1
+                # 避免無止盡增長
+                if response.status_code == 200 and len(self.tinyurls) < 1000000:
+                    self.tinyurls.append(response.json()['tiny'].split("/")[-1])
 
     @task
     def redirect(self):
