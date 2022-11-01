@@ -9,8 +9,6 @@ services:
       - "6600:6600"
     networks:
       - deployment_network-tinyurl
-    depends_on:
-      - mysql
 
 networks:
     deployment_network-tinyurl:

@@ -1,46 +1,6 @@
 version: "3.4"
 
 services:
-  mysql:
-    image: mysql:5.7
-    platform: linux/amd64
-    container_name: "tinyurl-mysql"
-    restart: always
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: "0"
-      MYSQL_DATABASE: "tinyurl"
-    volumes:
-      - ./mysql/init:/docker-entrypoint-initdb.d
-      - ./data/mysql:/var/lib/mysql
-      - ./mysql/conf:/etc/mysql/conf.d
-      - /etc/timezone:/etc/timezone
-      - /etc/localtime:/etc/localtime
-    networks: 
-      - network-tinyurl
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-        reservations:
-          memory: 4G
-
-  redis:
-    image: redis:latest
-    container_name: "tinyurl-redis"
-    restart: always
-    ports:
-      - 6379:6379
-    networks:
-      - network-tinyurl
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-        reservations:
-          memory: 4G
-
   mysql-exporter:
     image: prom/mysqld-exporter
     container_name: "tinyurl-mysql-exporter"
@@ -50,7 +10,7 @@ services:
     environment:
       DATA_SOURCE_NAME: 'exporter:123456@(mysql:3306)/tinyurl'
     networks:
-      - network-tinyurl
+      - deployment_network-tinyurl
     depends_on:
       - mysql
 
@@ -61,7 +21,7 @@ services:
     ports:
       - "9121:9121"
     networks:
-      - network-tinyurl
+      - deployment_network-tinyurl
     command:
       - "--redis.addr=redis://redis:6379"
     depends_on:
@@ -77,7 +37,7 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./data/prometheus:/prometheus
     networks:
-      - network-tinyurl
+      - deployment_network-tinyurl
     depends_on:
       - mysql_exporter
       - tinyurl
@@ -91,11 +51,10 @@ services:
     volumes:
       - ./data/grafana:/var/lib/grafana
     networks:
-      - network-tinyurl
+      - deployment_network-tinyurl
     depends_on:
       - prometheus
 
 networks:
-    network-tinyurl:
-      driver: bridge
-
+    deployment_network-tinyurl:
+      external: true

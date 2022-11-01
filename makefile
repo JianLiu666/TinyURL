@@ -23,32 +23,41 @@ help:
 init:
 	rm -rf deployment/data
 	mkdir -p deployment/data/mysql deployment/data/prometheus deployment/data/grafana deployment/data/locust
+	
 	go mod download
 	go mod tidy
+	
 	make build-image
 
 demo:
-	docker-compose -f deployment/server.yaml down -v
-	docker-compose -f deployment/infra.yaml down -v
-	docker-compose -f deployment/infra.yaml up -d
-	docker-compose -f deployment/server.yaml up -d
+	docker-compose -f deployment/04.locust.yaml down -v
+	docker-compose -f deployment/02.monitoring.yaml down -v
+	docker-compose -f deployment/01.server.yaml down -v
+	docker-compose -f deployment/00.infra.yaml down -v
+
+	docker-compose -f deployment/00.infra.yaml up -d
+	docker-compose -f deployment/01.server.yaml up -d
+	docker-compose -f deployment/02.monitoring.yaml up -d
+	docker-compose -f deployment/04.locust.yaml up -d
+
 	docker ps -a
 
 shutdown-all:
-	docker-compose -f deployment/locust.yaml down -v
-	docker-compose -f deployment/server.yaml down -v
-	docker-compose -f deployment/infra.yaml down -v
+	docker-compose -f deployment/04.locust.yaml down -v
+	docker-compose -f deployment/02.monitoring.yaml down -v
+	docker-compose -f deployment/01.server.yaml down -v
+	docker-compose -f deployment/00.infra.yaml down -v
 
 shutdown-server:
-	docker-compose -f deployment/server.yaml down -v
+	docker-compose -f deployment/01.server.yaml down -v
 
 restart-infra:
-	docker-compose -f deployment/infra.yaml down -v
-	docker-compose -f deployment/infra.yaml up -d
+	docker-compose -f deployment/00.infra.yaml down -v
+	docker-compose -f deployment/00.infra.yaml up -d
 
 restart-server:
-	docker-compose -f deployment/server.yaml down -v
-	docker-compose -f deployment/server.yaml up -d
+	docker-compose -f deployment/01.server.yaml down -v
+	docker-compose -f deployment/01.server.yaml up -d
 
 lint:
 	golangci-lint run
@@ -69,12 +78,14 @@ benchmark-up:
 # TODO: 應該要先確認 server 是否已啟動
 	rm -rf deployment/data/locust
 	mkdir -p deployment/data/locust
+	
 	cp -r benchmark/*.py deployment/data/locust/
 	cp -r deployment/locust/ deployment/data/locust/
-	docker-compose -f deployment/locust.yaml up -d
+	
+	docker-compose -f deployment/04.locust.yaml up -d
 
 benchmark-down:
-	docker-compose -f deployment/locust.yaml down -v
+	docker-compose -f deployment/04.locust.yaml down -v
 
 build-image:
 	docker build -t tinyurl:latest .
