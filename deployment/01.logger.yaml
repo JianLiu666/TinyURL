@@ -4,7 +4,7 @@ services:
   mongodb:
     image: mongo:4.4.14
     platform: linux/amd64
-    container_name: "tinyurl-03-mongodb"
+    container_name: "tinyurl-01-mongodb"
     restart: always
     ports:
       - 27017:27017
@@ -15,7 +15,7 @@ services:
 
   elasticsearch:
     image: elasticsearch:7.17.7
-    container_name: "tinyurl-03-elasticsearch"
+    container_name: "tinyurl-01-elasticsearch"
     restart: always
     ports:
       - 9200:9200
@@ -42,7 +42,7 @@ services:
 
   graylog:
     image: graylog/graylog:4.3
-    container_name: "tinyurl-03-graylog"
+    container_name: "tinyurl-01-graylog"
     restart: always
     ports:
       # - "5044:5044/tcp"   # Beats
@@ -52,7 +52,7 @@ services:
       # - "5555:5555/udp"   # RAW TCP
       - "9000:9000/tcp"   # Server API
       # - "12201:12201/tcp" # GELF TCP
-      # - "12201:12201/udp" # GELF UDP
+      - "12201:12201/udp" # GELF UDP
       # - "10000:10000/tcp" # Custom TCP port
       # - "10000:10000/udp" # Custom UDP port
       # - "13301:13301/tcp" # Forwarder data

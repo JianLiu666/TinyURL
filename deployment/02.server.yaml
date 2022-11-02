@@ -3,12 +3,17 @@ version: "3.4"
 services:
   tinyurl:
     image: tinyurl:latest
-    container_name: "tinyurl-01-server"
+    container_name: "tinyurl-02-server"
     restart: always
     ports:
       - "6600:6600"
     networks:
       - deployment_network-tinyurl
+    # logging:
+    #   driver: "gelf"
+    #   options:
+    #     gelf-address: "udp://graylog:12201"
+    #     tag: "tinyurl"
 
 networks:
     deployment_network-tinyurl:
