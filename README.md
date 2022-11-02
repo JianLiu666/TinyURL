@@ -8,6 +8,7 @@
     - [Usage](#usage)
     - [Monitoring](#monitoring)
     - [Logging](#logging)
+  - [Release Note](#release-note)
   - [High Level System Design](#high-level-system-design)
   - [File Architecture](#file-architecture)
   - [References](#references)
@@ -85,6 +86,12 @@ Enter http://localhost:9000 to see graylog management.
 
 - default account: admin/admin
 - Note: In the first time, you need to set the `input` before you used it.
+
+---
+
+## Release Note
+
+- [Here 👀](./doc/RELEASE_NOTE.md)
 
 ---
 
