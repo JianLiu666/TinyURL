@@ -7,6 +7,7 @@
     - [Quick install instructions](#quick-install-instructions)
     - [Usage](#usage)
     - [Monitoring](#monitoring)
+    - [Logging](#logging)
   - [High Level System Design](#high-level-system-design)
   - [File Architecture](#file-architecture)
   - [References](#references)
@@ -16,7 +17,7 @@
     - [Github Actions](#github-actions)
     - [Deployment](#deployment)
     - [Monitoring](#monitoring-1)
-    - [Logging](#logging)
+    - [Logging](#logging-1)
 
 ---
 
@@ -63,7 +64,7 @@ make integration-test
 Run the customize benchmark on http://localhost:8089 after enter the following command : 
 
 ```shell
-make benchmark-up
+make restart-benchmark
 ```
 
 Get more help by enter :
@@ -77,6 +78,13 @@ make help
 Enter http://localhost:3000 to see grafana monitoring.
 
 - I was prepared two simple dashboard templates for you in `deployment/grafana/`, one is mysql dashboard, another is server dashboard.
+
+### Logging
+
+Enter http://localhost:9000 to see graylog management.
+
+- default account: admin/admin
+- Note: In the first time, you need to set the `input` before you used it.
 
 ---
 
