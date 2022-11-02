@@ -13,9 +13,10 @@
     - [TinyURL](#tinyurl-1)
     - [Database](#database)
     - [Testing](#testing)
-    - [Monitoring](#monitoring-1)
     - [Github Actions](#github-actions)
     - [Deployment](#deployment)
+    - [Monitoring](#monitoring-1)
+    - [Logging](#logging)
 
 ---
 
@@ -127,11 +128,6 @@ TinyURL
 
 - [[Doc] Locust](https://docs.locust.io/en/stable/)
 
-### Monitoring
-
-- [[Blog] docker-compose 搭建 Prometheus+Grafana监控系统](https://www.cnblogs.com/qdhxhz/p/16325893.html)
-- [[Blog] Prometheus+Grafana+Go服务自建监控系统入门](https://www.xhyonline.com/?p=1492)
-
 ### Github Actions
 
 - [[Github] Marketplace/Actions/Run golangci-lint](https://github.com/marketplace/actions/run-golangci-lint)
@@ -141,3 +137,13 @@ TinyURL
 ### Deployment
 
 - [[Blog] 多个docker-compose共享网络并相互调用服务](https://juejin.cn/post/7070401263019491365)
+
+### Monitoring
+
+- [[Blog] docker-compose 搭建 Prometheus+Grafana监控系统](https://www.cnblogs.com/qdhxhz/p/16325893.html)
+- [[Blog] Prometheus+Grafana+Go服务自建监控系统入门](https://www.xhyonline.com/?p=1492)
+
+### Logging
+
+- [[Doc] Graylog : GELF](https://docs.graylog.org/docs/gelf)
+- [[Doc] Docker : Graylog Extended Format logging driver](https://docs.docker.com/config/containers/logging/gelf/)
