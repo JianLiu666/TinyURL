@@ -52,8 +52,8 @@
 
 - [x] Prometheus
 - [x] Grafana
-- [ ] Logging
+- [x] Logging
   - [x] used `logrus(O)`, `zap(X)`
-  - [ ] used `Graylog(O)`, `ELK(X)`
+  - [x] used `Graylog(O)`, `ELK(X)`
 - [ ] Distributed Tracing
   - [ ] Study `OpenTracing`, `OpenTelemetry`, `Jaeger`, `Zipkin`

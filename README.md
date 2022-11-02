@@ -147,3 +147,4 @@ TinyURL
 
 - [[Doc] Graylog : GELF](https://docs.graylog.org/docs/gelf)
 - [[Doc] Docker : Graylog Extended Format logging driver](https://docs.docker.com/config/containers/logging/gelf/)
+- [[Blog] Day 30- 三周目 - Docker network 暨完賽回顧](https://ithelp.ithome.com.tw/articles/10206725)

@@ -70,7 +70,8 @@ services:
       - ./data/graylog/journal:/usr/share/graylog/data/journal
     entrypoint: "/usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh"
     networks: 
-      - deployment_network-tinyurl
+      deployment_network-tinyurl:
+        ipv4_address: 172.19.0.16
     depends_on:
       elasticsearch:
         condition: "service_started"

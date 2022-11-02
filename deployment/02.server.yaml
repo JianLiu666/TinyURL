@@ -9,11 +9,11 @@ services:
       - "6600:6600"
     networks:
       - deployment_network-tinyurl
-    # logging:
-    #   driver: "gelf"
-    #   options:
-    #     gelf-address: "udp://graylog:12201"
-    #     tag: "tinyurl"
+    logging:
+      driver: "gelf"
+      options:
+        gelf-address: "udp://172.19.0.16:12201"
+        tag: "tinyurl"
 
 networks:
     deployment_network-tinyurl:
