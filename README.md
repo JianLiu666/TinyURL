@@ -115,13 +115,16 @@ TinyURL
 ---
 
 ## References
-
 ### TinyURL
 
+- [[Blog] Designing a URL Shortening service like TinyURL](https://www.educative.io/module/lesson/grokking-system-design-interview/xVZVrgDXYLP#a.-Encoding-actual-URL)
+- [[Blog] 短 URL 系统是怎么设计的？](https://www.zhihu.com/question/29270034)
+- [[Doc] Fiber Web Framework](https://docs.gofiber.io/)
 - [[Wiki] MurMurHash](https://en.wikipedia.org/wiki/MurmurHash)
 
 ### Database
 
+- [[Doc] GORM Guides](https://gorm.io/docs/index.html)
 - [[Blog] 如何查看 MySQL 語句執行紀錄](https://learnku.com/articles/33773)
 
 ### Testing
