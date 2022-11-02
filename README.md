@@ -145,6 +145,8 @@ TinyURL
 
 ### Logging
 
+- [[Blog] 開源Graylog統整報表　跨越設備日誌格式鴻溝(上)](https://www.netadmin.com.tw/netadmin/zh-tw/technology/DBD49A35B0E5435F9809DA5C0E9D1E5A)
 - [[Doc] Graylog : GELF](https://docs.graylog.org/docs/gelf)
+- [[Doc] Docker : Configure logging drivers](https://docs.docker.com/config/containers/logging/configure/)
 - [[Doc] Docker : Graylog Extended Format logging driver](https://docs.docker.com/config/containers/logging/gelf/)
 - [[Blog] Day 30- 三周目 - Docker network 暨完賽回顧](https://ithelp.ithome.com.tw/articles/10206725)
