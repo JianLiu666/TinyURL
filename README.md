@@ -135,7 +135,7 @@ TinyURL
 
 ### Database Schemas
 
-- [urls](./doc/storage/mysql.md)
+- [urls](./doc/mysql/urls.md)
 
 ### API References
 

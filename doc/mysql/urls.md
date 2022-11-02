@@ -1,6 +1,4 @@
-# Database Schema
-
-## URL
+# Table Schema: urls
 
 | Column     | Type           | Default Value | Nullable | Character Set | Collation          | Privileges                         | Extra          | Comments |
 | ---------- | -------------- | ------------- | -------- | ------------- | ------------------ | ---------------------------------- | -------------- | -------- |
@@ -10,7 +8,7 @@
 | created_at | datetime       |               | NO       |               |                    | select, insert, update, references |                | 短網址產生時間 |
 | expires_at | datetime       |               | NO       |               |                    | select, insert, update, references |                | 短網址失效時間 |
 
-**tiny encoding format**
+## tiny encoding format
 
 ```
 +---+---+---+---+---+---+
