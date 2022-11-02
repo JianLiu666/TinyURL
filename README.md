@@ -8,9 +8,12 @@
     - [Usage](#usage)
     - [Monitoring](#monitoring)
     - [Logging](#logging)
-  - [Release Note](#release-note)
-  - [High Level System Design](#high-level-system-design)
   - [File Architecture](#file-architecture)
+  - [High Level System Design](#high-level-system-design)
+  - [Documentations](#documentations)
+    - [Release Note](#release-note)
+    - [Database Schemas](#database-schemas)
+    - [API References](#api-references)
   - [References](#references)
     - [TinyURL](#tinyurl-1)
     - [Database](#database)
@@ -90,18 +93,6 @@ Enter http://localhost:9000 to see graylog management.
 
 ---
 
-## Release Note
-
-- [Here 👀](./doc/RELEASE_NOTE.md)
-
----
-
-## High Level System Design
-
-![image](./doc/image/architecture_v0.2.0.svg)
-
----
-
 ## File Architecture
 
 ```
@@ -127,6 +118,29 @@ TinyURL
  ├─ makefile         # cli tool
  └─ README.md
 ```
+
+---
+
+## High Level System Design
+
+![image](./doc/image/architecture_v0.2.0.svg)
+
+---
+
+## Documentations
+
+### Release Note
+
+- [Here 👀](./doc/RELEASE_NOTE.md)
+
+### Database Schemas
+
+- [urls](./doc/storage/mysql.md)
+
+### API References
+
+- [create tiny url](./doc/api/v1/create.md)
+- [redirect by tiny url](./doc/api/v1/redirect.md)
 
 ---
 
