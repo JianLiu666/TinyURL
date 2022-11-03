@@ -1,12 +1,19 @@
 # RELEASE NOTE
 
 - [RELEASE NOTE](#release-note)
-  - [v0.2.0 continuing ...](#v020-continuing-)
+  - [v0.3.0 continuing ...](#v030-continuing-)
+  - [v0.2.0 at 2022/11/03](#v020-at-20221103)
   - [v0.1.0 at 2022/10/27](#v010-at-20221027)
 
 ---
 
-## v0.2.0 continuing ...
+## v0.3.0 continuing ...
+
+- `feat` 加入分散式鏈路追蹤工具: Jaeger
+
+---
+
+## v0.2.0 at 2022/11/03
 
 - `fix` 修正 `api/v1/create` 業務邏輯, 使其符合使用情境
 - `fix` 修正 `api/v1/{tiny_url}` 業務邏輯, 使其符合使用情境

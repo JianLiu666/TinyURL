@@ -50,6 +50,19 @@ services:
     depends_on:
       - prometheus
 
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: "tinyurl-03-jaeger"
+    restart: always
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+    environment:
+      COLLECTOR_ZIPKIN_HOST_PORT: ":9411"
+      COLLECTOR_OTLP_ENABLED: true
+    networks:
+      - deployment_network-tinyurl
+
 networks:
     deployment_network-tinyurl:
       external: true

@@ -55,6 +55,6 @@
 - [x] Logging
   - [x] used `logrus(O)`, `zap(X)`
   - [x] used `Graylog(O)`, `ELK(X)`
-- [ ] Distributed Tracing (Application Performance Monitoring, APM)
-  - [ ] study `OpenTracing`, `OpenCensus`, `OpenTelemetry`
-  - [ ] used `Jaeger(O)`, `Zipkin(X)`, `SkyWalking(X)`
+- [x] Distributed Tracing (Application Performance Monitoring, APM)
+  - [x] study `OpenTracing`, `OpenCensus`, `OpenTelemetry`
+  - [x] used `Jaeger(O)`, `Zipkin(X)`, `SkyWalking(X)`

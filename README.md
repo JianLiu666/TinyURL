@@ -189,3 +189,6 @@ TinyURL
 - [[Blog] 分布式调用链调研（pinpoint,skywalking,jaeger,zipkin等对比）](https://www.cnblogs.com/Ming8006/p/13793598.html)
 - [[Blog] SkyWalking 如何以改动最低的方式整合到Go业务代码中去](https://juejin.cn/post/6871928187123826702)
 - [[Doc] Jaeger APM Framework](https://www.jaegertracing.io/docs/1.38/)
+- [[Github] fiber-opentracing Middleware](https://github.com/aschenmaker/fiber-opentracing)
+- [[Blog] Golang 分布式链路追踪之jaeger](https://bbs.huaweicloud.com/blogs/352913)
+- [[Blog] 从零开始搭建一个简单实用的微服务模板 Part 1](https://blog.igota.net/posts/20220422/)

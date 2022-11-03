@@ -40,9 +40,11 @@ type environment struct {
 	Server server `yaml:"server"`
 	MySQL  mysql  `yaml:"mysql"`
 	Redis  redis  `yaml:"redis"`
+	Jaeger jaeger `yaml:"jaeger"`
 }
 
 type server struct {
+	Name                string `mapstructure:"name" yaml:"name"`
 	Domain              string `mapstructure:"domain" yaml:"domain"`
 	Port                string `mapstructure:"port" yaml:"port"`
 	TinyUrlCacheExpired int    `mapstructure:"tinyurl_cache_expired" yaml:"tinyurl_cache_expired"`
@@ -63,4 +65,8 @@ type redis struct {
 	Address  string `mapstructure:"address" yaml:"address"`
 	Password string `mapstructure:"password" yaml:"password"`
 	DB       int    `mapstructure:"db" yaml:"db"`
+}
+
+type jaeger struct {
+	Address string `mapstructure:"address" yaml:"address"`
 }
