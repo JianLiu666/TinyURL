@@ -55,7 +55,7 @@ shutdown-all:
 	docker-compose -f deployment/00.infra.yaml down -v
 
 shutdown-server:
-	docker-compose -f deployment/01.server.yaml down -v
+	docker-compose -f deployment/02.server.yaml down -v
 
 restart-infra:
 	docker-compose -f deployment/00.infra.yaml down -v
