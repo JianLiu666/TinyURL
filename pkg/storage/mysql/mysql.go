@@ -42,7 +42,9 @@ func Init() {
 		sqlDB.SetConnMaxLifetime(time.Duration(config.Env().MySQL.ConnMaxLifetime * int(time.Minute)))
 
 		// add opentracing plugin into gorm
-		instance.Use(gormopentracing.New())
+		if err := instance.Use(gormopentracing.New()); err != nil {
+			panic(err)
+		}
 
 		fmt.Println("connect to mysql successful.")
 	})
