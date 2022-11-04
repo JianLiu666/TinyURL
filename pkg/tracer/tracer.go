@@ -18,7 +18,6 @@ func Init() {
 		cfg := jaegercfg.Configuration{
 			ServiceName: config.Env().Server.Name,
 			RPCMetrics:  config.Env().Jaeger.RPCMetrics,
-			Tags:        []opentracing.Tag{{Key: "hostname", Value: "hostname"}},
 			Sampler: &jaegercfg.SamplerConfig{
 				Type:  config.Env().Jaeger.Sampler.Type,
 				Param: float64(config.Env().Jaeger.Sampler.Param),
