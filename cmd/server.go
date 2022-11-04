@@ -9,6 +9,7 @@ import (
 	"tinyurl/pkg/api"
 	"tinyurl/pkg/storage/mysql"
 	"tinyurl/pkg/storage/redis"
+	"tinyurl/pkg/tracer"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
@@ -28,13 +29,16 @@ func init() {
 }
 
 func RunServerCmd(cmd *cobra.Command, args []string) error {
-	// enable third-party logger
+	// enable logger modules
 	logrus.SetFormatter(&log.TextFormatter{
 		FullTimestamp:   true,
 		TimestampFormat: "2006-01-02 15:04:05-07:00",
 	})
 
-	// enable third-party modules
+	// enable opentracing with jaeger
+	tracer.Init()
+
+	// enable storage modules
 	mysql.Init()
 	redis.Init()
 

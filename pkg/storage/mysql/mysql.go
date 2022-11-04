@@ -8,6 +8,7 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	gormopentracing "gorm.io/plugin/opentracing"
 )
 
 var once sync.Once
@@ -39,6 +40,9 @@ func Init() {
 		sqlDB.SetMaxIdleConns(config.Env().MySQL.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(config.Env().MySQL.MaxOpenConns)
 		sqlDB.SetConnMaxLifetime(time.Duration(config.Env().MySQL.ConnMaxLifetime * int(time.Minute)))
+
+		// add opentracing plugin into gorm
+		instance.Use(gormopentracing.New())
 
 		fmt.Println("connect to mysql successful.")
 	})

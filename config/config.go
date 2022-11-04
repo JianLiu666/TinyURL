@@ -68,5 +68,24 @@ type redis struct {
 }
 
 type jaeger struct {
-	Address string `mapstructure:"address" yaml:"address"`
+	RPCMetrics bool           `mapstructure:"rpc_metrics" yaml:"rpc_metrics"`
+	Sampler    jaegerSampler  `mapstructure:"sampler" yaml:"sampler"`
+	Reporter   jaegerReporter `mapstructure:"reporter" yaml:"reporter"`
+	Headers    jaegerHeaders  `mapstructure:"headers" yaml:"headers"`
+}
+
+type jaegerSampler struct {
+	Type  string `mapstructure:"type" yaml:"type"`
+	Param int    `mapstructure:"param" yaml:"param"`
+}
+
+type jaegerReporter struct {
+	LogSpans            bool   `mapstructure:"log_spans" yaml:"log_spans"`
+	BufferFlushInterval int    `mapstructure:"buffer_flush_interval" yaml:"buffer_flush_interval"`
+	LocalAgentHostPort  string `mapstructure:"local_agent_host_port" yaml:"local_agent_host_port"`
+}
+
+type jaegerHeaders struct {
+	TraceBaggageHeaderPrefix string `mapstructure:"trace_baggage_header_prefix" yaml:"trace_baggage_header_prefix"`
+	TraceContextHeaderName   string `mapstructure:"trace_context_header_name" yaml:"trace_context_header_name"`
 }
