@@ -59,5 +59,5 @@
   - [x] study `OpenTracing`, `OpenCensus`, `OpenTelemetry`
   - [ ] used `Jaeger(O)`, `Zipkin(X)`, `SkyWalking(X)`
     - [x] Fiber
-    - [ ] Gorm
+    - [x] Gorm
     - [ ] Redis
