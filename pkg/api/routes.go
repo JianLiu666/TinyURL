@@ -3,9 +3,9 @@ package api
 import (
 	"time"
 	v1api "tinyurl/pkg/api/v1"
+	"tinyurl/pkg/tracer"
 
 	"github.com/ansrivas/fiberprometheus/v2"
-	fibertracing "github.com/aschenmaker/fiber-opentracing"
 	"github.com/opentracing/opentracing-go"
 
 	"github.com/gofiber/fiber/v2"
@@ -26,7 +26,7 @@ func SetRoutes(app *fiber.App) {
 
 func setMonitor(app *fiber.App) {
 	// enable jaeger plugin
-	app.Use(fibertracing.New(fibertracing.Config{
+	app.Use(tracer.NewFiberMiddleware(tracer.FiberConfig{
 		Tracer: opentracing.GlobalTracer(),
 	}))
 

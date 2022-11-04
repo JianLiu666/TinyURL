@@ -13,7 +13,7 @@ import (
 
 var once sync.Once
 
-func Init() {
+func InitGlobalTracer() {
 	once.Do(func() {
 		cfg := jaegercfg.Configuration{
 			ServiceName: config.Env().Server.Name,

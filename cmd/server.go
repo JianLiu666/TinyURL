@@ -36,7 +36,7 @@ func RunServerCmd(cmd *cobra.Command, args []string) error {
 	})
 
 	// enable opentracing with jaeger
-	tracer.Init()
+	tracer.InitGlobalTracer()
 
 	// enable storage modules
 	mysql.Init()
