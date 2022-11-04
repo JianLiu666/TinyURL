@@ -25,7 +25,7 @@ func Redirect(c *fiber.Ctx) error {
 	}
 
 	// 短網址未命中時的處理流程
-	url, err := mysql.GetUrl(tiny)
+	url, err := mysql.GetUrl(c.UserContext(), tiny)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// 寫入 redis cache

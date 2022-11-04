@@ -1,6 +1,7 @@
 package mysql
 
 import (
+	"context"
 	"errors"
 	"tinyurl/pkg/storage"
 
@@ -10,13 +11,13 @@ import (
 
 const tbUrls = "urls"
 
-func CreateUrl(data *storage.Url, isCustomAlias bool) (bool, error) {
-	tx := instance.Table(tbUrls).Clauses(clause.OnConflict{UpdateAll: true}).Create(&data)
+func CreateUrl(ctx context.Context, data *storage.Url, isCustomAlias bool) (bool, error) {
+	tx := instance.WithContext(ctx).Table(tbUrls).Clauses(clause.OnConflict{UpdateAll: true}).Create(&data)
 	return tx.RowsAffected == 0, tx.Error
 }
 
-func GetUrl(tiny_url string) (res storage.Url, err error) {
-	err = instance.Table(tbUrls).Where("tiny = ?", tiny_url).First(&res).Error
+func GetUrl(ctx context.Context, tiny_url string) (res storage.Url, err error) {
+	err = instance.WithContext(ctx).Table(tbUrls).Where("tiny = ?", tiny_url).First(&res).Error
 
 	// 查無資料時的初始化流程
 	if errors.Is(err, gorm.ErrRecordNotFound) {

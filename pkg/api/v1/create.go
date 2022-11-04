@@ -63,7 +63,7 @@ func Create(c *fiber.Ctx) error {
 	}
 
 	// create url record into mysql
-	urlAlreadyExists, err := mysql.CreateUrl(data, tiny == reqBody.Alias)
+	urlAlreadyExists, err := mysql.CreateUrl(c.UserContext(), data, tiny == reqBody.Alias)
 	if err != nil {
 		logrus.Errorf("Failed to run sql: %v", err)
 		return c.SendStatus(fiber.StatusInternalServerError)

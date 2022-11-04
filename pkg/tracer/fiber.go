@@ -38,6 +38,9 @@ func NewFiberMiddleware(config FiberConfig) fiber.Handler {
 			return c.Next()
 		}
 
+		// set trace-id from span into fiber user context
+		c.SetUserContext(opentracing.ContextWithSpan(c.Context(), span))
+
 		cfg.Modify(c, span)
 
 		defer func() {
