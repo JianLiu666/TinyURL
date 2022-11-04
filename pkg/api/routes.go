@@ -28,9 +28,6 @@ func setMonitor(app *fiber.App) {
 	// enable jaeger plugin
 	app.Use(fibertracing.New(fibertracing.Config{
 		Tracer: opentracing.GlobalTracer(),
-		OperationName: func(ctx *fiber.Ctx) string {
-			return "HTTP " + ctx.Method() + " URL: " + ctx.Path()
-		},
 	}))
 
 	// enable fiber monitor plugin
