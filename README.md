@@ -192,3 +192,4 @@ TinyURL
 - [[Doc] Jaeger APM Framework](https://www.jaegertracing.io/docs/1.38/)
 - [[Github] fiber-opentracing Middleware](https://github.com/aschenmaker/fiber-opentracing)
 - [[Blog] Golang 分布式链路追踪之jaeger](https://bbs.huaweicloud.com/blogs/352913)
+- [[Github] go-redis-opentracing](https://github.com/globocom/go-redis-opentracing)

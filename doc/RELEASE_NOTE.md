@@ -12,6 +12,7 @@
 - `feat` 加入分散式鏈路追蹤工具: Jaeger
 - `feat` gorm 加入 opentracing plugin
 - `feat` fiber 加入 opentracing middleware
+- `feat` redis 加入 opentracing hook
 
 ---
 
