@@ -12,9 +12,11 @@ import (
 	"tinyurl/pkg/tracer"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/opentracing/opentracing-go"
 	"github.com/sirupsen/logrus"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	gormopentracing "gorm.io/plugin/opentracing"
 )
 
 var serverCmd = &cobra.Command{
@@ -35,12 +37,18 @@ func RunServerCmd(cmd *cobra.Command, args []string) error {
 		TimestampFormat: "2006-01-02 15:04:05-07:00",
 	})
 
-	// enable opentracing with jaeger
+	// enable opentracing  with jaeger
 	tracer.InitGlobalTracer()
 
-	// enable storage modules
+	// enable redis client
 	mysql.Init()
+	if err := mysql.GetInstance().Use(gormopentracing.New()); err != nil {
+		panic(err)
+	}
+
+	// enable redis client
 	redis.Init()
+	redis.GetInstance().AddHook(tracer.NewRedisHook(opentracing.GlobalTracer()))
 
 	// enable api server
 	app := fiber.New()

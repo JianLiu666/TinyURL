@@ -55,7 +55,7 @@ func Create(c *fiber.Ctx) error {
 	}
 
 	// check whether tiny url exists or not from redis
-	if code := redis.CheckTinyUrl(data, tiny == reqBody.Alias); code != redis.ErrNotFound {
+	if code := redis.CheckTinyUrl(c.UserContext(), data, tiny == reqBody.Alias); code != redis.ErrNotFound {
 		if code == redis.ErrInvalidData {
 			return c.Status(fiber.StatusBadRequest).SendString("alias dunplicated.")
 		}
@@ -70,7 +70,7 @@ func Create(c *fiber.Ctx) error {
 	}
 
 	// set tiny url cache into redis
-	if code := redis.SetTinyUrl(data); code != redis.ErrNotFound {
+	if code := redis.SetTinyUrl(c.UserContext(), data); code != redis.ErrNotFound {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 

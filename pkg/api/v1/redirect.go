@@ -14,7 +14,7 @@ func Redirect(c *fiber.Ctx) error {
 	tiny := c.Params("tiny_url")
 
 	// get origin url cache from redis
-	origin, status := redis.GetOriginUrl(c.Params("tiny_url"))
+	origin, status := redis.GetOriginUrl(c.UserContext(), c.Params("tiny_url"))
 
 	// 短網址命中時的處理流程
 	if status == redis.ErrNotFound {
@@ -29,7 +29,7 @@ func Redirect(c *fiber.Ctx) error {
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// 寫入 redis cache
-			if code := redis.SetTinyUrl(&url); code != redis.ErrNotFound {
+			if code := redis.SetTinyUrl(c.UserContext(), &url); code != redis.ErrNotFound {
 				return c.SendStatus(fiber.StatusInternalServerError)
 			}
 			return c.Status(fiber.StatusBadRequest).SendString("tinyurl not found.")
@@ -38,7 +38,7 @@ func Redirect(c *fiber.Ctx) error {
 	}
 
 	// 寫入 redis cache
-	if code := redis.SetTinyUrl(&url); code != redis.ErrNotFound {
+	if code := redis.SetTinyUrl(c.UserContext(), &url); code != redis.ErrNotFound {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 	return c.Redirect(url.Origin, fiber.StatusFound)

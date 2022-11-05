@@ -12,9 +12,9 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-func SetTinyUrl(data *storage.Url) int {
+func SetTinyUrl(ctx context.Context, data *storage.Url) int {
 
-	if err := instance.SetEX(context.TODO(), "tiny:"+data.Tiny, data.Origin, time.Duration(config.Env().Server.TinyUrlCacheExpired)*time.Second).Err(); err != nil {
+	if err := instance.SetEX(ctx, "tiny:"+data.Tiny, data.Origin, time.Duration(config.Env().Server.TinyUrlCacheExpired)*time.Second).Err(); err != nil {
 		fmt.Println(err)
 		return ErrUnexpected
 	}
@@ -22,9 +22,9 @@ func SetTinyUrl(data *storage.Url) int {
 	return ErrNotFound
 }
 
-func GetOriginUrl(tiny string) (string, int) {
+func GetOriginUrl(ctx context.Context, tiny string) (string, int) {
 
-	res, err := instance.Get(context.TODO(), "tiny:"+tiny).Result()
+	res, err := instance.Get(ctx, "tiny:"+tiny).Result()
 	// 短網址未命中
 	if err == redis.Nil {
 		return "", ErrKeyNotFound
@@ -39,11 +39,11 @@ func GetOriginUrl(tiny string) (string, int) {
 	return res, ErrNotFound
 }
 
-func CheckTinyUrl(data *storage.Url, isCustomAlias bool) int {
+func CheckTinyUrl(ctx context.Context, data *storage.Url, isCustomAlias bool) int {
 
 	for i := 0; i < config.Env().Server.TinyUrlRetry; i++ {
 		// 檢查 redis 中是否存在相同的短網址
-		res, err := instance.Get(context.TODO(), "tiny:"+data.Tiny).Result()
+		res, err := instance.Get(ctx, "tiny:"+data.Tiny).Result()
 
 		// 可以使用的短網址
 		if err == redis.Nil || res == "" {
