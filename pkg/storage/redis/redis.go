@@ -5,7 +5,7 @@ import (
 	"sync"
 	"tinyurl/config"
 
-	"github.com/go-redis/redis/v9"
+	"github.com/go-redis/redis/v8"
 )
 
 var once sync.Once

@@ -27,7 +27,7 @@ services:
           memory: 4G
 
   redis:
-    image: redis:latest
+    image: redis:6.2.7
     container_name: "tinyurl-00-redis"
     restart: always
     ports:

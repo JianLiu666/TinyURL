@@ -9,12 +9,12 @@ import (
 	"tinyurl/pkg/storage"
 	"tinyurl/util"
 
-	"github.com/go-redis/redis/v9"
+	"github.com/go-redis/redis/v8"
 )
 
 func SetTinyUrl(data *storage.Url) int {
 
-	if err := instance.SetEx(context.TODO(), "tiny:"+data.Tiny, data.Origin, time.Duration(config.Env().Server.TinyUrlCacheExpired)*time.Second).Err(); err != nil {
+	if err := instance.SetEX(context.TODO(), "tiny:"+data.Tiny, data.Origin, time.Duration(config.Env().Server.TinyUrlCacheExpired)*time.Second).Err(); err != nil {
 		fmt.Println(err)
 		return ErrUnexpected
 	}
