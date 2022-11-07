@@ -1,13 +1,13 @@
 # RELEASE NOTE
 
 - [RELEASE NOTE](#release-note)
-  - [v0.3.0 continuing ...](#v030-continuing-)
+  - [v0.3.0 at 2022/11/07](#v030-at-20221107)
   - [v0.2.0 at 2022/11/03](#v020-at-20221103)
   - [v0.1.0 at 2022/10/27](#v010-at-20221027)
 
 ---
 
-## v0.3.0 continuing ...
+## v0.3.0 at 2022/11/07
 
 - `feat` 加入分散式鏈路追蹤工具: Jaeger
 - `feat` gorm 加入 opentracing plugin
