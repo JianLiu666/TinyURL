@@ -32,9 +32,12 @@ func (hook RedisHook) AfterProcess(ctx context.Context, cmd redis.Cmder) error {
 	span := opentracing.SpanFromContext(ctx)
 	defer span.Finish()
 
+	span.LogKV("cmd.string", cmd.String())
+
 	if err := cmd.Err(); err != nil {
 		hook.recordError(ctx, "db.error", span, err)
 	}
+
 	return nil
 }
 func (hook RedisHook) BeforeProcessPipeline(ctx context.Context, cmds []redis.Cmder) (context.Context, error) {
