@@ -84,6 +84,8 @@ Enter http://localhost:3000 to see grafana monitoring.
 
 - I was prepared two simple dashboard templates for you in `deployment/grafana/`, one is mysql dashboard, another is server dashboard.
 
+Enter http://localhost:16686 to see jaeger dashboard.
+
 ### Logging
 
 Enter http://localhost:9000 to see graylog management.
@@ -123,7 +125,7 @@ TinyURL
 
 ## High Level System Design
 
-![image](./doc/image/architecture_v0.2.0.svg)
+![image](./doc/image/architecture_v0.3.0.svg)
 
 ---
 
