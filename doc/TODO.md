@@ -26,6 +26,7 @@
 - [ ] Rate Limiter
   - [ ] `api/v1/create` : by IP
   - [ ] `api/v1/{redirect}` : muti rules (per IP and global maximum)
+- [ ] Bloom Filter
 - [ ] Precompute TinyURL
 - [ ] Add APIs for registered user
 - [ ] Horizontal Scaling
