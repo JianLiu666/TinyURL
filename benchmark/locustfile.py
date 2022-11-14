@@ -85,7 +85,7 @@ class randomly_case(HttpUser):
                 if response.status_code == 200 and len(self.tinyurls) < 1000000:
                     self.tinyurls.append(response.json()['tiny'].split("/")[-1])
 
-    @task
+    @task(100)
     def redirect(self):
         with self.client.get("/api/v1/"+random.choice(self.tinyurls), allow_redirects=False, catch_response=True) as response:
             if response.status_code != 302:
