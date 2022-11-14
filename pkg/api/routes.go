@@ -15,21 +15,13 @@ import (
 )
 
 func SetRoutes(app *fiber.App) {
-	setMonitor(app)
-	setLogger(app)
-
 	api := app.Group("/api")
 	v1 := api.Group("/v1")
 	v1.Post("/create", v1api.Create)
 	v1.Get("/:tiny_url", v1api.Redirect)
 }
 
-func setMonitor(app *fiber.App) {
-	// enable jaeger plugin
-	app.Use(tracer.NewFiberMiddleware(tracer.FiberConfig{
-		Tracer: opentracing.GlobalTracer(),
-	}))
-
+func SetMonitor(app *fiber.App) {
 	// enable fiber monitor plugin
 	app.Use(pprof.New())
 	app.Get("/fiber/monitor", monitor.New(monitor.Config{
@@ -43,8 +35,15 @@ func setMonitor(app *fiber.App) {
 	app.Use(prometheus.Middleware)
 }
 
-func setLogger(app *fiber.App) {
+func SetLogger(app *fiber.App) {
 	app.Use(logger.New(logger.Config{
 		Format: "[${time}] | ${ip} | ${latency} | ${status} | ${method} | ${path} | Req: ${body} | Resp: ${resBody}\n",
+	}))
+}
+
+func SetTracer(app *fiber.App) {
+	// enable jaeger plugin
+	app.Use(tracer.NewFiberMiddleware(tracer.FiberConfig{
+		Tracer: opentracing.GlobalTracer(),
 	}))
 }

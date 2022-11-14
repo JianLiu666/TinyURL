@@ -53,6 +53,9 @@ func RunServerCmd(cmd *cobra.Command, args []string) error {
 	// enable api server
 	app := fiber.New()
 	api.SetRoutes(app)
+	api.SetMonitor(app)
+	api.SetLogger(app)
+	api.SetTracer(app)
 	go func() {
 		if err := app.Listen(config.Env().Server.Port); err != nil {
 			panic(fmt.Errorf("starting fiber HTTP server on %s failed: %s", config.Env().Server.Port, err.Error()))
