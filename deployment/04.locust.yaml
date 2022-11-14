@@ -12,6 +12,13 @@ services:
     volumes:
       - ./data/locust:/mnt/locust
     command: --config=/mnt/locust/locust.conf
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G
+        reservations:
+          memory: 2G
 
 networks:
   deployment_network-tinyurl:

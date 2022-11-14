@@ -12,6 +12,13 @@ services:
       - ./data/mongodb:/data/db
     networks: 
       - deployment_network-tinyurl
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 4G
+        reservations:
+          memory: 2G
 
   elasticsearch:
     image: elasticsearch:7.17.7
@@ -39,6 +46,13 @@ services:
       - ./data/elasticsearch:/usr/share/elasticsearch/data"
     networks: 
       - deployment_network-tinyurl
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 4G
+        reservations:
+          memory: 2G
 
   graylog:
     image: graylog/graylog:4.3
@@ -71,6 +85,13 @@ services:
     entrypoint: "/usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh"
     networks: 
       - deployment_network-tinyurl
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 4G
+        reservations:
+          memory: 512M
     depends_on:
       elasticsearch:
         condition: "service_started"

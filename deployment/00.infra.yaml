@@ -22,9 +22,10 @@ services:
     deploy:
       resources:
         limits:
+          cpus: "2"
           memory: 4G
         reservations:
-          memory: 4G
+          memory: 2G
 
   redis:
     image: redis:6.2.7
@@ -37,9 +38,10 @@ services:
     deploy:
       resources:
         limits:
+          cpus: "2"
           memory: 4G
         reservations:
-          memory: 4G
+          memory: 2G
 
 networks:
     network-tinyurl:
