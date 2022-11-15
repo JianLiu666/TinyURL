@@ -2,8 +2,8 @@ package v1
 
 import (
 	"errors"
-	"tinyurl/pkg/storage/mysql"
-	"tinyurl/pkg/storage/redis"
+	"tinyurl/internal/storage/mysql"
+	"tinyurl/internal/storage/redis"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"

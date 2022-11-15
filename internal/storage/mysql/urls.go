@@ -3,7 +3,7 @@ package mysql
 import (
 	"context"
 	"errors"
-	"tinyurl/pkg/storage"
+	"tinyurl/internal/storage"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"

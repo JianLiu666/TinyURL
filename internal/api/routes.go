@@ -2,8 +2,8 @@ package api
 
 import (
 	"time"
-	v1api "tinyurl/pkg/api/v1"
-	"tinyurl/pkg/tracer"
+	v1api "tinyurl/internal/api/v1"
+	"tinyurl/internal/tracer"
 
 	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/opentracing/opentracing-go"

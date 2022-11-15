@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	v1 "tinyurl/internal/api/v1"
 	"tinyurl/internal/config"
-	v1 "tinyurl/pkg/api/v1"
 )
 
 func create_200(s *session) (bool, error) {

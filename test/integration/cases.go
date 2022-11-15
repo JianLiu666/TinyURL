@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"tinyurl/internal/config"
-	"tinyurl/pkg/storage/mysql"
-	"tinyurl/pkg/storage/redis"
+	"tinyurl/internal/storage/mysql"
+	"tinyurl/internal/storage/redis"
 )
 
 type session struct {

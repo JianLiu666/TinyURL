@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 	"tinyurl/internal/config"
-	"tinyurl/pkg/storage"
-	"tinyurl/pkg/storage/mysql"
-	"tinyurl/pkg/storage/redis"
+	"tinyurl/internal/storage"
+	"tinyurl/internal/storage/mysql"
+	"tinyurl/internal/storage/redis"
 	"tinyurl/tools"
 
 	"github.com/gofiber/fiber/v2"

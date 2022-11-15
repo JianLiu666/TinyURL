@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 	"tinyurl/internal/config"
-	"tinyurl/pkg/storage"
+	"tinyurl/internal/storage"
 	"tinyurl/tools"
 
 	"github.com/go-redis/redis/v8"

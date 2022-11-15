@@ -99,33 +99,36 @@ Enter http://localhost:9000 to see graylog management.
 
 ```
 TinyURL
- ├─ .github/         # includes github actions
+ ├─ .github/         
+ │   └─ workflows/   
  ├─ cmd/             # 本專案的主要應用程式
  ├─ conf.d/          # 組態設定的檔案範本及預設設定
  ├─ deployments/     # 系統和容器編配部署的組態設定腳本
  │   ├─ data/        # 保存 docker volume
- │   ├─ grafana/     # grafana 預設儀表板
- │   ├─ locust/      # locust 組態設定
- │   ├─ mysql/       # mysql 組態設定與動態連結函式庫 (dll)
+ │   ├─ grafana/     # Grafana 預設儀表板
+ │   ├─ locust/      # Locust 組態設定
+ │   ├─ mysql/       # MySQL 組態設定與動態連結函式庫 (dll)
  │   └─ prometheus/  # prometheus 組態設定
  ├─ docs/            # 設計和使用者文件 (sequence, db schema, etc.)
  ├─ internal/        # 私有應用程式和函示庫的程式碼
- │   └─ config/      # 組態設定模組 (viper)
- ├─ pkg/             # includes core modules (apis, storages, etc.)
+ │   ├─ api/         # TinyURL API Server
+ │   ├─ config/      # 組態設定模組 (viper)
+ │   ├─ storage/     # 資料庫模組
+ │   └─ tracer/      # OpenTracing 模組 (jaeger)
  ├─ test/            # 額外的外部測試應用程式和測試資料
  │   ├─ benchmark/   # 壓力測試腳本
  │   └─ integration/ # 整合測試腳本
- ├─ util/            # includes common modules (base converter, etc.)
- ├─ .gitattributes     
- ├─ .gitignore         
- ├─ .golangci.yaml   # golang linter settings
- ├─ dockerfile         
- ├─ go.mod           # go mod files
- ├─ go.sum           # go mou files
- ├─ LICENSE            
- ├─ main.go          # program entry point
- ├─ makefile         # cli tool
- └─ README.md          
+ ├─ tools/           # 支援工具
+ ├─ .gitattributes   
+ ├─ .gitignore       
+ ├─ .golangci.yaml   
+ ├─ dockerfile       
+ ├─ go.mod           
+ ├─ go.sum           
+ ├─ LICENSE          
+ ├─ main.go          # 主程式進入點
+ ├─ makefile         
+ └─ README.md        
 ```
 
 ---
