@@ -3,7 +3,7 @@ package integration
 import (
 	"context"
 	"fmt"
-	"tinyurl/config"
+	"tinyurl/internal/config"
 	"tinyurl/pkg/storage/mysql"
 	"tinyurl/pkg/storage/redis"
 )

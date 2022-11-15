@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 	"time"
-	"tinyurl/config"
+	"tinyurl/internal/config"
 
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"

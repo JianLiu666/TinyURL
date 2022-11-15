@@ -3,7 +3,7 @@ package redis
 import (
 	"fmt"
 	"sync"
-	"tinyurl/config"
+	"tinyurl/internal/config"
 
 	"github.com/go-redis/redis/v8"
 )

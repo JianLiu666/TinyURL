@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"tinyurl/config"
+	"tinyurl/internal/config"
 	v1 "tinyurl/pkg/api/v1"
 )
 

@@ -101,10 +101,11 @@ Enter http://localhost:9000 to see graylog management.
 TinyURL
  ├─ .github/         # includes github actions
  ├─ cmd/             # 本專案的主要應用程式
- ├─ conf.d/          # includes configuration files
- ├─ config/          # golang config manager (viper)
+ ├─ conf.d/          # 組態設定的檔案範本及預設設定
  ├─ deployment/      # includes docker-compose, mysql seed, etc.
  ├─ doc/             # includes documentations (sequence, db schema, etc.)
+ ├─ internal/        # 私有應用程式和函示庫的程式碼
+ │   ├─ config/      # 組態設定模組 (viper)
  ├─ pkg/             # includes core modules (apis, storages, etc.)
  ├─ test/            # 額外的外部測試應用程式和測試資料
  │   ├─ benchmark/   # 壓力測試腳本

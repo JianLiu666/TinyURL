@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-	"tinyurl/config"
+	"tinyurl/internal/config"
 	"tinyurl/pkg/storage"
 	"tinyurl/pkg/storage/mysql"
 	"tinyurl/pkg/storage/redis"

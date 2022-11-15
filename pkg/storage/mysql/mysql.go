@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 	"time"
-	"tinyurl/config"
+	"tinyurl/internal/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

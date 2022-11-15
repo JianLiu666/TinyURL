@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"tinyurl/config"
+	"tinyurl/internal/config"
 	"tinyurl/pkg/api"
 	"tinyurl/pkg/storage/mysql"
 	"tinyurl/pkg/storage/redis"

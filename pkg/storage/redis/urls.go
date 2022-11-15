@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"time"
-	"tinyurl/config"
+	"tinyurl/internal/config"
 	"tinyurl/pkg/storage"
 	"tinyurl/util"
 
