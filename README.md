@@ -29,7 +29,7 @@
 ## Goal
 
 - Create a shorter aliases for original URLs.
-- Side project practice (implementations, write documentations, deployment and monitoring)
+- POC 練習
 
 ---
 
@@ -48,31 +48,37 @@ make init
 
 ### Usage
 
-Enable whole of applications by docker-compose.
+建置並啟動 Tiny URL 專案所需的所有服務，包含：
+
+- API Server (主要服務)
+- Grafana (效能監控)
+- Graylog (日誌系統)
+- Jaeger (分散式鏈路追蹤)
+- Locust (壓力測試工具)
 
 ```shell
 make demo
 ```
 
-Now, you can make your own tiny url following this example :
+短網址製作範例
 
 ```shell
 curl -d '{"url":"http://replace/for/your/url", "alias":""}' -H "Content-Type: application/json" -X POST http://localhost:6600/api/v1/create
 ```
 
-Test by integraion testing command : 
+執行整合測試
 
 ```shell
 make integration-test
 ```
 
-Run the customize benchmark on http://localhost:8089 after enter the following command : 
+重新載入壓力測試腳本 (適用於修改 test/benchmark/ 底下的 .py 腳本時)
 
 ```shell
 make restart-benchmark
 ```
 
-Get more help by enter :
+更多指令請查閱：
 
 ```shell
 make help
@@ -80,18 +86,19 @@ make help
 
 ### Monitoring
 
-Enter http://localhost:3000 to see grafana monitoring.
+點擊 http://localhost:3000 即可進入 Grafana 觀察各服務的即時指標
 
-- I was prepared two simple dashboard templates for you in `deployment/grafana/`, one is mysql dashboard, another is server dashboard.
+- 預設帳號: admin/admin
+- `deployments/grafana/` 內提供 MySQL, Redis, Server 儀表板範本
 
-Enter http://localhost:16686 to see jaeger dashboard.
+點擊 http://localhost:16686 即可進入 Jaeger 觀察向 TinyURL 服務的請求處理流程
 
 ### Logging
 
-Enter http://localhost:9000 to see graylog management.
-
-- default account: admin/admin
-- Note: In the first time, you need to set the `input` before you used it.
+點擊 http://localhost:9000 即可進入 Graylog 觀察 TinyURL 服務的日誌記錄
+ 
+ - 預設帳號: admin/admin
+ - 第一次進入時需要至 `Sysmtem/Inputs` 設定資料來源
 
 ---
 

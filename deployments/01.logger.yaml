@@ -11,7 +11,7 @@ services:
     volumes:
       - ./data/mongodb:/data/db
     networks: 
-      - deployment_network-tinyurl
+      - deployments_network-tinyurl
     deploy:
       resources:
         limits:
@@ -45,7 +45,7 @@ services:
     volumes:
       - ./data/elasticsearch:/usr/share/elasticsearch/data"
     networks: 
-      - deployment_network-tinyurl
+      - deployments_network-tinyurl
     deploy:
       resources:
         limits:
@@ -84,7 +84,7 @@ services:
       - ./data/graylog/journal:/usr/share/graylog/data/journal
     entrypoint: "/usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh"
     networks: 
-      - deployment_network-tinyurl
+      - deployments_network-tinyurl
     deploy:
       resources:
         limits:
@@ -99,6 +99,6 @@ services:
         condition: "service_started"
 
 networks:
-    deployment_network-tinyurl:
+    deployments_network-tinyurl:
       external: true
 
