@@ -21,11 +21,11 @@ help:
 	@echo "  build-image        start to build tinyurl image."
 
 init:
-	rm -rf deployment/data
-	mkdir -p deployment/data/mysql
-	mkdir -p deployment/data/prometheus deployment/data/grafana
-	mkdir -p deployment/data/mongodb deployment/data/elasticsearch deployment/data/graylog/data deployment/data/graylog/journal
-	mkdir -p deployment/data/locust
+	rm -rf deployments/data
+	mkdir -p deployments/data/mysql
+	mkdir -p deployments/data/prometheus deployments/data/grafana
+	mkdir -p deployments/data/mongodb deployments/data/elasticsearch deployments/data/graylog/data deployments/data/graylog/journal
+	mkdir -p deployments/data/locust
 	
 	go mod download
 	go mod tidy
@@ -33,52 +33,52 @@ init:
 	make build-image
 
 demo:
-	docker-compose -f deployment/04.locust.yaml down -v
-	docker-compose -f deployment/03.monitoring.yaml down -v
-	docker-compose -f deployment/02.server.yaml down -v
-	docker-compose -f deployment/01.logger.yaml down -v
-	docker-compose -f deployment/00.infra.yaml down -v
+	docker-compose -f deployments/04.locust.yaml down -v
+	docker-compose -f deployments/03.monitoring.yaml down -v
+	docker-compose -f deployments/02.server.yaml down -v
+	docker-compose -f deployments/01.logger.yaml down -v
+	docker-compose -f deployments/00.infra.yaml down -v
 
-	docker-compose -f deployment/00.infra.yaml up -d
-	docker-compose -f deployment/01.logger.yaml up -d
-	docker-compose -f deployment/02.server.yaml up -d
-	docker-compose -f deployment/03.monitoring.yaml up -d
-	docker-compose -f deployment/04.locust.yaml up -d
+	docker-compose -f deployments/00.infra.yaml up -d
+	docker-compose -f deployments/01.logger.yaml up -d
+	docker-compose -f deployments/02.server.yaml up -d
+	docker-compose -f deployments/03.monitoring.yaml up -d
+	docker-compose -f deployments/04.locust.yaml up -d
 
 	docker ps -a
 
 shutdown-all:
-	docker-compose -f deployment/04.locust.yaml down -v
-	docker-compose -f deployment/03.monitoring.yaml down -v
-	docker-compose -f deployment/02.server.yaml down -v
-	docker-compose -f deployment/01.logger.yaml down -v
-	docker-compose -f deployment/00.infra.yaml down -v
+	docker-compose -f deployments/04.locust.yaml down -v
+	docker-compose -f deployments/03.monitoring.yaml down -v
+	docker-compose -f deployments/02.server.yaml down -v
+	docker-compose -f deployments/01.logger.yaml down -v
+	docker-compose -f deployments/00.infra.yaml down -v
 
 shutdown-server:
-	docker-compose -f deployment/02.server.yaml down -v
+	docker-compose -f deployments/02.server.yaml down -v
 
 restart-infra:
-	docker-compose -f deployment/00.infra.yaml down -v
-	docker-compose -f deployment/00.infra.yaml up -d
+	docker-compose -f deployments/00.infra.yaml down -v
+	docker-compose -f deployments/00.infra.yaml up -d
 
 restart-logger:
-	docker-compose -f deployment/01.logger.yaml down -v
-	docker-compose -f deployment/01.logger.yaml up -d
+	docker-compose -f deployments/01.logger.yaml down -v
+	docker-compose -f deployments/01.logger.yaml up -d
 
 restart-server:
-	docker-compose -f deployment/02.server.yaml down -v
-	docker-compose -f deployment/02.server.yaml up -d
+	docker-compose -f deployments/02.server.yaml down -v
+	docker-compose -f deployments/02.server.yaml up -d
 
 restart-benchmark:
-	docker-compose -f deployment/04.locust.yaml down -v
+	docker-compose -f deployments/04.locust.yaml down -v
 
-	rm -rf deployment/data/locust
-	mkdir -p deployment/data/locust
+	rm -rf deployments/data/locust
+	mkdir -p deployments/data/locust
 	
-	cp -r test/benchmark/*.py deployment/data/locust/
-	cp -r deployment/locust/ deployment/data/locust/
+	cp -r test/benchmark/*.py deployments/data/locust/
+	cp -r deployments/locust/ deployments/data/locust/
 	
-	docker-compose -f deployment/04.locust.yaml up -d
+	docker-compose -f deployments/04.locust.yaml up -d
 
 lint:
 	golangci-lint run

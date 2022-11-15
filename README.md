@@ -102,10 +102,15 @@ TinyURL
  ├─ .github/         # includes github actions
  ├─ cmd/             # 本專案的主要應用程式
  ├─ conf.d/          # 組態設定的檔案範本及預設設定
- ├─ deployment/      # includes docker-compose, mysql seed, etc.
+ ├─ deployments/     # 系統和容器編配部署的組態設定腳本
+ │   ├─ data/        # 保存 docker volume
+ │   ├─ grafana/     # grafana 預設儀表板
+ │   ├─ locust/      # locust 組態設定
+ │   ├─ mysql/       # mysql 組態設定與動態連結函式庫 (dll)
+ │   └─ prometheus/  # prometheus 組態設定
  ├─ docs/            # 設計和使用者文件 (sequence, db schema, etc.)
  ├─ internal/        # 私有應用程式和函示庫的程式碼
- │   ├─ config/      # 組態設定模組 (viper)
+ │   └─ config/      # 組態設定模組 (viper)
  ├─ pkg/             # includes core modules (apis, storages, etc.)
  ├─ test/            # 額外的外部測試應用程式和測試資料
  │   ├─ benchmark/   # 壓力測試腳本

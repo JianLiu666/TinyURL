@@ -2,5 +2,5 @@
 env.yaml
 
 # folders
-deployment/data
+deployments/data
 __pycache__
