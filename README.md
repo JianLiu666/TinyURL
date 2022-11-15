@@ -8,7 +8,7 @@
     - [Usage](#usage)
     - [Monitoring](#monitoring)
     - [Logging](#logging)
-  - [File Architecture](#file-architecture)
+  - [Project Layout](#project-layout)
   - [High Level System Design](#high-level-system-design)
   - [Documentations](#documentations)
     - [Release Note](#release-note)
@@ -102,7 +102,9 @@ make help
 
 ---
 
-## File Architecture
+## Project Layout
+
+- 參考 [Standard Go Project Layout](https://github.com/golang-standards/project-layout)
 
 ```
 TinyURL
@@ -158,8 +160,8 @@ TinyURL
 
 ### API References
 
-- [create tiny url](./docs/api/v1/create.md)
-- [redirect by tiny url](./docs/api/v1/redirect.md)
+- [產生短網址流程](./docs/api/v1/create.md)
+- [短網址跳轉流程](./docs/api/v1/redirect.md)
 
 ---
 
