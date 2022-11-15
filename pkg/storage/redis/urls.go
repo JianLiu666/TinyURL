@@ -7,7 +7,7 @@ import (
 	"time"
 	"tinyurl/internal/config"
 	"tinyurl/pkg/storage"
-	"tinyurl/util"
+	"tinyurl/tools"
 
 	"github.com/go-redis/redis/v8"
 )
@@ -64,7 +64,7 @@ func CheckTinyUrl(ctx context.Context, data *storage.Url, isCustomAlias bool) in
 		}
 
 		// 原始網址加上後綴改變雜湊結果
-		data.Tiny = util.EncodeUrlByHash(data.Origin + strconv.Itoa(i))
+		data.Tiny = tools.EncodeUrlByHash(data.Origin + strconv.Itoa(i))
 	}
 
 	return ErrUnexpected

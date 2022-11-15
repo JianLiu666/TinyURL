@@ -8,7 +8,7 @@ import (
 	"tinyurl/pkg/storage"
 	"tinyurl/pkg/storage/mysql"
 	"tinyurl/pkg/storage/redis"
-	"tinyurl/util"
+	"tinyurl/tools"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
@@ -44,7 +44,7 @@ func Create(c *fiber.Ctx) error {
 	// generate tiny url by custom alias or hash method
 	tiny := reqBody.Alias
 	if tiny == "" {
-		tiny = util.EncodeUrlByHash(reqBody.Url)
+		tiny = tools.EncodeUrlByHash(reqBody.Url)
 	}
 
 	data := &storage.Url{
