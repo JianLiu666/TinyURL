@@ -103,7 +103,7 @@ TinyURL
  ├─ cmd/             # 本專案的主要應用程式
  ├─ conf.d/          # 組態設定的檔案範本及預設設定
  ├─ deployment/      # includes docker-compose, mysql seed, etc.
- ├─ doc/             # includes documentations (sequence, db schema, etc.)
+ ├─ docs/            # 設計和使用者文件 (sequence, db schema, etc.)
  ├─ internal/        # 私有應用程式和函示庫的程式碼
  │   ├─ config/      # 組態設定模組 (viper)
  ├─ pkg/             # includes core modules (apis, storages, etc.)
@@ -127,7 +127,7 @@ TinyURL
 
 ## High Level System Design
 
-![image](./doc/image/architecture_v0.3.0.svg)
+![image](./docs/image/architecture_v0.3.0.svg)
 
 ---
 
@@ -135,16 +135,16 @@ TinyURL
 
 ### Release Note
 
-- [Here 👀](./doc/RELEASE_NOTE.md)
+- [Here 👀](./docs/RELEASE_NOTE.md)
 
 ### Database Schemas
 
-- [urls](./doc/mysql/urls.md)
+- [urls](./docs/mysql/urls.md)
 
 ### API References
 
-- [create tiny url](./doc/api/v1/create.md)
-- [redirect by tiny url](./doc/api/v1/redirect.md)
+- [create tiny url](./docs/api/v1/create.md)
+- [redirect by tiny url](./docs/api/v1/redirect.md)
 
 ---
 
