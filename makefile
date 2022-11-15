@@ -75,7 +75,7 @@ restart-benchmark:
 	rm -rf deployment/data/locust
 	mkdir -p deployment/data/locust
 	
-	cp -r benchmark/*.py deployment/data/locust/
+	cp -r test/benchmark/*.py deployment/data/locust/
 	cp -r deployment/locust/ deployment/data/locust/
 	
 	docker-compose -f deployment/04.locust.yaml up -d

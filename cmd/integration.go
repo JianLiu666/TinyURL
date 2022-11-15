@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"tinyurl/integration"
+	"tinyurl/test/integration"
 
 	"github.com/spf13/cobra"
 )

@@ -100,25 +100,26 @@ Enter http://localhost:9000 to see graylog management.
 ```
 TinyURL
  ├─ .github/         # includes github actions
- ├─ benchmark/       # includes benchmark testcases
- ├─ cmd/             # golang cli (cobra)
+ ├─ cmd/             # 本專案的主要應用程式
  ├─ conf.d/          # includes configuration files
  ├─ config/          # golang config manager (viper)
  ├─ deployment/      # includes docker-compose, mysql seed, etc.
  ├─ doc/             # includes documentations (sequence, db schema, etc.)
- ├─ integration/     # includes integration testcases
  ├─ pkg/             # includes core modules (apis, storages, etc.)
+ ├─ test/            # 額外的外部測試應用程式和測試資料
+ │   ├─ benchmark/   # 壓力測試腳本
+ │   └─ integration/ # 整合測試腳本
  ├─ util/            # includes common modules (base converter, etc.)
- ├─ .gitattributes
- ├─ .gitignore
+ ├─ .gitattributes     
+ ├─ .gitignore         
  ├─ .golangci.yaml   # golang linter settings
- ├─ dockerfile
+ ├─ dockerfile         
  ├─ go.mod           # go mod files
  ├─ go.sum           # go mou files
- ├─ LICENSE
+ ├─ LICENSE            
  ├─ main.go          # program entry point
  ├─ makefile         # cli tool
- └─ README.md
+ └─ README.md          
 ```
 
 ---
