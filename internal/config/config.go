@@ -1,9 +1,9 @@
 package config
 
 import (
-	"fmt"
 	"sync"
 
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -20,16 +20,17 @@ func Env() *environment {
 
 func LoadFromViper() {
 	once.Do(func() {
+		defer logrus.Infof("read config file from: %v\n", viper.ConfigFileUsed())
+
 		err := viper.ReadInConfig()
 		if err != nil {
-			panic(fmt.Errorf("fatal error config file: %w", err))
+			logrus.Panicf("failed to read in config: %v", err)
 		}
-		fmt.Printf("read config file from: %v\n", viper.ConfigFileUsed())
 
 		env = &environment{}
 		err = viper.Unmarshal(env)
 		if err != nil {
-			panic(fmt.Errorf("fatal unmarshal config file: %w", err))
+			logrus.Panicf("failed to unmarshal config file: %v", err)
 		}
 
 		initialized = true

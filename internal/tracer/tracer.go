@@ -1,12 +1,12 @@
 package tracer
 
 import (
-	"fmt"
 	"sync"
 	"time"
 	"tinyurl/internal/config"
 
 	"github.com/opentracing/opentracing-go"
+	"github.com/sirupsen/logrus"
 	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
 )
@@ -15,6 +15,8 @@ var once sync.Once
 
 func InitGlobalTracer() {
 	once.Do(func() {
+		defer logrus.Infoln("init jaeger successful.")
+
 		cfg := jaegercfg.Configuration{
 			ServiceName: config.Env().Server.Name,
 			RPCMetrics:  config.Env().Jaeger.RPCMetrics,
@@ -35,10 +37,9 @@ func InitGlobalTracer() {
 
 		tracer, _, err := cfg.NewTracer()
 		if err != nil {
-			fmt.Println("init jaeger failed: ", err)
+			logrus.Panicf("failed to init jaeger: %v", err)
 		}
 
 		opentracing.SetGlobalTracer(tracer)
-		fmt.Println("init jaeger successful.")
 	})
 }

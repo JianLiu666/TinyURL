@@ -1,11 +1,11 @@
 package redis
 
 import (
-	"fmt"
 	"sync"
 	"tinyurl/internal/config"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/sirupsen/logrus"
 )
 
 var once sync.Once
@@ -17,12 +17,12 @@ func GetInstance() *redis.Client {
 
 func Init() {
 	once.Do(func() {
+		defer logrus.Infof("connect to redis successful.")
+
 		instance = redis.NewClient(&redis.Options{
 			Addr:     config.Env().Redis.Address,
 			Password: config.Env().Redis.Password,
 			DB:       config.Env().Redis.DB,
 		})
-
-		fmt.Println("connect to redis successful.")
 	})
 }

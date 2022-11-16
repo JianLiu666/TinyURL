@@ -6,6 +6,7 @@ import (
 	"time"
 	"tinyurl/internal/config"
 
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -19,6 +20,8 @@ func GetInstance() *gorm.DB {
 
 func Init() {
 	once.Do(func() {
+		defer logrus.Infoln("connect to mysql successful.")
+
 		dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 			config.Env().MySQL.UserName,
 			config.Env().MySQL.Password,
@@ -28,18 +31,16 @@ func Init() {
 
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 		if err != nil {
-			panic(err)
+			logrus.Panicf("failed to open mysql: %v", err)
 		}
 		instance = db
 
 		sqlDB, err := db.DB()
 		if err != nil {
-			panic(err)
+			logrus.Panicf("failed to get database instance: %v", err)
 		}
 		sqlDB.SetMaxIdleConns(config.Env().MySQL.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(config.Env().MySQL.MaxOpenConns)
 		sqlDB.SetConnMaxLifetime(time.Duration(config.Env().MySQL.ConnMaxLifetime * int(time.Minute)))
-
-		fmt.Println("connect to mysql successful.")
 	})
 }

@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -14,7 +13,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/opentracing/opentracing-go"
 	"github.com/sirupsen/logrus"
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	gormopentracing "gorm.io/plugin/opentracing"
 )
@@ -31,12 +29,6 @@ func init() {
 }
 
 func RunServerCmd(cmd *cobra.Command, args []string) error {
-	// enable logger modules
-	logrus.SetFormatter(&log.TextFormatter{
-		FullTimestamp:   true,
-		TimestampFormat: "2006-01-02 15:04:05-07:00",
-	})
-
 	// enable opentracing  with jaeger
 	tracer.InitGlobalTracer()
 
@@ -58,21 +50,23 @@ func RunServerCmd(cmd *cobra.Command, args []string) error {
 	api.SetTracer(app)
 	go func() {
 		if err := app.Listen(config.Env().Server.Port); err != nil {
-			panic(fmt.Errorf("starting fiber HTTP server on %s failed: %s", config.Env().Server.Port, err.Error()))
+			logrus.Panicf("starting fiber HTTP server on %s failed: %s", config.Env().Server.Port, err.Error())
 		}
 	}()
 
 	// set graceful shutdown method
 	stopSignal := make(chan os.Signal, 1)
-	signal.Notify(stopSignal, syscall.SIGINT, syscall.SIGHUP, syscall.SIGTERM)
+	signal.Notify(stopSignal, os.Interrupt, syscall.SIGTERM)
 	<-stopSignal
 
-	fmt.Printf("main: graceful shutdown %s...\n", cmd.Name())
+	logrus.Infof("main: graceful shutdown %s...", cmd.Name())
 
-	// if err := app.Shutdown(); err != nil {
-	// 	fmt.Printf("shuting fiber HTTP server down failed: %v\n", err.Error())
-	// 	return err
-	// }
+	if err := app.Shutdown(); err != nil {
+		logrus.Errorf("main: shuting fiber HTTP server down failed: %v\n", err.Error())
+		return err
+	}
+
+	logrus.Infof("main: %s closed.\n", cmd.Name())
 
 	return nil
 }
