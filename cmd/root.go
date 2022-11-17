@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"tinyurl/internal/config"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -32,5 +31,5 @@ func Execute() {
 func initConfig() {
 	viper.SetConfigFile(cfgFile)
 	viper.AutomaticEnv()
-	config.LoadFromViper()
+
 }

@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func redirect_302(s *session) (bool, error) {
+func (t *tester) redirect_302(s *session) (bool, error) {
 	// 1. prepare request data
 	domain := fmt.Sprintf("http://%s", s.tiny)
 	req, err := http.NewRequest(http.MethodGet, domain, nil)
@@ -42,7 +42,7 @@ func redirect_302(s *session) (bool, error) {
 	return true, nil
 }
 
-func redirect_400(s *session) (bool, error) {
+func (t *tester) redirect_400(s *session) (bool, error) {
 	// 1. prepare request data
 	domain := fmt.Sprintf("http://%s", s.tiny)
 	req, err := http.NewRequest(http.MethodGet, domain, nil)

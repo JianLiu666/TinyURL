@@ -28,7 +28,7 @@ func RunIntegrationCmd(cmd *cobra.Command, args []string) error {
 	infra.InitKvStore(ctx)
 	infra.InitRDB(ctx)
 
-	app := integration.NewIntegrationTester(infra.KvStore, infra.RDB)
+	app := integration.NewIntegrationTester(infra.KvStore, infra.RDB, infra.Config.Server)
 	app.Start()
 
 	return nil

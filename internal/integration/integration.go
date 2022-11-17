@@ -6,6 +6,7 @@ import (
 	"runtime"
 	"strings"
 	"time"
+	"tinyurl/internal/config"
 	"tinyurl/internal/storage/kvstore"
 	"tinyurl/internal/storage/rdb"
 
@@ -13,14 +14,16 @@ import (
 )
 
 type tester struct {
-	kvStore kvstore.KvStore
-	rdb     rdb.RDB
+	kvStore      kvstore.KvStore
+	rdb          rdb.RDB
+	serverConfig config.ServerOpts
 }
 
-func NewIntegrationTester(kvstore kvstore.KvStore, rdb rdb.RDB) *tester {
+func NewIntegrationTester(kvstore kvstore.KvStore, rdb rdb.RDB, serverConfig config.ServerOpts) *tester {
 	return &tester{
-		kvStore: kvstore,
-		rdb:     rdb,
+		kvStore:      kvstore,
+		rdb:          rdb,
+		serverConfig: serverConfig,
 	}
 }
 

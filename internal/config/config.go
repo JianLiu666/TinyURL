@@ -3,7 +3,6 @@ package config
 import (
 	"sync"
 
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -82,30 +81,4 @@ func NewFromDefault() *Config {
 	}
 
 	return cfg
-}
-
-func Env() *Config {
-	if initialized {
-		return cfg
-	}
-	return nil
-}
-
-func LoadFromViper() {
-	once.Do(func() {
-		defer logrus.Infof("read config file from: %v\n", viper.ConfigFileUsed())
-
-		err := viper.ReadInConfig()
-		if err != nil {
-			logrus.Panicf("failed to read in config: %v", err)
-		}
-
-		cfg = &Config{}
-		err = viper.Unmarshal(cfg)
-		if err != nil {
-			logrus.Panicf("failed to unmarshal config file: %v", err)
-		}
-
-		initialized = true
-	})
 }
