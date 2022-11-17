@@ -9,6 +9,7 @@ import (
 	"tinyurl/tools"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/opentracing/opentracing-go"
 	"github.com/sirupsen/logrus"
 )
 
@@ -33,6 +34,10 @@ func NewRedisClient(ctx context.Context, addr, password string, db int) KvStore 
 	return &redisClient{
 		conn: conn,
 	}
+}
+
+func (c *redisClient) SetOpenTracing(tracer opentracing.Tracer) {
+	c.conn.AddHook(newRedisHook(tracer))
 }
 
 func (c *redisClient) SetTinyUrl(ctx context.Context, data *storage.Url, expiration time.Duration) int {
