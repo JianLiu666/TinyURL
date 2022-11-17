@@ -35,6 +35,7 @@ func RunServerCmd(cmd *cobra.Command, args []string) error {
 
 	app := server.InitTinyUrlServer(infra.KvStore, infra.RDB, infra.Config.Server)
 	defer app.Shutdown()
+
 	app.Run()
 
 	// set graceful shutdown method
