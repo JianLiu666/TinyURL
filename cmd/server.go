@@ -26,7 +26,7 @@ func init() {
 func RunServerCmd(cmd *cobra.Command, args []string) error {
 	ctx := context.Background()
 
-	infra := accessor.BuildAccessor(ctx, "server")
+	infra := accessor.BuildAccessor()
 	defer infra.Close(ctx)
 
 	infra.InitKvStore(ctx)

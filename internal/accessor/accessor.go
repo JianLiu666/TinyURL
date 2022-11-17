@@ -3,7 +3,6 @@ package accessor
 import (
 	"context"
 	"fmt"
-	"os"
 	"sync"
 	"time"
 	"tinyurl/internal/config"
@@ -18,25 +17,18 @@ import (
 type shutdownHandler func(context.Context)
 
 type accessor struct {
-	shutdownSig      chan os.Signal
 	shutdownOnce     sync.Once
 	shutdownHandlers []shutdownHandler
 
-	Name    string
-	Config  *config.Config
-	KvStore kvstore.KvStore
-	RDB     rdb.RDB
+	Config  *config.Config  // configuration managment
+	KvStore kvstore.KvStore // key-value store instance
+	RDB     rdb.RDB         // relational database instance
 }
 
-func BuildAccessor(ctx context.Context, service string) *accessor {
-	p := &accessor{
-		shutdownSig: make(chan os.Signal, 1),
-
-		Name:   service,
+func BuildAccessor() *accessor {
+	return &accessor{
 		Config: config.NewFromViper(),
 	}
-
-	return p
 }
 
 func (a *accessor) Close(ctx context.Context) {

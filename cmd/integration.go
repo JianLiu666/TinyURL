@@ -22,7 +22,7 @@ func init() {
 func RunIntegrationCmd(cmd *cobra.Command, args []string) error {
 	ctx := context.Background()
 
-	infra := accessor.BuildAccessor(ctx, "integration")
+	infra := accessor.BuildAccessor()
 	defer infra.Close(ctx)
 
 	infra.InitKvStore(ctx)
