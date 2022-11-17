@@ -31,5 +31,4 @@ func Execute() {
 func initConfig() {
 	viper.SetConfigFile(cfgFile)
 	viper.AutomaticEnv()
-
 }
