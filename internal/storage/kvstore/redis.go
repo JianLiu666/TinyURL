@@ -40,6 +40,16 @@ func (c *redisClient) SetOpenTracing(tracer opentracing.Tracer) {
 	c.conn.AddHook(newRedisHook(tracer))
 }
 
+func (c *redisClient) Shutdown(ctx context.Context) {
+	if err := c.conn.Close(); err != nil {
+		logrus.Errorf("failed to close redis client: %v", err)
+	}
+}
+
+func (c *redisClient) FlushAll(ctx context.Context) {
+	c.conn.FlushAll(ctx)
+}
+
 func (c *redisClient) SetTinyUrl(ctx context.Context, data *storage.Url, expiration time.Duration) int {
 	if err := c.conn.SetEX(ctx, getTinyKey(data.Tiny), data.Origin, expiration).Err(); err != nil {
 		fmt.Println(err)
@@ -93,10 +103,4 @@ func (c *redisClient) CheckTinyUrl(ctx context.Context, data *storage.Url, isCus
 	}
 
 	return ErrUnexpected
-}
-
-func (c *redisClient) Shutdown(ctx context.Context) {
-	if err := c.conn.Close(); err != nil {
-		logrus.Errorf("failed to close redis client: %v", err)
-	}
 }

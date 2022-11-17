@@ -26,14 +26,14 @@ func init() {
 func RunServerCmd(cmd *cobra.Command, args []string) error {
 	ctx := context.Background()
 
-	accessors := accessor.BuildAccessor(ctx, "server")
-	defer accessors.Close(ctx)
+	infra := accessor.BuildAccessor(ctx, "server")
+	defer infra.Close(ctx)
 
-	accessors.InitKvStore(ctx)
-	accessors.InitRDB(ctx)
-	accessors.InitOpenTracing(ctx)
+	infra.InitKvStore(ctx)
+	infra.InitRDB(ctx)
+	infra.InitOpenTracing(ctx)
 
-	app := server.InitTinyUrlServer(accessors.KvStore, accessors.RDB)
+	app := server.InitTinyUrlServer(infra.KvStore, infra.RDB)
 	defer app.Shutdown()
 	app.Run()
 

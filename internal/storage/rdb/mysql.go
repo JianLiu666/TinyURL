@@ -47,6 +47,16 @@ func (c *mysqlClient) SetOpenTracing(tracer opentracing.Tracer) {
 	}
 }
 
+func (c *mysqlClient) Shutdown(ctx context.Context) {
+	if err := c.sqlDB.Close(); err != nil {
+		logrus.Panicf("failed to close sql.DB : %v", err)
+	}
+}
+
+func (c *mysqlClient) Exec(sql string) {
+	c.gormDB.Exec(sql)
+}
+
 func (c *mysqlClient) CreateUrl(ctx context.Context, data *storage.Url, isCustomAlias bool) (bool, error) {
 	tx := c.gormDB.WithContext(ctx).Table(tbUrls).Clauses(clause.OnConflict{UpdateAll: true}).Create(&data)
 	return tx.RowsAffected == 0, tx.Error
@@ -61,10 +71,4 @@ func (c *mysqlClient) GetUrl(ctx context.Context, tiny_url string) (res storage.
 	}
 
 	return
-}
-
-func (c *mysqlClient) Shutdown(ctx context.Context) {
-	if err := c.sqlDB.Close(); err != nil {
-		logrus.Panicf("failed to close sql.DB : %v", err)
-	}
 }

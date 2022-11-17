@@ -113,20 +113,20 @@ TinyURL
  ├─ cmd/             # 本專案的主要應用程式
  ├─ conf.d/          # 組態設定的檔案範本及預設設定
  ├─ deployments/     # 系統和容器編配部署的組態設定腳本
- │   ├─ data/        # 保存 docker volume
- │   ├─ grafana/     # Grafana 預設儀表板
- │   ├─ locust/      # Locust 組態設定
- │   ├─ mysql/       # MySQL 組態設定與動態連結函式庫 (dll)
- │   └─ prometheus/  # prometheus 組態設定
+ │   ├─ data/           # 保存 docker volume
+ │   ├─ grafana/        # Grafana 預設儀表板
+ │   ├─ locust/         # Locust 組態設定
+ │   ├─ mysql/          # MySQL 組態設定與動態連結函式庫 (dll)
+ │   └─ prometheus/     # prometheus 組態設定
  ├─ docs/            # 設計和使用者文件 (sequence, db schema, etc.)
  ├─ internal/        # 私有應用程式和函示庫的程式碼
- │   ├─ api/         # TinyURL API Server
- │   ├─ config/      # 組態設定模組 (viper)
- │   ├─ storage/     # 資料庫模組
- │   └─ tracer/      # OpenTracing 模組 (jaeger)
+ │   ├─ api/            # TinyURL API Server
+ │   ├─ config/         # 組態設定模組 (viper)
+ │   ├─ storage/        # 資料庫模組
+ │   └─ tracer/         # OpenTracing 模組 (jaeger)
  ├─ test/            # 額外的外部測試應用程式和測試資料
- │   ├─ benchmark/   # 壓力測試腳本
- │   └─ integration/ # 整合測試腳本
+ │   ├─ benchmark/      # 壓力測試腳本
+ │   └─ integration/    # 整合測試腳本
  ├─ tools/           # 支援工具
  ├─ .gitattributes   
  ├─ .gitignore       

@@ -6,7 +6,6 @@ import (
 	"time"
 	"tinyurl/internal/storage"
 	"tinyurl/internal/storage/kvstore"
-	"tinyurl/internal/storage/redis"
 	"tinyurl/tools"
 
 	"github.com/gofiber/fiber/v2"
@@ -71,7 +70,7 @@ func (h *handler) Create(c *fiber.Ctx) error {
 
 	// TODO: remove magic number
 	// set tiny url cache into redis
-	if code := h.kvStore.SetTinyUrl(c.UserContext(), data, 60*time.Minute); code != redis.ErrNotFound {
+	if code := h.kvStore.SetTinyUrl(c.UserContext(), data, 60*time.Minute); code != kvstore.ErrNotFound {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 

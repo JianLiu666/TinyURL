@@ -1,7 +1,9 @@
 package cmd
 
 import (
-	"tinyurl/test/integration"
+	"context"
+	"tinyurl/internal/accessor"
+	"tinyurl/internal/integration"
 
 	"github.com/spf13/cobra"
 )
@@ -18,6 +20,16 @@ func init() {
 }
 
 func RunIntegrationCmd(cmd *cobra.Command, args []string) error {
-	integration.Start()
+	ctx := context.Background()
+
+	infra := accessor.BuildAccessor(ctx, "integration")
+	defer infra.Close(ctx)
+
+	infra.InitKvStore(ctx)
+	infra.InitRDB(ctx)
+
+	app := integration.NewIntegrationTester(infra.KvStore, infra.RDB)
+	app.Start()
+
 	return nil
 }

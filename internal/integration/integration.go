@@ -6,9 +6,30 @@ import (
 	"runtime"
 	"strings"
 	"time"
+	"tinyurl/internal/storage/kvstore"
+	"tinyurl/internal/storage/rdb"
 
 	"github.com/fatih/color"
 )
+
+type tester struct {
+	kvStore kvstore.KvStore
+	rdb     rdb.RDB
+}
+
+func NewIntegrationTester(kvstore kvstore.KvStore, rdb rdb.RDB) *tester {
+	return &tester{
+		kvStore: kvstore,
+		rdb:     rdb,
+	}
+}
+
+func (t *tester) Start() {
+	casef(t.testcase1)
+	casef(t.testcase2)
+	casef(t.testcase3)
+	casef(t.testcase4)
+}
 
 // format testcase output
 func casef(callback func()) {
