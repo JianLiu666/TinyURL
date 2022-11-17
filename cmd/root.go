@@ -19,7 +19,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "f", "", "config file (default is ./conf.d/env.yaml")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "f", "./conf.d/env.yaml", "config file (default is ./conf.d/env.yaml")
 }
 
 func Execute() {
@@ -30,12 +30,7 @@ func Execute() {
 }
 
 func initConfig() {
-	if cfgFile != "" {
-		viper.SetConfigFile(cfgFile)
-	} else {
-		viper.SetConfigFile("./conf.d/env.yaml")
-	}
-
+	viper.SetConfigFile(cfgFile)
 	viper.AutomaticEnv()
 	config.LoadFromViper()
 }
