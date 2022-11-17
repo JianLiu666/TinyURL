@@ -5,7 +5,6 @@ import (
 	v1 "tinyurl/internal/server/api/v1"
 	"tinyurl/internal/storage/kvstore"
 	"tinyurl/internal/storage/rdb"
-	"tinyurl/internal/tracer"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -26,7 +25,7 @@ func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config
 		Format: "[${time}] | ${ip} | ${latency} | ${status} | ${method} | ${path} | Req: ${body} | Resp: ${resBody}\n",
 	}))
 
-	app.Use(tracer.NewFiberMiddleware(tracer.FiberConfig{
+	app.Use(newFiberMiddleware(fiberConfig{
 		Tracer: opentracing.GlobalTracer(),
 	}))
 

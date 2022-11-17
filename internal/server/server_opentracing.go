@@ -1,4 +1,4 @@
-package tracer
+package server
 
 import (
 	"net/http"
@@ -8,7 +8,7 @@ import (
 	"github.com/opentracing/opentracing-go/ext"
 )
 
-func NewFiberMiddleware(config FiberConfig) fiber.Handler {
+func newFiberMiddleware(config fiberConfig) fiber.Handler {
 	// Set default config
 	cfg := setDefaultFiberConfig(config)
 	return func(c *fiber.Ctx) error {
@@ -55,7 +55,7 @@ func NewFiberMiddleware(config FiberConfig) fiber.Handler {
 	}
 }
 
-type FiberConfig struct {
+type fiberConfig struct {
 	Tracer                opentracing.Tracer
 	OperationName         func(*fiber.Ctx) string
 	Filter                func(*fiber.Ctx) bool
@@ -63,7 +63,7 @@ type FiberConfig struct {
 	SkipSpanWithoutParent bool
 }
 
-var fiberDefaultConfig = FiberConfig{
+var fiberDefaultConfig = fiberConfig{
 	Tracer: opentracing.NoopTracer{},
 	OperationName: func(ctx *fiber.Ctx) string {
 		return "HTTP " + ctx.Method() + " URL: " + ctx.Path()
@@ -80,7 +80,7 @@ var fiberDefaultConfig = FiberConfig{
 }
 
 // setDefaultFiberConfig function to return defalut values
-func setDefaultFiberConfig(config ...FiberConfig) FiberConfig {
+func setDefaultFiberConfig(config ...fiberConfig) fiberConfig {
 	// return default config if no config provided
 	if len(config) < 1 {
 		return fiberDefaultConfig
