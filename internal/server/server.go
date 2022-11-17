@@ -38,7 +38,8 @@ func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config
 	v1Api.Get("/:tiny_url", handler.Redirect)
 
 	return &server{
-		app: app,
+		app:          app,
+		serverConfig: serverConfig,
 	}
 }
 
