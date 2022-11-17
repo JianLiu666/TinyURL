@@ -7,10 +7,12 @@ import (
 	"time"
 	"tinyurl/internal/storage"
 
+	"github.com/opentracing/opentracing-go"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	gormopentracing "gorm.io/plugin/opentracing"
 )
 
 type mysqlClient struct {
@@ -36,6 +38,12 @@ func NewMySqlClient(ctx context.Context, dsn string, connMaxLifetime time.Durati
 	return &mysqlClient{
 		gormDB: gormDB,
 		sqlDB:  sqlDB,
+	}
+}
+
+func (c *mysqlClient) SetOpenTracing(tracer opentracing.Tracer) {
+	if err := c.gormDB.Use(gormopentracing.New()); err != nil {
+		logrus.Panicf("failed to use open tracing: %v", err)
 	}
 }
 
