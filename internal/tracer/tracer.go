@@ -13,25 +13,23 @@ import (
 
 var once sync.Once
 
-func InitGlobalTracer() {
+func InitGlobalTracer(serverName string, opts config.JaegerOpts) {
 	once.Do(func() {
-		defer logrus.Infoln("init jaeger successful.")
-
 		cfg := jaegercfg.Configuration{
-			ServiceName: config.Env().Server.Name,
-			RPCMetrics:  config.Env().Jaeger.RPCMetrics,
+			ServiceName: serverName,
+			RPCMetrics:  opts.RPCMetrics,
 			Sampler: &jaegercfg.SamplerConfig{
-				Type:  config.Env().Jaeger.Sampler.Type,
-				Param: float64(config.Env().Jaeger.Sampler.Param),
+				Type:  opts.Sampler.Type,
+				Param: float64(opts.Sampler.Param),
 			},
 			Reporter: &jaegercfg.ReporterConfig{
-				LogSpans:            config.Env().Jaeger.Reporter.LogSpans,
-				BufferFlushInterval: time.Duration(config.Env().Jaeger.Reporter.BufferFlushInterval) * time.Second,
-				LocalAgentHostPort:  config.Env().Jaeger.Reporter.LocalAgentHostPort,
+				LogSpans:            opts.Reporter.LogSpans,
+				BufferFlushInterval: time.Duration(opts.Reporter.BufferFlushInterval) * time.Second,
+				LocalAgentHostPort:  opts.Reporter.LocalAgentHostPort,
 			},
 			Headers: &jaeger.HeadersConfig{
-				TraceBaggageHeaderPrefix: config.Env().Jaeger.Headers.TraceBaggageHeaderPrefix,
-				TraceContextHeaderName:   config.Env().Jaeger.Headers.TraceContextHeaderName,
+				TraceBaggageHeaderPrefix: opts.Headers.TraceBaggageHeaderPrefix,
+				TraceContextHeaderName:   opts.Headers.TraceContextHeaderName,
 			},
 		}
 

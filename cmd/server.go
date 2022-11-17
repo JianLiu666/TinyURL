@@ -30,7 +30,7 @@ func init() {
 
 func RunServerCmd(cmd *cobra.Command, args []string) error {
 	// enable opentracing  with jaeger
-	tracer.InitGlobalTracer()
+	tracer.InitGlobalTracer(config.Env().Server.Name, config.Env().Jaeger)
 
 	// enable redis client
 	mysql.Init()
