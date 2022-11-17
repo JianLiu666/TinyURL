@@ -33,7 +33,7 @@ func RunServerCmd(cmd *cobra.Command, args []string) error {
 	infra.InitRDB(ctx)
 	infra.InitOpenTracing(ctx)
 
-	app := server.InitTinyUrlServer(infra.KvStore, infra.RDB)
+	app := server.InitTinyUrlServer(infra.KvStore, infra.RDB, infra.Config.Server)
 	defer app.Shutdown()
 	app.Run()
 

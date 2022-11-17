@@ -52,9 +52,8 @@ func (h *handler) Create(c *fiber.Ctx) error {
 		ExpiresAt: time.Now().Add(24 * time.Hour),
 	}
 
-	// TODO: remove magic number
 	// check whether tiny url exists or not from redis
-	if code := h.kvStore.CheckTinyUrl(c.UserContext(), data, tiny == reqBody.Alias, 10); code != kvstore.ErrNotFound {
+	if code := h.kvStore.CheckTinyUrl(c.UserContext(), data, tiny == reqBody.Alias, h.serverConfig.TinyUrlRetry); code != kvstore.ErrNotFound {
 		if code == kvstore.ErrInvalidData {
 			return c.Status(fiber.StatusBadRequest).SendString("alias dunplicated.")
 		}
@@ -68,17 +67,15 @@ func (h *handler) Create(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	// TODO: remove magic number
 	// set tiny url cache into redis
-	if code := h.kvStore.SetTinyUrl(c.UserContext(), data, 60*time.Minute); code != kvstore.ErrNotFound {
+	if code := h.kvStore.SetTinyUrl(c.UserContext(), data, time.Duration(h.serverConfig.TinyUrlCacheExpired)*time.Second); code != kvstore.ErrNotFound {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	// TODO: remove magic number
 	// initial reponse body
 	respBody := &CreateRespBody{
 		Origin:    data.Origin,
-		Tiny:      fmt.Sprintf("%s%s/api/v1/%s", "localhost", ":6600", data.Tiny),
+		Tiny:      fmt.Sprintf("%s%s/api/v1/%s", h.serverConfig.Domain, h.serverConfig.Port, data.Tiny),
 		CreateAt:  data.CreatedAt.Unix(),
 		ExpiresAt: data.ExpiresAt.Unix(),
 	}

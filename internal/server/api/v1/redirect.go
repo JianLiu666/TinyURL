@@ -30,8 +30,7 @@ func (h *handler) Redirect(c *fiber.Ctx) error {
 		// TODO: remove gorm constant
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// 寫入 redis cache
-			// TODO: remove magic number
-			if code := h.kvStore.SetTinyUrl(c.UserContext(), &url, 60*time.Minute); code != kvstore.ErrNotFound {
+			if code := h.kvStore.SetTinyUrl(c.UserContext(), &url, time.Duration(h.serverConfig.TinyUrlCacheExpired)*time.Second); code != kvstore.ErrNotFound {
 				return c.SendStatus(fiber.StatusInternalServerError)
 			}
 			return c.Status(fiber.StatusBadRequest).SendString("tinyurl not found.")
@@ -40,8 +39,7 @@ func (h *handler) Redirect(c *fiber.Ctx) error {
 	}
 
 	// 寫入 redis cache
-	// TODO: remove magic number
-	if code := h.kvStore.SetTinyUrl(c.UserContext(), &url, 60*time.Minute); code != kvstore.ErrNotFound {
+	if code := h.kvStore.SetTinyUrl(c.UserContext(), &url, time.Duration(h.serverConfig.TinyUrlCacheExpired)*time.Second); code != kvstore.ErrNotFound {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 	return c.Redirect(url.Origin, fiber.StatusFound)

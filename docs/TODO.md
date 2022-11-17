@@ -23,7 +23,7 @@
 - [x] Server Cache
   - [x] `api/v1/create`
   - [x] `api/v1/{redirect}`
-- [ ] Adapter Pattern (interface)
+- [x] Adapter Pattern (interface)
 - [ ] Rate Limiter
   - [ ] `api/v1/create` : by IP
   - [ ] `api/v1/{redirect}` : muti rules (per IP and global maximum)

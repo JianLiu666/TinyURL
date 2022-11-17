@@ -1,6 +1,7 @@
 package server
 
 import (
+	"tinyurl/internal/config"
 	v1 "tinyurl/internal/server/api/v1"
 	"tinyurl/internal/storage/kvstore"
 	"tinyurl/internal/storage/rdb"
@@ -13,10 +14,11 @@ import (
 )
 
 type server struct {
-	app *fiber.App
+	app          *fiber.App
+	serverConfig config.ServerOpts
 }
 
-func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB) *server {
+func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config.ServerOpts) *server {
 	app := fiber.New()
 
 	// set middlewares
@@ -29,7 +31,7 @@ func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB) *server {
 	}))
 
 	// set routes
-	handler := v1.NewV1Handler(kvStore, rdb)
+	handler := v1.NewV1Handler(kvStore, rdb, serverConfig)
 	api := app.Group("/api")
 	v1Api := api.Group("/v1")
 	v1Api.Post("/create", handler.Create)
@@ -42,9 +44,8 @@ func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB) *server {
 
 func (s *server) Run() {
 	go func() {
-		// TODO: remove magic number
-		if err := s.app.Listen(":6600"); err != nil {
-			logrus.Panicf("starting fiber HTTP server on %s failed: %s", ":6600", err.Error())
+		if err := s.app.Listen(s.serverConfig.Port); err != nil {
+			logrus.Panicf("starting fiber HTTP server on %s failed: %s", s.serverConfig.Port, err.Error())
 		}
 	}()
 }
