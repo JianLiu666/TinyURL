@@ -1,6 +1,7 @@
 package integration
 
 import (
+	"context"
 	"fmt"
 	"reflect"
 	"runtime"
@@ -28,16 +29,18 @@ func NewIntegrationTester(kvstore kvstore.KvStore, rdb rdb.RDB, serverConfig con
 }
 
 func (t *tester) Start() {
-	casef(t.testcase1)
-	casef(t.testcase2)
-	casef(t.testcase3)
-	casef(t.testcase4)
+	ctx := context.Background()
+
+	casef(ctx, t.testcase1)
+	casef(ctx, t.testcase2)
+	casef(ctx, t.testcase3)
+	casef(ctx, t.testcase4)
 }
 
 // format testcase output
-func casef(callback func()) {
+func casef(ctx context.Context, callback func(context.Context)) {
 	fmt.Printf("========== %s ==========\n", getFunctionName(callback))
-	callback()
+	callback(ctx)
 }
 
 // format business logic output
