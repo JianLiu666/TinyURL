@@ -2,10 +2,11 @@ package server
 
 import (
 	"tinyurl/internal/config"
-	v1 "tinyurl/internal/server/api/v1"
+	v1Api "tinyurl/internal/server/api/v1"
 	"tinyurl/internal/storage/kvstore"
 	"tinyurl/internal/storage/rdb"
 
+	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/opentracing/opentracing-go"
@@ -20,22 +21,28 @@ type server struct {
 func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config.ServerOpts) *server {
 	app := fiber.New()
 
-	// set middlewares
+	// set web server logger format
 	app.Use(logger.New(logger.Config{
 		Format: "[${time}] | ${ip} | ${latency} | ${status} | ${method} | ${path} | Req: ${body} | Resp: ${resBody}\n",
 	}))
 
+	// enable jaeger plugin
 	app.Use(newFiberMiddleware(fiberConfig{
 		Tracer: opentracing.GlobalTracer(),
 	}))
 
+	// enable prometheus metrics plugin
+	prometheus := fiberprometheus.New("tinyurl")
+	prometheus.RegisterAt(app, "/metrics")
+	app.Use(prometheus.Middleware)
+
 	// set routes
 	api := app.Group("/api")
 
-	v1Api := api.Group("/v1")
-	handler := v1.NewV1Handler(kvStore, rdb, serverConfig)
-	v1Api.Post("/create", handler.Create)
-	v1Api.Get("/:tiny_url", handler.Redirect)
+	v1 := api.Group("/v1")
+	handler := v1Api.NewV1Handler(kvStore, rdb, serverConfig)
+	v1.Post("/create", handler.Create)
+	v1.Get("/:tiny_url", handler.Redirect)
 
 	return &server{
 		app:          app,
