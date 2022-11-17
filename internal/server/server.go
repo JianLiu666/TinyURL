@@ -31,9 +31,10 @@ func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config
 	}))
 
 	// set routes
-	handler := v1.NewV1Handler(kvStore, rdb, serverConfig)
 	api := app.Group("/api")
+
 	v1Api := api.Group("/v1")
+	handler := v1.NewV1Handler(kvStore, rdb, serverConfig)
 	v1Api.Post("/create", handler.Create)
 	v1Api.Get("/:tiny_url", handler.Redirect)
 
