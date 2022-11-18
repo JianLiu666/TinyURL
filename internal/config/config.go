@@ -1,14 +1,10 @@
 package config
 
 import (
-	"sync"
-
 	"github.com/spf13/viper"
 )
 
 var cfg *Config
-var once sync.Once
-var initialized bool
 
 type Config struct {
 	Server ServerOpts `mapstructure:"server" yaml:"server"`
