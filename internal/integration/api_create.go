@@ -6,11 +6,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	v1 "tinyurl/internal/api/v1"
-	"tinyurl/internal/config"
+	v1 "tinyurl/internal/server/api/v1"
 )
 
-func create_200(s *session) (bool, error) {
+func (t *tester) create_200(s *session) (bool, error) {
 	// 1. prepare request body
 	reqData := &v1.CreateReqBody{
 		Url:   s.origin,
@@ -22,8 +21,8 @@ func create_200(s *session) (bool, error) {
 	}
 
 	domain := fmt.Sprintf("http://%s%s/api/v1/create",
-		config.Env().Server.Domain,
-		config.Env().Server.Port,
+		t.serverConfig.Domain,
+		t.serverConfig.Port,
 	)
 	req, err := http.NewRequest(http.MethodPost, domain, bytes.NewBuffer(reqBody))
 	if err != nil {
@@ -64,7 +63,7 @@ func create_200(s *session) (bool, error) {
 	return true, nil
 }
 
-func create_400(s *session) (bool, error) {
+func (t *tester) create_400(s *session) (bool, error) {
 	// 1. prepare request body
 	reqData := &v1.CreateReqBody{
 		Url:   s.origin,
@@ -76,8 +75,8 @@ func create_400(s *session) (bool, error) {
 	}
 
 	domain := fmt.Sprintf("http://%s%s/api/v1/create",
-		config.Env().Server.Domain,
-		config.Env().Server.Port,
+		t.serverConfig.Domain,
+		t.serverConfig.Port,
 	)
 	req, err := http.NewRequest(http.MethodPost, domain, bytes.NewBuffer(reqBody))
 	if err != nil {

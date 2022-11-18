@@ -1,19 +1,46 @@
 package integration
 
 import (
+	"context"
 	"fmt"
 	"reflect"
 	"runtime"
 	"strings"
 	"time"
+	"tinyurl/internal/config"
+	"tinyurl/internal/storage/kvstore"
+	"tinyurl/internal/storage/rdb"
 
 	"github.com/fatih/color"
 )
 
+type tester struct {
+	kvStore      kvstore.KvStore
+	rdb          rdb.RDB
+	serverConfig config.ServerOpts
+}
+
+func NewIntegrationTester(kvstore kvstore.KvStore, rdb rdb.RDB, serverConfig config.ServerOpts) *tester {
+	return &tester{
+		kvStore:      kvstore,
+		rdb:          rdb,
+		serverConfig: serverConfig,
+	}
+}
+
+func (t *tester) Start() {
+	ctx := context.Background()
+
+	casef(ctx, t.testcase1)
+	casef(ctx, t.testcase2)
+	casef(ctx, t.testcase3)
+	casef(ctx, t.testcase4)
+}
+
 // format testcase output
-func casef(callback func()) {
+func casef(ctx context.Context, callback func(context.Context)) {
 	fmt.Printf("========== %s ==========\n", getFunctionName(callback))
-	callback()
+	callback(ctx)
 }
 
 // format business logic output

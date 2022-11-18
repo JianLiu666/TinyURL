@@ -3,90 +3,82 @@ package config
 import (
 	"sync"
 
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
-var env *environment
+var cfg *Config
 var once sync.Once
 var initialized bool
 
-func Env() *environment {
-	if initialized {
-		return env
+type Config struct {
+	Server ServerOpts `mapstructure:"server" yaml:"server"`
+	MySQL  MysqlOpts  `mapstructure:"mysql" yaml:"mysql"`
+	Redis  RedisOpts  `mapstructure:"redis" yaml:"redis"`
+	Jaeger JaegerOpts `mapstructure:"jaeger" yaml:"jaeger"`
+}
+
+func NewFromViper() *Config {
+	err := viper.ReadInConfig()
+	if err != nil {
+		return NewFromDefault()
 	}
-	return nil
+
+	cfg = &Config{}
+	err = viper.Unmarshal(cfg)
+	if err != nil {
+		return NewFromDefault()
+	}
+
+	return cfg
 }
 
-func LoadFromViper() {
-	once.Do(func() {
-		defer logrus.Infof("read config file from: %v\n", viper.ConfigFileUsed())
+func NewFromDefault() *Config {
+	server := ServerOpts{
+		Name:                "server",
+		Domain:              "localhost",
+		Port:                "6600",
+		TinyUrlCacheExpired: 3600,
+		TinyUrlRetry:        10,
+	}
 
-		err := viper.ReadInConfig()
-		if err != nil {
-			logrus.Panicf("failed to read in config: %v", err)
-		}
+	mysql := MysqlOpts{
+		Address:         "mysql:3306",
+		UserName:        "root",
+		Password:        "0",
+		DBName:          "tinyurl",
+		MaxIdleConns:    10,
+		MaxOpenConns:    100,
+		ConnMaxLifetime: 60,
+	}
+	redis := RedisOpts{
+		Address:  "redis:6379",
+		Password: "",
+		DB:       0,
+	}
 
-		env = &environment{}
-		err = viper.Unmarshal(env)
-		if err != nil {
-			logrus.Panicf("failed to unmarshal config file: %v", err)
-		}
+	jaeger := JaegerOpts{
+		RPCMetrics: true,
+		Sampler: jaegerSampler{
+			Type:  "const",
+			Param: 1,
+		},
+		Reporter: jaegerReporter{
+			LogSpans:            true,
+			BufferFlushInterval: 1,
+			LocalAgentHostPort:  "jaeger:6831",
+		},
+		Headers: jaegerHeaders{
+			TraceBaggageHeaderPrefix: "ctx-",
+			TraceContextHeaderName:   "headerName",
+		},
+	}
 
-		initialized = true
-	})
-}
+	cfg := &Config{
+		Server: server,
+		MySQL:  mysql,
+		Redis:  redis,
+		Jaeger: jaeger,
+	}
 
-type environment struct {
-	Server server `yaml:"server"`
-	MySQL  mysql  `yaml:"mysql"`
-	Redis  redis  `yaml:"redis"`
-	Jaeger jaeger `yaml:"jaeger"`
-}
-
-type server struct {
-	Name                string `mapstructure:"name" yaml:"name"`
-	Domain              string `mapstructure:"domain" yaml:"domain"`
-	Port                string `mapstructure:"port" yaml:"port"`
-	TinyUrlCacheExpired int    `mapstructure:"tinyurl_cache_expired" yaml:"tinyurl_cache_expired"`
-	TinyUrlRetry        int    `mapstructure:"tinyurl_retry" yaml:"tinyurl_retry"`
-}
-
-type mysql struct {
-	Address         string `mapstructure:"address" yaml:"address"`
-	UserName        string `mapstructure:"username" yaml:"username"`
-	Password        string `mapstructure:"password" yaml:"password"`
-	DBName          string `mapstructure:"dbname" yaml:"dbname"`
-	MaxIdleConns    int    `mapstructure:"max_idle_conns" yaml:"max_idle_conns"`
-	MaxOpenConns    int    `mapstructure:"max_open_conns" yaml:"max_open_conns"`
-	ConnMaxLifetime int    `mapstructure:"conn_max_lifetime" yaml:"conn_max_lifetime"`
-}
-
-type redis struct {
-	Address  string `mapstructure:"address" yaml:"address"`
-	Password string `mapstructure:"password" yaml:"password"`
-	DB       int    `mapstructure:"db" yaml:"db"`
-}
-
-type jaeger struct {
-	RPCMetrics bool           `mapstructure:"rpc_metrics" yaml:"rpc_metrics"`
-	Sampler    jaegerSampler  `mapstructure:"sampler" yaml:"sampler"`
-	Reporter   jaegerReporter `mapstructure:"reporter" yaml:"reporter"`
-	Headers    jaegerHeaders  `mapstructure:"headers" yaml:"headers"`
-}
-
-type jaegerSampler struct {
-	Type  string `mapstructure:"type" yaml:"type"`
-	Param int    `mapstructure:"param" yaml:"param"`
-}
-
-type jaegerReporter struct {
-	LogSpans            bool   `mapstructure:"log_spans" yaml:"log_spans"`
-	BufferFlushInterval int    `mapstructure:"buffer_flush_interval" yaml:"buffer_flush_interval"`
-	LocalAgentHostPort  string `mapstructure:"local_agent_host_port" yaml:"local_agent_host_port"`
-}
-
-type jaegerHeaders struct {
-	TraceBaggageHeaderPrefix string `mapstructure:"trace_baggage_header_prefix" yaml:"trace_baggage_header_prefix"`
-	TraceContextHeaderName   string `mapstructure:"trace_context_header_name" yaml:"trace_context_header_name"`
+	return cfg
 }

@@ -1,4 +1,4 @@
-package tracer
+package kvstore
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 var _ redis.Hook = RedisHook{}
 
 // NewRedisHook creates a new go-redis hook instance and that will collect spans using the provided tracer.
-func NewRedisHook(tracer opentracing.Tracer) redis.Hook {
+func newRedisHook(tracer opentracing.Tracer) redis.Hook {
 	return &RedisHook{
 		tracer: tracer,
 	}

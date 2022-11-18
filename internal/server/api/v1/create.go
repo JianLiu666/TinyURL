@@ -4,10 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-	"tinyurl/internal/config"
 	"tinyurl/internal/storage"
-	"tinyurl/internal/storage/mysql"
-	"tinyurl/internal/storage/redis"
+	"tinyurl/internal/storage/kvstore"
 	"tinyurl/tools"
 
 	"github.com/gofiber/fiber/v2"
@@ -26,7 +24,7 @@ type CreateRespBody struct {
 	ExpiresAt int64  `json:"expires_at"` // 短網址有效時間
 }
 
-func Create(c *fiber.Ctx) error {
+func (h *handler) Create(c *fiber.Ctx) error {
 	// parsing request body
 	reqBody := new(CreateReqBody)
 	if err := c.BodyParser(reqBody); err != nil {
@@ -55,29 +53,29 @@ func Create(c *fiber.Ctx) error {
 	}
 
 	// check whether tiny url exists or not from redis
-	if code := redis.CheckTinyUrl(c.UserContext(), data, tiny == reqBody.Alias); code != redis.ErrNotFound {
-		if code == redis.ErrInvalidData {
+	if code := h.kvStore.CheckTinyUrl(c.UserContext(), data, tiny == reqBody.Alias, h.serverConfig.TinyUrlRetry); code != kvstore.ErrNotFound {
+		if code == kvstore.ErrInvalidData {
 			return c.Status(fiber.StatusBadRequest).SendString("alias dunplicated.")
 		}
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
 	// create url record into mysql
-	urlAlreadyExists, err := mysql.CreateUrl(c.UserContext(), data, tiny == reqBody.Alias)
+	urlAlreadyExists, err := h.rdb.CreateUrl(c.UserContext(), data, tiny == reqBody.Alias)
 	if err != nil {
 		logrus.Errorf("Failed to run sql: %v", err)
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
 	// set tiny url cache into redis
-	if code := redis.SetTinyUrl(c.UserContext(), data); code != redis.ErrNotFound {
+	if code := h.kvStore.SetTinyUrl(c.UserContext(), data, time.Duration(h.serverConfig.TinyUrlCacheExpired)*time.Second); code != kvstore.ErrNotFound {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
 	// initial reponse body
 	respBody := &CreateRespBody{
 		Origin:    data.Origin,
-		Tiny:      fmt.Sprintf("%s%s/api/v1/%s", config.Env().Server.Domain, config.Env().Server.Port, data.Tiny),
+		Tiny:      fmt.Sprintf("%s%s/api/v1/%s", h.serverConfig.Domain, h.serverConfig.Port, data.Tiny),
 		CreateAt:  data.CreatedAt.Unix(),
 		ExpiresAt: data.ExpiresAt.Unix(),
 	}

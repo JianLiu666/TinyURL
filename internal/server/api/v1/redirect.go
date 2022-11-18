@@ -2,22 +2,22 @@ package v1
 
 import (
 	"errors"
-	"tinyurl/internal/storage/mysql"
-	"tinyurl/internal/storage/redis"
+	"time"
+	"tinyurl/internal/storage/kvstore"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
 )
 
 // // TODO: 用戶資料分析
-func Redirect(c *fiber.Ctx) error {
+func (h *handler) Redirect(c *fiber.Ctx) error {
 	tiny := c.Params("tiny_url")
 
 	// get origin url cache from redis
-	origin, status := redis.GetOriginUrl(c.UserContext(), c.Params("tiny_url"))
+	origin, status := h.kvStore.GetOriginUrl(c.UserContext(), c.Params("tiny_url"))
 
 	// 短網址命中時的處理流程
-	if status == redis.ErrNotFound {
+	if status == kvstore.ErrNotFound {
 		if origin == "" {
 			return c.Status(fiber.StatusBadRequest).SendString("tinyurl not found.")
 		}
@@ -25,11 +25,12 @@ func Redirect(c *fiber.Ctx) error {
 	}
 
 	// 短網址未命中時的處理流程
-	url, err := mysql.GetUrl(c.UserContext(), tiny)
+	url, err := h.rdb.GetUrl(c.UserContext(), tiny)
 	if err != nil {
+		// TODO: remove gorm constant
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// 寫入 redis cache
-			if code := redis.SetTinyUrl(c.UserContext(), &url); code != redis.ErrNotFound {
+			if code := h.kvStore.SetTinyUrl(c.UserContext(), &url, time.Duration(h.serverConfig.TinyUrlCacheExpired)*time.Second); code != kvstore.ErrNotFound {
 				return c.SendStatus(fiber.StatusInternalServerError)
 			}
 			return c.Status(fiber.StatusBadRequest).SendString("tinyurl not found.")
@@ -38,7 +39,7 @@ func Redirect(c *fiber.Ctx) error {
 	}
 
 	// 寫入 redis cache
-	if code := redis.SetTinyUrl(c.UserContext(), &url); code != redis.ErrNotFound {
+	if code := h.kvStore.SetTinyUrl(c.UserContext(), &url, time.Duration(h.serverConfig.TinyUrlCacheExpired)*time.Second); code != kvstore.ErrNotFound {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 	return c.Redirect(url.Origin, fiber.StatusFound)
