@@ -60,5 +60,6 @@ func funcf(s *session, callback func(s *session) (bool, error)) {
 }
 
 func getFunctionName(f interface{}) string {
-	return strings.Split(runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name(), ".")[1]
+	funcName := strings.Split(runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name(), ".")[2]
+	return strings.Split(funcName, "-")[0]
 }
