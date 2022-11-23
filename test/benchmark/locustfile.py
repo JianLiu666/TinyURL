@@ -65,7 +65,7 @@ class redirect_using_same_tinyurl(HttpUser):
 
 class randomly_case(HttpUser):
     wait_time = between(0, 1)
-    tinyurls = ["xaJxi"]
+    tinyurls = ["jian"]
 
     @task
     def create(self):
