@@ -25,6 +25,7 @@ type RedisOpts struct {
 }
 
 type JaegerOpts struct {
+	Enable     bool           `mapstructure:"enable" yaml:"enable"`
 	RPCMetrics bool           `mapstructure:"rpc_metrics" yaml:"rpc_metrics"`
 	Sampler    jaegerSampler  `mapstructure:"sampler" yaml:"sampler"`
 	Reporter   jaegerReporter `mapstructure:"reporter" yaml:"reporter"`

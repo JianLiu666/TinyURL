@@ -26,11 +26,6 @@ func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config
 		Format: "[${time}] | ${ip} | ${latency} | ${status} | ${method} | ${path} | Req: ${body} | Resp: ${resBody}\n",
 	}))
 
-	// enable jaeger plugin
-	app.Use(newFiberMiddleware(fiberConfig{
-		Tracer: opentracing.GlobalTracer(),
-	}))
-
 	// enable prometheus metrics plugin
 	prometheus := fiberprometheus.New("tinyurl")
 	prometheus.RegisterAt(app, "/metrics")
@@ -48,6 +43,13 @@ func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config
 		app:          app,
 		serverConfig: serverConfig,
 	}
+}
+
+func (s *server) EnableOpentracing() {
+	// enable jaeger plugin
+	s.app.Use(newFiberMiddleware(fiberConfig{
+		Tracer: opentracing.GlobalTracer(),
+	}))
 }
 
 func (s *server) Run() {

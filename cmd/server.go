@@ -26,16 +26,24 @@ func init() {
 func RunServerCmd(cmd *cobra.Command, args []string) error {
 	ctx := context.Background()
 
+	// initial infrastructure
 	infra := accessor.BuildAccessor()
 	defer infra.Close(ctx)
 
 	infra.InitKvStore(ctx)
 	infra.InitRDB(ctx)
-	infra.InitOpenTracing(ctx)
 
+	// initial tiny url server
 	app := server.InitTinyUrlServer(infra.KvStore, infra.RDB, infra.Config.Server)
 	defer app.Shutdown()
 
+	// initial opentracing mechanism
+	if infra.Config.Jaeger.Enable {
+		infra.InitOpenTracing(ctx)
+		app.EnableOpentracing()
+	}
+
+	// enable tiny url server
 	app.Run()
 
 	// set graceful shutdown method
