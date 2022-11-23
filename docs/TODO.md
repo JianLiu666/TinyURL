@@ -45,6 +45,7 @@
     - [ ] 比較 upsert 的執行開銷差距: replace(delete+insert) 與 insert on dunplicate(select+update)
   - [x] Encode tinyurl cases
     - [x] mermer3 與 sha256, md5 的開銷差距
+  - [ ] 加入 Jaeger 前後的效能損失
 
 ## Continuous Integration
 - [ ] Github Actions
