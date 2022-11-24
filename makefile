@@ -1,7 +1,7 @@
 GIT_NUM ?= ${shell git rev-parse --short=6 HEAD}
 BUILD_TIME ?= ${shell date +'%Y-%m-%d_%T'}
 
-.PHONY: help init demo shutdown-all shutdown-server restart-infra restart-logger restart-server restart-benchmark lint local unit-test integration-test build-image
+.PHONY: help init demo shutdown-all shutdown-server shutdown-benchmark restart-infra restart-logger restart-server restart-benchmark lint local unit-test integration-test build-image
 
 help:
 	@echo "Usage: make [commands]\n"
@@ -56,6 +56,9 @@ shutdown-all:
 
 shutdown-server:
 	docker-compose -f deployments/02.server.yaml down -v
+
+shutdown-benchmark:
+	docker-compose -f deployments/04.locust.yaml down -v
 
 restart-infra:
 	docker-compose -f deployments/00.infra.yaml down -v
