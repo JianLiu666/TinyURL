@@ -1,7 +1,7 @@
 GIT_NUM ?= ${shell git rev-parse --short=6 HEAD}
 BUILD_TIME ?= ${shell date +'%Y-%m-%d_%T'}
 
-.PHONY: help init demo shutdown-all shutdown-server shutdown-benchmark restart-infra restart-logger restart-server restart-benchmark lint local unit-test integration-test build-image
+.PHONY: help init demo shutdown-all shutdown-server shutdown-benchmark restart-infra restart-logger restart-server restart-benchmark lint local unit-test integration-test build-image gen-swagger
 
 help:
 	@echo "Usage: make [commands]\n"
@@ -100,3 +100,6 @@ integration-test:
 
 build-image:
 	docker build -t tinyurl:latest .
+
+gen-swagger:
+	swag init -g server.go -d ./internal/server/ --output ./docs/swagger/
