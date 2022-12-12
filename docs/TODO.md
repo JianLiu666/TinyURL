@@ -31,7 +31,7 @@
 - [ ] Precompute TinyURL
 - [ ] Add APIs for registered user
 - [ ] Horizontal Scaling
-- [ ] Swagger
+- [x] Swagger
 
 ## Testings
 

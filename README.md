@@ -8,6 +8,7 @@
     - [Usage](#usage)
     - [Monitoring](#monitoring)
     - [Logging](#logging)
+    - [Swagger](#swagger)
   - [Project Layout](#project-layout)
   - [High Level System Design](#high-level-system-design)
   - [Documentations](#documentations)
@@ -99,6 +100,10 @@ make help
  
  - 預設帳號: admin/admin
  - 第一次進入時需要至 `Sysmtem/Inputs` 設定資料來源
+
+### Swagger
+
+點擊 http://localhost:6600/swagger/index.html 訪問 Swagger 文件
 
 ---
 
