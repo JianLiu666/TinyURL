@@ -13,17 +13,31 @@ import (
 )
 
 type CreateReqBody struct {
-	Url   string `json:"url"`   // 原始網址
-	Alias string `json:"alias"` // 指定短網址格式
+	Url   string `json:"url"   example:"https://github.com/JianLiu666"` // 原始網址
+	Alias string `json:"alias" example:"jian"`                          // 指定短網址格式
 }
 
 type CreateRespBody struct {
-	Origin    string `json:"origin"`     // 原始網址
-	Tiny      string `json:"tiny"`       // 短網址
-	CreateAt  int64  `json:"created_at"` // 短網址產生時間
-	ExpiresAt int64  `json:"expires_at"` // 短網址有效時間
+	Origin    string `json:"origin"     example:"https://github.com/JianLiu666"`     // 原始網址
+	Tiny      string `json:"tiny"       example:"http://localhost:6600/api/v1/jian"` // 短網址
+	CreateAt  int64  `json:"created_at" example:"1669229019"`                        // 短網址產生時間
+	ExpiresAt int64  `json:"expires_at" example:"1670936510"`                        // 短網址有效時間
 }
 
+// @Summary      Create a shorten url
+// @Description  Generate shortenl url by user's original url
+// @Tags         api/v1
+// @Accept       json
+// @Produce      json
+//
+// @Param  url    body  CreateReqBody true "original url"
+// @Param  alias  body  CreateReqBody true "alias name"
+//
+// @Success  200  {object}  CreateRespBody
+// @Failure  400  {string}  string
+// @Failure  500  {string}  string
+//
+// @Router  /api/v1/create [post]
 func (h *handler) Create(c *fiber.Ctx) error {
 	// parsing request body
 	reqBody := new(CreateReqBody)

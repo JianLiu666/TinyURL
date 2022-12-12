@@ -9,6 +9,7 @@ import (
 	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/swagger"
 	"github.com/opentracing/opentracing-go"
 	"github.com/sirupsen/logrus"
 )
@@ -18,6 +19,18 @@ type server struct {
 	serverConfig config.ServerOpts
 }
 
+// @title        TinyURL Swagger
+// @version      1.0
+// @description  Tiny URL swagger documentation
+//
+// @contact.name   API Support
+// @contact.url    https://github.com/JianLiu666/TinyURL/issues
+// @contact.email  jianliu0616@gmail.com
+//
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+//
+// @host      localhost:6600
 func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config.ServerOpts) *server {
 	app := fiber.New()
 
@@ -32,6 +45,14 @@ func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config
 	app.Use(prometheus.Middleware)
 
 	// set routes
+	app.Get("/swagger/*", swagger.HandlerDefault)     // default
+	app.Get("/swagger/*", swagger.New(swagger.Config{ // custom
+		URL:         "http://localhost:6600/swagger/doc.json",
+		DeepLinking: false,
+		// Expand ("list") or Collapse ("none") tag groups by default
+		DocExpansion: "none",
+	}))
+
 	api := app.Group("/api")
 
 	v1 := api.Group("/v1")

@@ -1,0 +1,164 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Tiny URL swagger documentation",
+        "title": "TinyURL Swagger",
+        "contact": {
+            "name": "API Support",
+            "url": "https://github.com/JianLiu666/TinyURL/issues",
+            "email": "jianliu0616@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:6600",
+    "paths": {
+        "/api/v1/create": {
+            "post": {
+                "description": "Generate shortenl url by user's original url",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "api/v1"
+                ],
+                "summary": "Create a shorten url",
+                "parameters": [
+                    {
+                        "description": "original url",
+                        "name": "url",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v1.CreateReqBody"
+                        }
+                    },
+                    {
+                        "description": "alias name",
+                        "name": "alias",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v1.CreateReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/v1.CreateRespBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/{tiny}": {
+            "get": {
+                "description": "Redirect user by given shorten url",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "tags": [
+                    "api/v1"
+                ],
+                "summary": "Redirect",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "shorten url",
+                        "name": "tiny",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Found",
+                        "headers": {
+                            "Location": {
+                                "type": "string",
+                                "description": "Original URL"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "v1.CreateReqBody": {
+            "type": "object",
+            "properties": {
+                "alias": {
+                    "description": "指定短網址格式",
+                    "type": "string",
+                    "example": "jian"
+                },
+                "url": {
+                    "description": "原始網址",
+                    "type": "string",
+                    "example": "https://github.com/JianLiu666"
+                }
+            }
+        },
+        "v1.CreateRespBody": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "description": "短網址產生時間",
+                    "type": "integer",
+                    "example": 1669229019
+                },
+                "expires_at": {
+                    "description": "短網址有效時間",
+                    "type": "integer",
+                    "example": 1670936510
+                },
+                "origin": {
+                    "description": "原始網址",
+                    "type": "string",
+                    "example": "https://github.com/JianLiu666"
+                },
+                "tiny": {
+                    "description": "短網址",
+                    "type": "string",
+                    "example": "http://localhost:6600/api/v1/jian"
+                }
+            }
+        }
+    }
+}

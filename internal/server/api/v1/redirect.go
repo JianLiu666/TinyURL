@@ -9,7 +9,22 @@ import (
 	"gorm.io/gorm"
 )
 
-// // TODO: 用戶資料分析
+// TODO: 用戶資料分析
+// @Summary      Redirect
+// @Description  Redirect user by given shorten url
+// @Tags         api/v1
+// @Accept       json
+// @Produce      text/html
+//
+// @Param  tiny  path  string true "shorten url"
+//
+// @Success  302
+// @Failure  400  {string}  string
+// @Failure  500  {string}  string
+//
+// @Header 302 {string} Location "Original URL"
+//
+// @Router  /api/v1/{tiny} [get]
 func (h *handler) Redirect(c *fiber.Ctx) error {
 	tiny := c.Params("tiny_url")
 

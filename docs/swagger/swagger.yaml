@@ -1,0 +1,112 @@
+definitions:
+  v1.CreateReqBody:
+    properties:
+      alias:
+        description: 指定短網址格式
+        example: jian
+        type: string
+      url:
+        description: 原始網址
+        example: https://github.com/JianLiu666
+        type: string
+    type: object
+  v1.CreateRespBody:
+    properties:
+      created_at:
+        description: 短網址產生時間
+        example: 1669229019
+        type: integer
+      expires_at:
+        description: 短網址有效時間
+        example: 1670936510
+        type: integer
+      origin:
+        description: 原始網址
+        example: https://github.com/JianLiu666
+        type: string
+      tiny:
+        description: 短網址
+        example: http://localhost:6600/api/v1/jian
+        type: string
+    type: object
+host: localhost:6600
+info:
+  contact:
+    email: jianliu0616@gmail.com
+    name: API Support
+    url: https://github.com/JianLiu666/TinyURL/issues
+  description: Tiny URL swagger documentation
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: TinyURL Swagger
+  version: "1.0"
+paths:
+  /api/v1/{tiny}:
+    get:
+      consumes:
+      - application/json
+      description: Redirect user by given shorten url
+      parameters:
+      - description: shorten url
+        in: path
+        name: tiny
+        required: true
+        type: string
+      produces:
+      - text/html
+      responses:
+        "302":
+          description: Found
+          headers:
+            Location:
+              description: Original URL
+              type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Redirect
+      tags:
+      - api/v1
+  /api/v1/create:
+    post:
+      consumes:
+      - application/json
+      description: Generate shortenl url by user's original url
+      parameters:
+      - description: original url
+        in: body
+        name: url
+        required: true
+        schema:
+          $ref: '#/definitions/v1.CreateReqBody'
+      - description: alias name
+        in: body
+        name: alias
+        required: true
+        schema:
+          $ref: '#/definitions/v1.CreateReqBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.CreateRespBody'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create a shorten url
+      tags:
+      - api/v1
+swagger: "2.0"

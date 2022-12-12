@@ -8,6 +8,8 @@ import (
 	"tinyurl/internal/accessor"
 	"tinyurl/internal/server"
 
+	_ "tinyurl/docs/swagger"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
