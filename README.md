@@ -26,7 +26,7 @@
     - [Distributed Tracing](#distributed-tracing)
 
 ---
-****
+
 ## Goal
 
 - Create a shorter aliases for original URLs.
