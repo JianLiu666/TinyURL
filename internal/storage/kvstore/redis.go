@@ -13,6 +13,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+var _ KvStore = (*redisClient)(nil)
+
 type redisClient struct {
 	conn *redis.Client
 }

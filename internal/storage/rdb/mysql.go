@@ -15,6 +15,8 @@ import (
 	gormopentracing "gorm.io/plugin/opentracing"
 )
 
+var _ RDB = (*mysqlClient)(nil)
+
 type mysqlClient struct {
 	gormDB *gorm.DB
 	sqlDB  *sql.DB
