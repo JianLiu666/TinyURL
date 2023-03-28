@@ -1,24 +1,27 @@
 GIT_NUM ?= ${shell git rev-parse --short=6 HEAD}
 BUILD_TIME ?= ${shell date +'%Y-%m-%d_%T'}
 
-.PHONY: help init demo shutdown-all shutdown-server shutdown-benchmark restart-infra restart-logger restart-server restart-benchmark lint local unit-test integration-test build-image gen-swagger
+.PHONY: help init demo shutdown-all shutdown-server shutdown-benchmark restart-infra restart-logger restart-server restart-benchmark lint local unit-test integration-test build-image gen-swagger trace-60s
 
 help:
 	@echo "Usage: make [commands]\n"
 	@echo "Comands:"
-	@echo "  init               初始化建置環境 (docker volume, build image, etc.)"
-	@echo "  demo               透過 docker-compose 啟動所有服務 (主要系統, 壓力測試工具, 各項監控工具)"
-	@echo "  shutdown-all       關閉 docker-cpmpose 所有服務"
-	@echo "  shutdown-server    關閉 docker-compose 上的 API Server"
-	@echo "  restart-infra      重啟 docker-compose 上的資料庫 (MySQL, Redis)"
-	@echo "  restart-logger     重啟 docker-compose 上的日誌系統"
-	@echo "  restart-server     重啟 docker-compose 上的 API Server"
-	@echo "  restart-benchmark  重啟 docker-compose 上的壓力測試工具"
-	@echo "  lint               執行 Go Linter (golangci-lint)"
-	@echo "  local              本地執行 API Server"
-	@echo "  unit-test          本地執行單元測試腳本"
-	@echo "  integration-test   本地執行整合測試腳本"
-	@echo "  build-image        建置 API Server 映像檔"
+	@echo "  init                初始化建置環境 (docker volume, build image, etc.)"
+	@echo "  demo                透過 docker-compose 啟動所有服務 (主要系統, 壓力測試工具, 各項監控工具)"
+	@echo "  shutdown-all        關閉 docker-cpmpose 所有服務"
+	@echo "  shutdown-server     關閉 docker-compose 上的 API Server"
+	@echo "  shutdown-benchmark  關閉 docker-compose 上的壓力測試工具"
+	@echo "  restart-infra       重啟 docker-compose 上的資料庫 (MySQL, Redis)"
+	@echo "  restart-logger      重啟 docker-compose 上的日誌系統"
+	@echo "  restart-server      重啟 docker-compose 上的 API Server"
+	@echo "  restart-benchmark   重啟 docker-compose 上的壓力測試工具"
+	@echo "  lint                執行 Go Linter (golangci-lint)"
+	@echo "  local               本地執行 API Server"
+	@echo "  unit-test           本地執行單元測試腳本"
+	@echo "  integration-test    本地執行整合測試腳本"
+	@echo "  build-image         建置 API Server 映像檔"
+	@echo "  gen-swagger         產生 swagger 文件"
+	@echo "  trace-60s           開始對 Server 進行 60 秒的效能採樣, 透過 trace 工具進行分析"
 
 init:
 	rm -rf deployments/data
@@ -103,3 +106,7 @@ build-image:
 
 gen-swagger:
 	swag init -g server.go -d ./internal/server/ --output ./docs/swagger/
+
+trace-60s:
+	wget -O trace.out http://localhost:6600/debug/pprof/trace?seconds=60
+	go tool trace trace.out

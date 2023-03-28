@@ -9,6 +9,7 @@ import (
 	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/pprof"
 	"github.com/gofiber/swagger"
 	"github.com/opentracing/opentracing-go"
 	"github.com/sirupsen/logrus"
@@ -43,6 +44,9 @@ func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config
 	prometheus := fiberprometheus.New("tinyurl")
 	prometheus.RegisterAt(app, "/metrics")
 	app.Use(prometheus.Middleware)
+
+	// enable pprof plugin
+	app.Use(pprof.New())
 
 	// set routes
 	app.Get("/swagger/*", swagger.HandlerDefault)     // default
