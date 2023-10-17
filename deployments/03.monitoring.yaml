@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   mysql-exporter:
-    image: prom/mysqld-exporter
+    image: prom/mysqld-exporter:v0.14.0
     container_name: "tinyurl-03-mysql-exporter"
     restart: always
     ports:
