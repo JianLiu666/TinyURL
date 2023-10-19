@@ -30,7 +30,7 @@ func newFiberMiddleware(config fiberConfig) fiber.Handler {
 
 		// extract trace-id from header
 		sc, err := tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(header))
-		if err != nil {
+		if err == nil {
 			span = tracer.StartSpan(operationName, opentracing.ChildOf(sc))
 		} else if !cfg.SkipSpanWithoutParent {
 			span = tracer.StartSpan(operationName)
