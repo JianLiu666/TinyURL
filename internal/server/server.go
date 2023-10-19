@@ -32,13 +32,20 @@ type server struct {
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 //
 // @host      localhost:6600
-func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config.ServerOpts) *server {
+func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config.ServerOpts, enableOpentracing bool) *server {
 	app := fiber.New()
 
 	// set web server logger format
 	app.Use(logger.New(logger.Config{
 		Format: "[${time}] | ${ip} | ${latency} | ${status} | ${method} | ${path} | Req: ${body} | Resp: ${resBody}\n",
 	}))
+
+	// enable jaeger plugin
+	if enableOpentracing {
+		app.Use(newFiberMiddleware(fiberConfig{
+			Tracer: opentracing.GlobalTracer(),
+		}))
+	}
 
 	// enable prometheus metrics plugin
 	prometheus := fiberprometheus.New("tinyurl")
@@ -68,13 +75,6 @@ func InitTinyUrlServer(kvStore kvstore.KvStore, rdb rdb.RDB, serverConfig config
 		app:          app,
 		serverConfig: serverConfig,
 	}
-}
-
-func (s *server) EnableOpentracing() {
-	// enable jaeger plugin
-	s.app.Use(newFiberMiddleware(fiberConfig{
-		Tracer: opentracing.GlobalTracer(),
-	}))
 }
 
 func (s *server) Run() {
